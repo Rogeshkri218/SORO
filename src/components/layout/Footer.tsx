@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
@@ -13,6 +12,8 @@ import {
   FaLinkedinIn,
   FaInstagram,
   FaXTwitter,
+  FaFacebookF,
+  FaYoutube,
 } from 'react-icons/fa6';
 
 const serviceLinks = [
@@ -49,6 +50,8 @@ const Footer: React.FC = () => {
     { icon: FaLinkedinIn, label: 'LinkedIn', href: '#' },
     { icon: FaXTwitter, label: 'Twitter / X', href: '#' },
     { icon: FaInstagram, label: 'Instagram', href: '#' },
+    { icon: FaFacebookF, label: 'Facebook', href: '#' },
+    { icon: FaYoutube, label: 'YouTube', href: '#' },
   ];
 
   return (
@@ -88,7 +91,7 @@ const Footer: React.FC = () => {
             </p>
 
             {/* Social links */}
-            <div className="flex gap-3">
+            <div className="flex flex-wrap gap-3">
               {socialLinks.map(({ icon: Icon, label, href }) => (
                 <a
                   key={label}
