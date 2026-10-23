@@ -1,11 +1,19 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Camera,
-  Facebook,
-  Linkedin,
-  Youtube,
+  Cpu,
+  Mail,
+  Phone,
+  MessageCircle,
+  ExternalLink,
+  MapPin,
 } from 'lucide-react';
+import {
+  FaLinkedinIn,
+  FaInstagram,
+  FaXTwitter,
+} from 'react-icons/fa6';
 
 const serviceLinks = [
   { label: 'PCB Design', path: '/services/pcb-design' },
@@ -31,24 +39,30 @@ const companyLinks = [
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
-  // TODO: Replace with verified company details
-  const COMPANY_EMAIL = 'info@sorofabrications.com'; // placeholder
-  const COMPANY_PHONE = '+91 [Phone Number]'; // placeholder
-  const COMPANY_WHATSAPP = '+91 [WhatsApp Number]'; // placeholder
-  const COMPANY_ADDRESS = '[Company Address, City, State, India]'; // placeholder
+  // Replace these placeholders with verified company details.
+  const COMPANY_EMAIL = 'info@sorofabrications.com';
+  const COMPANY_PHONE = '+91 [Phone Number]';
+  const COMPANY_WHATSAPP = '+91 [WhatsApp Number]';
+  const COMPANY_ADDRESS = '[Company Address, City, State, India]';
+
+  const socialLinks = [
+    { icon: FaLinkedinIn, label: 'LinkedIn', href: '#' },
+    { icon: FaXTwitter, label: 'Twitter / X', href: '#' },
+    { icon: FaInstagram, label: 'Instagram', href: '#' },
+  ];
 
   return (
     <footer className="bg-[#050E1A] border-t border-[#1E3050]/60">
-      {/* Main Footer */}
       <div className="container-soro py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
-          {/* Brand Column */}
+          {/* Brand */}
           <div className="lg:col-span-1">
             <Link to="/" className="flex items-center gap-3 group mb-5">
               <div className="relative w-10 h-10 flex items-center justify-center">
                 <div className="absolute inset-0 bg-gradient-to-br from-[#1E6FFF] to-[#00AAFF] rounded-xl" />
                 <Cpu className="relative w-5 h-5 text-white" />
               </div>
+
               <div>
                 <span
                   className="text-xl font-extrabold text-white leading-none block"
@@ -64,16 +78,18 @@ const Footer: React.FC = () => {
                 </span>
               </div>
             </Link>
-            <p className="text-[#8A9DB5] text-sm leading-relaxed mb-6" style={{ fontFamily: 'Inter, sans-serif' }}>
-              Integrated engineering solutions spanning PCB design, embedded systems, 3D design, prototyping, and precision fabrication.
+
+            <p
+              className="text-[#8A9DB5] text-sm leading-relaxed mb-6"
+              style={{ fontFamily: 'Inter, sans-serif' }}
+            >
+              Integrated engineering solutions spanning PCB design, embedded
+              systems, 3D design, prototyping, and precision fabrication.
             </p>
-            {/* Social Links */}
+
+            {/* Social links */}
             <div className="flex gap-3">
-              {[
-                { icon: Linkedin, label: 'LinkedIn', href: '#' },
-                { icon: Twitter, label: 'Twitter / X', href: '#' },
-                { icon: Instagram, label: 'Instagram', href: '#' },
-              ].map(({ icon: Icon, label, href }) => (
+              {socialLinks.map(({ icon: Icon, label, href }) => (
                 <a
                   key={label}
                   href={href}
@@ -88,7 +104,7 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Services Column */}
+          {/* Services */}
           <div>
             <h3
               className="text-white font-semibold text-sm mb-5 tracking-wide"
@@ -111,7 +127,7 @@ const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Company Column */}
+          {/* Company */}
           <div>
             <h3
               className="text-white font-semibold text-sm mb-5 tracking-wide"
@@ -134,7 +150,7 @@ const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Contact Column */}
+          {/* Contact */}
           <div>
             <h3
               className="text-white font-semibold text-sm mb-5 tracking-wide"
@@ -146,25 +162,33 @@ const Footer: React.FC = () => {
               <li>
                 <a
                   href={`mailto:${COMPANY_EMAIL}`}
-                  className="flex items-start gap-3 text-[#8A9DB5] hover:text-white transition-colors group"
+                  className="flex items-start gap-3 text-[#8A9DB5] hover:text-white transition-colors"
                 >
                   <Mail className="w-4 h-4 mt-0.5 text-[#1E6FFF] shrink-0" />
-                  <span className="text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  <span
+                    className="text-sm"
+                    style={{ fontFamily: 'Inter, sans-serif' }}
+                  >
                     {COMPANY_EMAIL}
                   </span>
                 </a>
               </li>
+
               <li>
                 <a
                   href={`tel:${COMPANY_PHONE.replace(/\s/g, '')}`}
                   className="flex items-start gap-3 text-[#8A9DB5] hover:text-white transition-colors"
                 >
                   <Phone className="w-4 h-4 mt-0.5 text-[#1E6FFF] shrink-0" />
-                  <span className="text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  <span
+                    className="text-sm"
+                    style={{ fontFamily: 'Inter, sans-serif' }}
+                  >
                     {COMPANY_PHONE}
                   </span>
                 </a>
               </li>
+
               <li>
                 <a
                   href={`https://wa.me/${COMPANY_WHATSAPP.replace(/\D/g, '')}`}
@@ -173,16 +197,23 @@ const Footer: React.FC = () => {
                   className="flex items-start gap-3 text-[#8A9DB5] hover:text-[#25D366] transition-colors"
                 >
                   <MessageCircle className="w-4 h-4 mt-0.5 text-[#25D366] shrink-0" />
-                  <span className="text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  <span
+                    className="text-sm"
+                    style={{ fontFamily: 'Inter, sans-serif' }}
+                  >
                     WhatsApp Chat
                   </span>
                   <ExternalLink className="w-3 h-3 mt-1 shrink-0" />
                 </a>
               </li>
+
               <li>
                 <div className="flex items-start gap-3 text-[#8A9DB5]">
                   <MapPin className="w-4 h-4 mt-0.5 text-[#1E6FFF] shrink-0" />
-                  <span className="text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  <span
+                    className="text-sm"
+                    style={{ fontFamily: 'Inter, sans-serif' }}
+                  >
                     {COMPANY_ADDRESS}
                   </span>
                 </div>
@@ -192,12 +223,17 @@ const Footer: React.FC = () => {
         </div>
       </div>
 
-      {/* Bottom Bar */}
+      {/* Bottom bar */}
       <div className="border-t border-[#1E3050]/40">
         <div className="container-soro py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-[#8A9DB5] text-xs" style={{ fontFamily: 'Inter, sans-serif' }}>
-            &copy; {currentYear} SORO Fabrications Private Limited. All rights reserved.
+          <p
+            className="text-[#8A9DB5] text-xs"
+            style={{ fontFamily: 'Inter, sans-serif' }}
+          >
+            &copy; {currentYear} SORO Fabrications Private Limited. All rights
+            reserved.
           </p>
+
           <div className="flex gap-5">
             {['Privacy Policy', 'Terms of Use'].map((label) => (
               <a
