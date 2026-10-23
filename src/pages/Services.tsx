@@ -1,0 +1,159 @@
+import React from 'react';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
+import { ArrowRight, CheckCircle } from 'lucide-react';
+import ScrollReveal from '@/components/ui/ScrollReveal';
+import ServiceCard from '@/components/shared/ServiceCard';
+import { services } from '@/data/services';
+
+const Services: React.FC = () => (
+  <HelmetProvider>
+    <Helmet>
+      <title>Engineering Services — SORO Fabrications Private Limited</title>
+      <meta
+        name="description"
+        content="Comprehensive engineering services: PCB design, PCB assembly, embedded systems, 3D design, 3D printing, CNC machining, laser cutting, and sheet metal fabrication."
+      />
+    </Helmet>
+
+    {/* Hero */}
+    <section className="relative pt-36 pb-20 bg-[#0A1628] overflow-hidden">
+      <div className="absolute inset-0 bg-grid-pattern opacity-30" />
+      <div className="container-soro relative z-10">
+        <ScrollReveal>
+          <div className="badge-blue mb-5 w-fit">Services</div>
+          <h1 className="text-display text-white mb-6 max-w-3xl">
+            Engineering Services{' '}
+            <span className="gradient-text">That Deliver Results</span>
+          </h1>
+          <p
+            className="text-[#8A9DB5] text-lg max-w-2xl leading-relaxed"
+            style={{ fontFamily: 'Inter, sans-serif' }}
+          >
+            From electronic design to precision fabrication — our integrated services cover
+            every stage of product development.
+          </p>
+        </ScrollReveal>
+      </div>
+    </section>
+
+    {/* Service Cards Overview */}
+    <section className="py-20 bg-[#0D1B2A]">
+      <div className="container-soro">
+        <div className="grid-services">
+          {services.map((service, i) => (
+            <ScrollReveal key={service.id} delay={i * 0.07}>
+              <ServiceCard service={service} variant="full" />
+            </ScrollReveal>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* Detailed Service Sections */}
+    {services.map((service, i) => (
+      <section
+        key={service.id}
+        id={service.slug}
+        className={`py-20 ${i % 2 === 0 ? 'bg-[#0A1628]' : 'bg-[#0D1B2A]'}`}
+      >
+        <div className="container-soro">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
+            <ScrollReveal>
+              <div className="badge-blue mb-5 w-fit">{service.title}</div>
+              <h2 className="text-section-title text-white mb-5">
+                {service.title}
+              </h2>
+              <p
+                className="text-[#8A9DB5] leading-relaxed mb-8"
+                style={{ fontFamily: 'Inter, sans-serif' }}
+              >
+                {service.description}
+              </p>
+              <Link
+                to={`/services/${service.slug}`}
+                className="btn-primary w-fit"
+              >
+                Enquire About This Service
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </ScrollReveal>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <ScrollReveal delay={0.15}>
+                <div className="glass p-6 rounded-2xl h-full">
+                  <h3
+                    className="text-white font-bold mb-4 text-sm uppercase tracking-wide"
+                    style={{ fontFamily: 'Outfit, sans-serif' }}
+                  >
+                    Capabilities
+                  </h3>
+                  <ul className="space-y-2">
+                    {service.capabilities.map((cap) => (
+                      <li
+                        key={cap}
+                        className="flex items-start gap-2 text-sm text-[#8A9DB5]"
+                        style={{ fontFamily: 'Inter, sans-serif' }}
+                      >
+                        <CheckCircle className="w-4 h-4 text-[#1E6FFF] shrink-0 mt-0.5" />
+                        {cap}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </ScrollReveal>
+
+              <ScrollReveal delay={0.25}>
+                <div className="glass p-6 rounded-2xl h-full">
+                  <h3
+                    className="text-white font-bold mb-4 text-sm uppercase tracking-wide"
+                    style={{ fontFamily: 'Outfit, sans-serif' }}
+                  >
+                    Applications
+                  </h3>
+                  <ul className="space-y-2">
+                    {service.applications.map((app) => (
+                      <li
+                        key={app}
+                        className="flex items-start gap-2 text-sm text-[#8A9DB5]"
+                        style={{ fontFamily: 'Inter, sans-serif' }}
+                      >
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#FF6B2B] shrink-0 mt-1.5" />
+                        {app}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </ScrollReveal>
+            </div>
+          </div>
+        </div>
+      </section>
+    ))}
+
+    {/* CTA */}
+    <section className="py-16 bg-[#0A1628]">
+      <div className="container-soro text-center">
+        <ScrollReveal>
+          <h2
+            className="text-white font-bold text-2xl mb-4"
+            style={{ fontFamily: 'Outfit, sans-serif' }}
+          >
+            Need a Custom Engineering Solution?
+          </h2>
+          <p
+            className="text-[#8A9DB5] mb-8"
+            style={{ fontFamily: 'Inter, sans-serif' }}
+          >
+            Tell us about your project. We'll review the requirements and provide a detailed quotation.
+          </p>
+          <Link to="/quote" className="btn-primary">
+            Request a Quote <ArrowRight className="w-4 h-4" />
+          </Link>
+        </ScrollReveal>
+      </div>
+    </section>
+  </HelmetProvider>
+);
+
+export default Services;
