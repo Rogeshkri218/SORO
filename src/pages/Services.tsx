@@ -12,7 +12,7 @@ const Services: React.FC = () => (
       <title>Engineering Services — SORO Fabrications Private Limited</title>
       <meta
         name="description"
-        content="Comprehensive engineering services: PCB design, PCB assembly, embedded systems, 3D design, 3D printing, CNC machining, laser cutting, and sheet metal fabrication."
+        content="Discuss PCB design, prototype assembly, CAD, 3D printing, design review, and manufacturing support with SORO Fabrications."
       />
     </Helmet>
 
@@ -21,17 +21,17 @@ const Services: React.FC = () => (
       <div className="absolute inset-0 bg-grid-pattern opacity-30" />
       <div className="container-soro relative z-10">
         <ScrollReveal>
-          <div className="badge-blue mb-5 w-fit">Services</div>
+          <div className="badge-blue mb-5 w-fit">Capabilities to Discuss</div>
           <h1 className="text-display text-white mb-6 max-w-3xl">
-            Engineering Services{' '}
-            <span className="gradient-text">That Deliver Results</span>
+            Potential engineering scopes,{' '}
+            <span className="gradient-text">confirmed project by project</span>
           </h1>
           <p
             className="text-[#8A9DB5] text-lg max-w-2xl leading-relaxed"
             style={{ fontFamily: 'Inter, sans-serif' }}
           >
-            From electronic design to precision fabrication — our integrated services cover
-            every stage of product development.
+            These are areas to discuss, not a statement of equipment, capacity, or guaranteed
+            availability. Deliverables are agreed after reviewing each enquiry.
           </p>
         </ScrollReveal>
       </div>

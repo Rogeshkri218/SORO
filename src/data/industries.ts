@@ -5,7 +5,7 @@ export const industries: Industry[] = [
     id: 'medical',
     title: 'Medical Devices',
     description:
-      'We support medical device development with custom electronics, PCB design, embedded firmware, and precision-fabricated enclosures. Our engineering approach emphasises reliability, compact form factors, and clean design documentation.',
+      'Possible application ideas include health-related electronics, enclosure concepts, and prototype evaluation. This is illustrative and does not indicate medical-device experience or regulatory capability.',
     applications: [
       'Patient monitoring electronics',
       'Diagnostic device prototypes',
@@ -19,7 +19,7 @@ export const industries: Industry[] = [
     id: 'industrial-automation',
     title: 'Industrial Automation',
     description:
-      'Our team delivers custom control electronics, sensor integration, and fabricated hardware for industrial automation applications, supporting factory-floor upgrades and custom machine builds.',
+      'Possible application ideas include control electronics, sensor interfaces, and equipment enclosures. Specific scope and feasibility require project review.',
     applications: [
       'PLC and HMI support electronics',
       'Custom sensor and actuator boards',
@@ -33,7 +33,7 @@ export const industries: Industry[] = [
     id: 'agriculture',
     title: 'Agriculture',
     description:
-      'Precision agriculture benefits from smart sensor systems, low-power wireless networks, and rugged electronics. We develop field-deployable IoT devices for crop monitoring, soil analysis, and environmental data collection.',
+      'Possible application ideas include sensor-based monitoring and connected prototypes for agricultural environments. No field deployments or sector experience are claimed.',
     applications: [
       'Soil moisture and nutrient monitoring',
       'Greenhouse climate control electronics',
@@ -47,7 +47,7 @@ export const industries: Industry[] = [
     id: 'iot',
     title: 'Internet of Things (IoT)',
     description:
-      'We design IoT-ready hardware from custom sensor PCBs to embedded wireless firmware and cloud-connected prototypes. Our IoT solutions integrate a range of communication protocols to suit different deployment environments.',
+      'Connected sensors and electronic prototypes may be relevant product-development applications. Protocols, implementation, and integration scope are confirmed per enquiry.',
     applications: [
       'Custom IoT sensor hardware',
       'BLE, Wi-Fi, LoRa, and Zigbee devices',
@@ -61,7 +61,7 @@ export const industries: Industry[] = [
     id: 'education',
     title: 'Education',
     description:
-      'We support educational institutions and learning programmes with custom electronics kits, prototype development boards, and fabricated components for research and teaching.',
+      'Possible application ideas include learning kits, demonstrator models, and development-board concepts. No institutional engagements are implied.',
     applications: [
       'Custom teaching hardware kits',
       'Robotics and automation platforms',
@@ -75,7 +75,7 @@ export const industries: Industry[] = [
     id: 'research',
     title: 'Research & Development',
     description:
-      'We are a technical partner for research teams needing rapid prototyping, custom hardware design, and fabrication support for experimental systems and proof-of-concept builds.',
+      'Early research concepts may involve electronic or mechanical prototypes. This illustrative area does not represent confirmed research partnerships.',
     applications: [
       'Research instrument electronics',
       'Proof-of-concept prototype builds',

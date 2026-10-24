@@ -6,6 +6,11 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://sorofabrications.com/products</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://sorofabrications.com/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -26,7 +31,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://sorofabrications.com/services/embedded-systems</loc>
+    <loc>https://sorofabrications.com/services/prototype-design-review</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -41,17 +46,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://sorofabrications.com/services/cnc-machining</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://sorofabrications.com/services/laser-cutting</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://sorofabrications.com/services/sheet-metal</loc>
+    <loc>https://sorofabrications.com/services/manufacturing-support</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

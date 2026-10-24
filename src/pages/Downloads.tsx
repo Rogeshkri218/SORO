@@ -1,12 +1,12 @@
 import React from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-import { FileText, Download, Clock } from 'lucide-react';
+import { FileText, Download, Clock, Mail } from 'lucide-react';
 import ScrollReveal from '@/components/ui/ScrollReveal';
 
 interface Document {
   title: string;
   description: string;
-  status: 'available' | 'pending';
+  status: 'available' | 'preparation';
   fileType?: string;
   fileSize?: string;
   downloadUrl?: string;
@@ -16,27 +16,27 @@ const documents: Document[] = [
   {
     title: 'Company Brochure',
     description: 'Overview of SORO Fabrications services, capabilities, and engineering approach.',
-    status: 'pending',
+    status: 'preparation',
   },
   {
     title: 'Service Catalogue',
     description: 'Detailed catalogue of all engineering services with specifications.',
-    status: 'pending',
+    status: 'preparation',
   },
   {
     title: 'Manufacturing Capability Statement',
     description: 'Technical capability statement covering fabrication, assembly, and design services.',
-    status: 'pending',
+    status: 'preparation',
   },
   {
     title: 'PCB Design Guide',
     description: 'Engineering reference guide for PCB design requirements and file formats.',
-    status: 'pending',
+    status: 'preparation',
   },
   {
     title: 'File Format Requirements',
     description: 'Required file formats for PCB, 3D printing, CNC, and laser cutting orders.',
-    status: 'pending',
+    status: 'preparation',
   },
 ];
 
@@ -76,9 +76,8 @@ const Downloads: React.FC = () => (
         <ScrollReveal>
           <div className="glass p-5 rounded-xl border border-[#1E6FFF]/20 mb-10">
             <p className="text-[#8A9DB5] text-sm text-center" style={{ fontFamily: 'Inter, sans-serif' }}>
-              Documents marked as <strong className="text-[#FF6B2B]">Pending</strong> are being
-              prepared and will be available for download once published. Contact us directly if
-              you need any of these documents urgently.
+              Only published files include a download action. The documents below are in preparation;
+              contact SORO to request a specific document.
             </p>
           </div>
         </ScrollReveal>
@@ -110,7 +109,7 @@ const Downloads: React.FC = () => (
                       <span className="badge-blue text-xs">Available</span>
                     ) : (
                       <span className="badge-orange text-xs">
-                        <Clock className="w-3 h-3" /> Pending
+                        <Clock className="w-3 h-3" /> In preparation
                       </span>
                     )}
                   </div>
@@ -133,13 +132,12 @@ const Downloads: React.FC = () => (
                     Download {doc.fileType} {doc.fileSize && `(${doc.fileSize})`}
                   </a>
                 ) : (
-                  <div
-                    className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#1C2A3A]/60 border border-[#1E3050]/60 text-[#8A9DB5]/60 text-sm cursor-not-allowed"
-                    style={{ fontFamily: 'Inter, sans-serif' }}
+                  <a
+                    href={`mailto:orders@sorofabrication.in?subject=${encodeURIComponent(`Document request: ${doc.title}`)}`}
+                    className="btn-secondary justify-center text-sm"
                   >
-                    <Clock className="w-4 h-4" />
-                    Coming Soon
-                  </div>
+                    <Mail className="w-4 h-4" /> Contact to request
+                  </a>
                 )}
               </div>
             </ScrollReveal>
@@ -155,7 +153,7 @@ const Downloads: React.FC = () => (
               If you need a specific technical document or capability statement for your procurement
               process, contact us and we'll prepare the relevant documentation.
             </p>
-            <a href="mailto:info@sorofabrications.com" className="btn-primary">
+            <a href="mailto:orders@sorofabrication.in" className="btn-primary">
               Contact Us
             </a>
           </div>

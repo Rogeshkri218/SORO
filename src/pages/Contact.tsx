@@ -3,12 +3,10 @@ import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import emailjs from '@emailjs/browser';
 import {
   Mail,
-  Phone,
   MapPin,
-  MessageCircle,
-  Clock,
   Send,
   CheckCircle,
   AlertCircle,
@@ -46,8 +44,16 @@ const Contact: React.FC = () => {
   const onSubmit = async (data: ContactFormValues) => {
     setSubmitState('loading');
     try {
-      await new Promise((r) => setTimeout(r, 1200));
-      console.log('Contact form:', data);
+      const { VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_CONTACT_TEMPLATE_ID, VITE_EMAILJS_PUBLIC_KEY } = import.meta.env;
+      if (!VITE_EMAILJS_SERVICE_ID || !VITE_EMAILJS_CONTACT_TEMPLATE_ID || !VITE_EMAILJS_PUBLIC_KEY) {
+        throw new Error('Email delivery is not configured.');
+      }
+      await emailjs.send(
+        VITE_EMAILJS_SERVICE_ID,
+        VITE_EMAILJS_CONTACT_TEMPLATE_ID,
+        { ...data, to_email: 'orders@sorofabrication.in' },
+        { publicKey: VITE_EMAILJS_PUBLIC_KEY },
+      );
       setSubmitState('success');
       reset();
     } catch {
@@ -56,11 +62,7 @@ const Contact: React.FC = () => {
   };
 
   // TODO: Replace with verified company details
-  const COMPANY_EMAIL = 'info@sorofabrications.com';
-  const COMPANY_PHONE = '+91 [Phone Number]';
-  const COMPANY_WHATSAPP = '+91 [WhatsApp Number]';
-  const COMPANY_ADDRESS = '[Company Address, City, State, India]';
-  const BUSINESS_HOURS = 'Monday – Saturday: 9:00 AM – 6:00 PM IST';
+  const COMPANY_EMAIL = 'orders@sorofabrication.in';
 
   return (
     <HelmetProvider>
@@ -125,96 +127,6 @@ const Contact: React.FC = () => {
                 </a>
 
                 {/* Phone */}
-                <a
-                  href={`tel:${COMPANY_PHONE.replace(/\s/g, '')}`}
-                  className="glass p-6 rounded-2xl flex items-start gap-4 hover:border-[#1E6FFF]/30 transition-colors group block"
-                >
-                  <div className="w-11 h-11 rounded-xl bg-[#1E6FFF]/15 border border-[#1E6FFF]/30 flex items-center justify-center shrink-0">
-                    <Phone className="w-5 h-5 text-[#1E6FFF]" />
-                  </div>
-                  <div>
-                    <h3
-                      className="text-white font-semibold text-sm mb-1"
-                      style={{ fontFamily: 'Outfit, sans-serif' }}
-                    >
-                      Phone
-                    </h3>
-                    <span
-                      className="text-[#8A9DB5] text-sm"
-                      style={{ fontFamily: 'Inter, sans-serif' }}
-                    >
-                      {COMPANY_PHONE}
-                    </span>
-                  </div>
-                </a>
-
-                {/* WhatsApp */}
-                <a
-                  href={`https://wa.me/${COMPANY_WHATSAPP.replace(/\D/g, '')}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="glass p-6 rounded-2xl flex items-start gap-4 hover:border-[#25D366]/30 transition-colors group block"
-                >
-                  <div className="w-11 h-11 rounded-xl bg-[#25D366]/15 border border-[#25D366]/30 flex items-center justify-center shrink-0">
-                    <MessageCircle className="w-5 h-5 text-[#25D366]" />
-                  </div>
-                  <div>
-                    <h3
-                      className="text-white font-semibold text-sm mb-1"
-                      style={{ fontFamily: 'Outfit, sans-serif' }}
-                    >
-                      WhatsApp
-                    </h3>
-                    <span
-                      className="text-[#8A9DB5] text-sm group-hover:text-[#25D366] transition-colors"
-                      style={{ fontFamily: 'Inter, sans-serif' }}
-                    >
-                      Chat on WhatsApp
-                    </span>
-                  </div>
-                </a>
-
-                {/* Address */}
-                <div className="glass p-6 rounded-2xl flex items-start gap-4">
-                  <div className="w-11 h-11 rounded-xl bg-[#FF6B2B]/15 border border-[#FF6B2B]/30 flex items-center justify-center shrink-0">
-                    <MapPin className="w-5 h-5 text-[#FF6B2B]" />
-                  </div>
-                  <div>
-                    <h3
-                      className="text-white font-semibold text-sm mb-1"
-                      style={{ fontFamily: 'Outfit, sans-serif' }}
-                    >
-                      Address
-                    </h3>
-                    <span
-                      className="text-[#8A9DB5] text-sm"
-                      style={{ fontFamily: 'Inter, sans-serif' }}
-                    >
-                      {COMPANY_ADDRESS}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Business Hours */}
-                <div className="glass p-6 rounded-2xl flex items-start gap-4">
-                  <div className="w-11 h-11 rounded-xl bg-[#00AAFF]/15 border border-[#00AAFF]/30 flex items-center justify-center shrink-0">
-                    <Clock className="w-5 h-5 text-[#00AAFF]" />
-                  </div>
-                  <div>
-                    <h3
-                      className="text-white font-semibold text-sm mb-1"
-                      style={{ fontFamily: 'Outfit, sans-serif' }}
-                    >
-                      Business Hours
-                    </h3>
-                    <span
-                      className="text-[#8A9DB5] text-sm"
-                      style={{ fontFamily: 'Inter, sans-serif' }}
-                    >
-                      {BUSINESS_HOURS}
-                    </span>
-                  </div>
-                </div>
               </div>
             </ScrollReveal>
 
@@ -229,7 +141,7 @@ const Contact: React.FC = () => {
                     Message Sent!
                   </h2>
                   <p className="text-[#8A9DB5] mb-8" style={{ fontFamily: 'Inter, sans-serif' }}>
-                    Thank you for reaching out. We'll get back to you within 1–2 business days.
+                    Thank you. Your message was delivered successfully.
                   </p>
                   <button onClick={() => setSubmitState('idle')} className="btn-secondary">
                     Send Another Message
@@ -306,7 +218,8 @@ const Contact: React.FC = () => {
                   {submitState === 'error' && (
                     <div className="flex items-center gap-2 p-4 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
                       <AlertCircle className="w-4 h-4 shrink-0" />
-                      Failed to send your message. Please try emailing us directly.
+                      Message delivery failed or is not configured. Please email{' '}
+                      <a className="underline" href="mailto:orders@sorofabrication.in">orders@sorofabrication.in</a>.
                     </div>
                   )}
 

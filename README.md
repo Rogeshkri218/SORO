@@ -1,6 +1,6 @@
 # SORO Fabrications Private Limited — Official Website
 
-A production-ready, fully responsive engineering company website built with React, Vite, TypeScript, and Tailwind CSS.
+A responsive engineering and product-development website built with React, Vite, TypeScript, and Tailwind CSS.
 
 ---
 
@@ -25,9 +25,12 @@ npm run preview
 
 ## ⚙️ Environment Configuration
 
-1. Copy `.env.example` to `.env`
-2. Fill in your EmailJS credentials and company details (see `.env.example`)
-3. Sign up at [emailjs.com](https://www.emailjs.com) and create quote/contact templates
+1. Copy `.env.example` to `.env`.
+2. Create an EmailJS service and quote/contact templates.
+3. Set `VITE_EMAILJS_SERVICE_ID`, `VITE_EMAILJS_QUOTE_TEMPLATE_ID`, `VITE_EMAILJS_CONTACT_TEMPLATE_ID`, and `VITE_EMAILJS_PUBLIC_KEY` in `.env` and in the Vercel project settings.
+4. Restart the development server after changing environment variables.
+
+The forms report success only after EmailJS confirms delivery. Without these values, submission shows an error and provides the company email as a fallback. File uploads are not enabled.
 
 ---
 
@@ -65,17 +68,13 @@ SORO/
 
 | Item | Status |
 |---|---|
-| Company email, phone, WhatsApp | ⏳ Pending |
-| Company address | ⏳ Pending |
-| Official logo file | ⏳ Pending |
-| Google Maps embed URL | ⏳ Pending |
-| Real project photos | ⏳ Pending |
-| Team/leadership profiles | ⏳ Pending |
-| Certifications & awards | ⏳ Pending |
-| Real testimonials | ⏳ Pending |
-| Company brochure PDF | ⏳ Pending |
-| Social media links | ⏳ Pending |
-| Domain name | ⏳ Pending |
+| Company email mailbox verification | Needs confirmation |
+| Business phone, WhatsApp, and address | Not supplied |
+| Official logo and SF favicon artwork | Not present in workspace |
+| Verified project records and approved photography | Not supplied |
+| Team, certification, and testimonial details | Not supplied |
+| Published resource documents | In preparation |
+| Production domain | Confirm before updating sitemap and Vercel |
 
 ---
 
@@ -84,6 +83,8 @@ SORO/
 ### Vercel (Recommended)
 ```bash
 npx vercel deploy
+# For a production deployment after linking the project:
+npx vercel --prod
 ```
 Set environment variables in Vercel → Settings → Environment Variables.
 
@@ -105,15 +106,15 @@ Configure server to serve `index.html` for all routes (SPA routing).
 2. Connect your email (Gmail/Outlook)
 3. Create two templates — Quote and Contact
 4. Copy Service ID, Template IDs, and Public Key to `.env`
-5. Uncomment the `emailjs.send()` call in `Quote.tsx` and `Contact.tsx`
+5. Configure the four `VITE_EMAILJS_*` variables in the hosting provider.
 
 ---
 
 ## 🔒 Security
 
 - Never commit `.env` to git (already in `.gitignore`)
-- Update WhatsApp placeholder before launch
-- For production file uploads, implement a secure backend
+- Do not add phone, address, or WhatsApp details until verified
+- File attachments require a secure backend and are currently unavailable
 
 ---
 

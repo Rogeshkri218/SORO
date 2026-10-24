@@ -1,71 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, Cpu } from 'lucide-react';
+import React, { useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import { Menu, X, ChevronDown } from 'lucide-react';
+import type { NavItem } from '@/types';
 
-const navItems = [
+const navItems: NavItem[] = [
   { label: 'Home', path: '/' },
-  { label: 'About', path: '/about' },
-  {
-    label: 'Services',
-    path: '/services',
-    children: [
-      { label: 'PCB Design', path: '/services/pcb-design' },
-      { label: 'PCB Assembly', path: '/services/pcb-assembly' },
-      { label: 'Embedded Systems', path: '/services/embedded-systems' },
-      { label: '3D Design', path: '/services/3d-design' },
-      { label: '3D Printing', path: '/services/3d-printing' },
-      { label: 'CNC Machining', path: '/services/cnc-machining' },
-      { label: 'Laser Cutting', path: '/services/laser-cutting' },
-      { label: 'Sheet Metal', path: '/services/sheet-metal' },
-    ],
-  },
-  { label: 'Portfolio', path: '/portfolio' },
-  { label: 'Industries', path: '/industries' },
-  { label: 'Blog', path: '/blog' },
+  { label: 'Products', path: '/products' },
+  { label: 'Capabilities', path: '/services' },
+  { label: 'Projects', path: '/portfolio' },
+  { label: 'About Us', path: '/about' },
+  { label: 'Resources', path: '/downloads' },
   { label: 'Contact', path: '/contact' },
 ];
 
 const Navbar: React.FC = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  const location = useLocation();
-
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    setIsMobileOpen(false);
-    setOpenDropdown(null);
-  }, [location]);
-
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled || isMobileOpen
-          ? 'bg-[#0A1628]/95 backdrop-blur-xl shadow-lg shadow-black/30 border-b border-[#1E3050]/60'
-          : 'bg-transparent'
-      }`}
+      className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-[#071321]"
     >
       <div className="container-soro">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 group" aria-label="SORO Fabrications Home">
-            <div className="relative w-9 h-9 flex items-center justify-center">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#1E6FFF] to-[#00AAFF] rounded-lg opacity-90 group-hover:opacity-100 transition-opacity" />
-              <Cpu className="relative w-5 h-5 text-white" />
-            </div>
-            <div>
-              <span className="font-heading font-800 text-lg tracking-tight text-white leading-none block" style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 800 }}>
-                SORO
-              </span>
-              <span className="text-[0.6rem] text-[#8A9DB5] tracking-widest uppercase leading-none block" style={{ fontFamily: 'Inter, sans-serif' }}>
-                Fabrications
-              </span>
-            </div>
+          <Link to="/" className="group flex items-center" aria-label="SORO Fabrications Home">
+            <span className="font-heading text-lg font-extrabold tracking-tight text-white" style={{ fontFamily: 'Outfit, sans-serif' }}>
+              SORO <span className="font-normal text-[#AEB8C4]">FABRICATIONS</span>
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -119,6 +80,7 @@ const Navbar: React.FC = () => {
                 <NavLink
                   key={item.path}
                   to={item.path}
+                  onClick={() => setIsMobileOpen(false)}
                   className={({ isActive }) =>
                     `nav-link py-2 ${isActive ? 'active text-white' : ''}`
                   }
@@ -131,11 +93,8 @@ const Navbar: React.FC = () => {
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-3">
-            <Link to="/downloads" className="btn-secondary py-2 px-4 text-sm">
-              Downloads
-            </Link>
-            <Link to="/quote" className="btn-primary py-2 px-5 text-sm">
-              Get a Quote
+            <Link to="/quote" className="btn-orange py-2 px-5 text-sm">
+              Request a Quote
             </Link>
           </div>
 
@@ -174,6 +133,7 @@ const Navbar: React.FC = () => {
                         <NavLink
                           key={child.path}
                           to={child.path}
+                          onClick={() => setIsMobileOpen(false)}
                           className={({ isActive }) =>
                             `px-4 py-2.5 text-sm rounded-lg transition-colors ${
                               isActive
@@ -193,6 +153,7 @@ const Navbar: React.FC = () => {
                 <NavLink
                   key={item.path}
                   to={item.path}
+                  onClick={() => setIsMobileOpen(false)}
                   className={({ isActive }) =>
                     `px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
                       isActive
@@ -207,11 +168,8 @@ const Navbar: React.FC = () => {
               )
             )}
             <div className="pt-4 pb-2 flex flex-col gap-3 border-t border-[#1E3050]/60 mt-2">
-              <Link to="/downloads" className="btn-secondary text-center py-2.5">
-                Downloads
-              </Link>
-              <Link to="/quote" className="btn-primary text-center py-2.5">
-                Get a Quote
+              <Link to="/quote" className="btn-orange justify-center py-2.5">
+                Request a Quote
               </Link>
             </div>
           </div>

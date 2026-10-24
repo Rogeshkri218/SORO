@@ -52,15 +52,15 @@ const Portfolio: React.FC = () => {
               className="text-[#8A9DB5] text-lg max-w-2xl leading-relaxed"
               style={{ fontFamily: 'Inter, sans-serif' }}
             >
-              A selection of projects developed by the SORO Fabrications team across electronics,
-              firmware, mechanical design, and precision fabrication.
+              Case studies will be published when project details, SORO's contribution, and approved
+              images are confirmed.
             </p>
           </ScrollReveal>
         </div>
       </section>
 
       {/* Filter Bar */}
-      <section className="sticky top-16 lg:top-20 z-30 bg-[#0D1B2A]/95 backdrop-blur-xl border-b border-[#1E3050]/60 py-4">
+      {projects.length > 0 && <section className="sticky top-16 lg:top-20 z-30 bg-[#0D1B2A]/95 backdrop-blur-xl border-b border-[#1E3050]/60 py-4">
         <div className="container-soro">
           <div className="flex items-center gap-3 overflow-x-auto pb-1 no-scrollbar">
             <Filter className="w-4 h-4 text-[#8A9DB5] shrink-0" />
@@ -80,7 +80,7 @@ const Portfolio: React.FC = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* Projects Grid */}
       <section className="py-16 bg-[#0A1628] min-h-[500px]">
@@ -88,7 +88,7 @@ const Portfolio: React.FC = () => {
           {filtered.length === 0 ? (
             <div className="text-center py-20">
               <p className="text-[#8A9DB5]" style={{ fontFamily: 'Inter, sans-serif' }}>
-                No projects in this category yet.
+                No verified case studies are available for publication yet. Contact SORO to discuss your project.
               </p>
             </div>
           ) : (
@@ -100,23 +100,6 @@ const Portfolio: React.FC = () => {
               ))}
             </div>
           )}
-        </div>
-      </section>
-
-      {/* Note about placeholder content */}
-      <section className="py-8 bg-[#0D1B2A]">
-        <div className="container-soro">
-          <div className="glass p-5 rounded-xl border border-[#1E6FFF]/20">
-            <p
-              className="text-[#8A9DB5]/70 text-sm text-center"
-              style={{ fontFamily: 'Inter, sans-serif' }}
-            >
-              <strong className="text-[#8A9DB5]">Portfolio Note:</strong> Project descriptions
-              above represent engineering work carried out by the SORO team. Project images will be
-              updated when actual photography is available. No fabricated results or unverified
-              claims are made.
-            </p>
-          </div>
         </div>
       </section>
 

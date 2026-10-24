@@ -3,8 +3,8 @@ import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import emailjs from '@emailjs/browser';
 import {
-  Upload,
   CheckCircle,
   AlertCircle,
   Loader2,
@@ -75,8 +75,6 @@ const FieldError: React.FC<{ message?: string }> = ({ message }) =>
 // ==========================================
 const Quote: React.FC = () => {
   const [submitState, setSubmitState] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-  const [files, setFiles] = useState<File[]>([]);
-  const [fileError, setFileError] = useState('');
 
   const {
     register,
@@ -87,59 +85,23 @@ const Quote: React.FC = () => {
     resolver: zodResolver(quoteSchema),
   });
 
-  const ALLOWED_TYPES = [
-    'application/pdf',
-    'application/zip',
-    'application/x-zip-compressed',
-    '.gbr',
-    '.ger',
-    '.drl',
-    '.stp',
-    '.step',
-    '.stl',
-    '.dxf',
-    '.dwg',
-    'image/png',
-    'image/jpeg',
-  ];
-
-  const MAX_FILE_SIZE = 25 * 1024 * 1024; // 25MB per file
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newFiles = Array.from(e.target.files ?? []);
-    setFileError('');
-
-    for (const file of newFiles) {
-      if (file.size > MAX_FILE_SIZE) {
-        setFileError(`"${file.name}" exceeds the 25MB file size limit.`);
-        return;
-      }
-    }
-    setFiles((prev) => [...prev, ...newFiles].slice(0, 5));
-  };
-
-  const removeFile = (index: number) => {
-    setFiles((prev) => prev.filter((_, i) => i !== index));
-  };
-
   const onSubmit = async (data: QuoteFormValues) => {
     setSubmitState('loading');
 
     try {
-      // NOTE: Replace with your EmailJS service ID, template ID, and public key.
-      // import emailjs from '@emailjs/browser';
-      // await emailjs.send(SERVICE_ID, TEMPLATE_ID, { ...data }, PUBLIC_KEY);
-
-      // Simulated delay for development
-      await new Promise((r) => setTimeout(r, 1500));
-
-      // TODO: Implement actual EmailJS or backend API call here.
-      // For now, log the form data (remove before production):
-      console.log('Quote form submitted:', data, files);
+      const { VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_QUOTE_TEMPLATE_ID, VITE_EMAILJS_PUBLIC_KEY } = import.meta.env;
+      if (!VITE_EMAILJS_SERVICE_ID || !VITE_EMAILJS_QUOTE_TEMPLATE_ID || !VITE_EMAILJS_PUBLIC_KEY) {
+        throw new Error('Email delivery is not configured.');
+      }
+      await emailjs.send(
+        VITE_EMAILJS_SERVICE_ID,
+        VITE_EMAILJS_QUOTE_TEMPLATE_ID,
+        { ...data, to_email: 'orders@sorofabrication.in' },
+        { publicKey: VITE_EMAILJS_PUBLIC_KEY },
+      );
 
       setSubmitState('success');
       reset();
-      setFiles([]);
     } catch {
       setSubmitState('error');
     }
@@ -193,7 +155,7 @@ const Quote: React.FC = () => {
                   {[
                     'We receive your enquiry and review your requirements.',
                     'Our engineering team evaluates the scope and technical feasibility.',
-                    'We contact you within 1–2 business days with questions or a quotation.',
+                    'We follow up to clarify scope and discuss a next step.',
                     'On approval, we proceed with design and engineering.',
                   ].map((step, i) => (
                     <div key={i} className="flex gap-3 mb-4 last:mb-0">
@@ -220,36 +182,14 @@ const Quote: React.FC = () => {
                     className="text-white font-bold mb-3"
                     style={{ fontFamily: 'Outfit, sans-serif' }}
                   >
-                    Accepted File Types
+                    Share project files
                   </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {['PDF', 'Gerber / ZIP', 'STEP', 'STL', 'DXF', 'DWG', 'PNG', 'JPG'].map(
-                      (type) => (
-                        <span
-                          key={type}
-                          className="px-2.5 py-1 bg-[#1C2A3A] border border-[#1E3050]/60 rounded text-xs text-[#8A9DB5]"
-                          style={{ fontFamily: 'Inter, sans-serif' }}
-                        >
-                          {type}
-                        </span>
-                      )
-                    )}
-                  </div>
-                  <p
-                    className="text-[#8A9DB5]/60 text-xs mt-3"
-                    style={{ fontFamily: 'Inter, sans-serif' }}
-                  >
-                    Max 25MB per file · Up to 5 files
-                  </p>
-                </div>
-
-                <div className="glass p-6 rounded-2xl border border-[#1E6FFF]/20">
                   <p
                     className="text-[#8A9DB5] text-sm"
                     style={{ fontFamily: 'Inter, sans-serif' }}
                   >
-                    <CheckCircle className="w-4 h-4 text-[#1E6FFF] inline mr-2" />
-                    All submitted files and project details are kept strictly confidential.
+                    Attachments are not enabled on this form. Email drawings or reference files to{' '}
+                    <a className="text-[#1E6FFF] hover:underline" href="mailto:orders@sorofabrication.in">orders@sorofabrication.in</a>.
                   </p>
                 </div>
               </div>
@@ -272,8 +212,8 @@ const Quote: React.FC = () => {
                     className="text-[#8A9DB5] mb-8"
                     style={{ fontFamily: 'Inter, sans-serif' }}
                   >
-                    Thank you for your enquiry. Our engineering team will review your
-                    requirements and contact you within 1–2 business days.
+                    Your enquiry was delivered successfully. SORO can follow up using the contact
+                    details you provided.
                   </p>
                   <button
                     onClick={() => setSubmitState('idle')}
@@ -464,67 +404,13 @@ const Quote: React.FC = () => {
                     <FieldError message={errors.contactMethod?.message} />
                   </div>
 
-                  {/* File Upload */}
-                  <div>
-                    <label className="input-label">
-                      Upload Files (optional)
-                    </label>
-                    <label
-                      htmlFor="fileUpload"
-                      className="flex flex-col items-center justify-center gap-3 p-8 rounded-xl border-2 border-dashed border-[#1E3050]/80 hover:border-[#1E6FFF]/40 bg-[#0D1B2A]/50 cursor-pointer transition-colors"
-                    >
-                      <Upload className="w-8 h-8 text-[#8A9DB5]" />
-                      <div className="text-center">
-                        <span
-                          className="text-[#8A9DB5] text-sm block"
-                          style={{ fontFamily: 'Inter, sans-serif' }}
-                        >
-                          Drag & drop or{' '}
-                          <span className="text-[#1E6FFF]">click to browse</span>
-                        </span>
-                        <span
-                          className="text-[#8A9DB5]/60 text-xs"
-                          style={{ fontFamily: 'Inter, sans-serif' }}
-                        >
-                          PDF, Gerber, STEP, STL, DXF, DWG, PNG, JPG · Max 25MB · Up to 5 files
-                        </span>
-                      </div>
-                      <input
-                        id="fileUpload"
-                        type="file"
-                        multiple
-                        accept=".pdf,.zip,.gbr,.ger,.drl,.stp,.step,.stl,.dxf,.dwg,.png,.jpg,.jpeg"
-                        className="sr-only"
-                        onChange={handleFileChange}
-                      />
-                    </label>
-                    {fileError && (
-                      <p className="text-red-400 text-xs mt-1.5 flex items-center gap-1.5" style={{ fontFamily: 'Inter, sans-serif' }}>
-                        <AlertCircle className="w-3.5 h-3.5" /> {fileError}
-                      </p>
-                    )}
-                    {files.length > 0 && (
-                      <ul className="mt-3 space-y-2">
-                        {files.map((file, i) => (
-                          <li
-                            key={i}
-                            className="flex items-center justify-between px-3 py-2 bg-[#1C2A3A] rounded-lg text-sm"
-                          >
-                            <span className="text-[#8A9DB5] truncate" style={{ fontFamily: 'Inter, sans-serif' }}>
-                              {file.name}
-                            </span>
-                            <button
-                              type="button"
-                              onClick={() => removeFile(i)}
-                              className="text-[#8A9DB5] hover:text-red-400 ml-3 shrink-0"
-                            >
-                              ✕
-                            </button>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
+                  <p className="text-[#8A9DB5] text-sm">
+                    Need to share drawings or reference files? Email them to{' '}
+                    <a className="text-[#1E6FFF] hover:underline" href="mailto:orders@sorofabrication.in">
+                      orders@sorofabrication.in
+                    </a>{' '}
+                    after submitting your enquiry. File attachments are not enabled on this form.
+                  </p>
 
                   {/* Privacy Consent */}
                   <div>
@@ -538,11 +424,7 @@ const Quote: React.FC = () => {
                         className="text-[#8A9DB5] text-sm"
                         style={{ fontFamily: 'Inter, sans-serif' }}
                       >
-                        I agree to the{' '}
-                        <a href="#" className="text-[#1E6FFF] hover:underline">
-                          Privacy Policy
-                        </a>{' '}
-                        and consent to SORO Fabrications contacting me regarding this enquiry.{' '}
+                        I consent to SORO Fabrications contacting me regarding this enquiry.{' '}
                         <span className="text-red-400">*</span>
                       </span>
                     </label>
@@ -553,7 +435,8 @@ const Quote: React.FC = () => {
                   {submitState === 'error' && (
                     <div className="flex items-center gap-2 p-4 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
                       <AlertCircle className="w-4 h-4 shrink-0" />
-                      There was a problem submitting your enquiry. Please try again or email us directly.
+                      Delivery failed or is not configured. Please try again or email{' '}
+                      <a className="underline" href="mailto:orders@sorofabrication.in">orders@sorofabrication.in</a>.
                     </div>
                   )}
 
@@ -576,15 +459,11 @@ const Quote: React.FC = () => {
                     )}
                   </button>
 
-                  <p
-                    className="text-[#8A9DB5]/60 text-xs text-center"
-                    style={{ fontFamily: 'Inter, sans-serif' }}
-                  >
-                    ⚠️ Development mode: EmailJS integration requires configuration.{' '}
-                    <a href="mailto:info@sorofabrications.com" className="text-[#1E6FFF] hover:underline">
-                      Email us directly
-                    </a>{' '}
-                    in the meantime.
+                  <p className="text-[#8A9DB5]/70 text-xs text-center">
+                    If submission is unavailable, email us at{' '}
+                    <a href="mailto:orders@sorofabrication.in" className="text-[#1E6FFF] hover:underline">
+                      orders@sorofabrication.in
+                    </a>.
                   </p>
 
                   <div className="flex gap-2 items-center justify-center pt-2">
@@ -593,7 +472,7 @@ const Quote: React.FC = () => {
                       className="text-[#8A9DB5] text-xs"
                       style={{ fontFamily: 'Inter, sans-serif' }}
                     >
-                      No obligation. We'll review and respond within 1–2 business days.
+                      Your enquiry is sent only after the configured email service confirms delivery.
                     </span>
                   </div>
                 </form>

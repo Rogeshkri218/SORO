@@ -13,6 +13,7 @@ const Industries = lazy(() => import('@/pages/Industries'));
 const Quote = lazy(() => import('@/pages/Quote'));
 const Contact = lazy(() => import('@/pages/Contact'));
 const Downloads = lazy(() => import('@/pages/Downloads'));
+const Products = lazy(() => import('@/pages/Products'));
 const Blog = lazy(() => import('@/pages/Blog'));
 
 // Page loading fallback
@@ -62,6 +63,7 @@ const AppRouter: React.FC = () => (
           <Route path="/quote" element={<Quote />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/downloads" element={<Downloads />} />
+          <Route path="/products" element={<Products />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

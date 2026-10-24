@@ -8,13 +8,13 @@ const values = [
   {
     icon: Target,
     title: 'Precision',
-    desc: 'We apply rigorous engineering standards to every design, assembly, and fabrication task.',
+    desc: 'Clear requirements and careful review should guide every engineering decision.',
     color: '#1E6FFF',
   },
   {
     icon: Heart,
     title: 'Reliability',
-    desc: 'Clients depend on us to deliver accurate, working solutions on time, every time.',
+    desc: 'Project scope and expectations should be agreed before work begins.',
     color: '#FF6B2B',
   },
   {
@@ -26,21 +26,18 @@ const values = [
   {
     icon: Users,
     title: 'Partnership',
-    desc: 'We work as an extension of your team, investing in your project\'s success.',
+    desc: 'Project collaboration should keep goals, responsibilities, and next steps clear.',
     color: '#6EE7B7',
   },
 ];
 
 const capabilities = [
-  'PCB design — schematic through to production Gerbers',
-  'PCB assembly — prototype and small-batch builds',
-  'Embedded firmware development (C, C++, RTOS)',
-  'IoT hardware and connectivity solutions',
-  '3D CAD modelling and mechanical assembly design',
-  '3D printing — FDM and resin prototyping',
-  'CNC machining of metal and plastic components',
-  'Laser cutting in metal, acrylic, and sheet materials',
-  'Sheet metal fabrication — enclosures, brackets, structures',
+  'PCB schematic design and layout',
+  'PCB and prototype assembly',
+  '3D CAD modelling',
+  '3D printing and functional prototyping',
+  'Prototype design review',
+  'Manufacturing support',
 ];
 
 const About: React.FC = () => (
@@ -49,7 +46,7 @@ const About: React.FC = () => (
       <title>About Us — SORO Fabrications Private Limited</title>
       <meta
         name="description"
-        content="Learn about SORO Fabrications Private Limited — our mission, engineering capabilities, values, and technical team."
+        content="Learn about SORO Fabrications Private Limited and its focus on electronic and mechanical product development."
       />
     </Helmet>
 
@@ -67,9 +64,8 @@ const About: React.FC = () => (
             className="text-[#8A9DB5] text-lg max-w-2xl leading-relaxed"
             style={{ fontFamily: 'Inter, sans-serif' }}
           >
-            SORO Fabrications Private Limited is a technology and engineering company delivering
-            end-to-end product development services — from electronic design through to precision-
-            fabricated hardware.
+            SORO Fabrications Private Limited is an engineering and product-development company
+            focused on electronic and mechanical product development.
           </p>
         </ScrollReveal>
       </div>
@@ -87,18 +83,15 @@ const About: React.FC = () => (
               className="text-[#8A9DB5] leading-relaxed mb-5"
               style={{ fontFamily: 'Inter, sans-serif' }}
             >
-              SORO Fabrications Private Limited is an engineering and technology company specialising
-              in integrated product development — bringing together electronic design, embedded
-              software, mechanical engineering, and precision manufacturing under one team.
+              SORO Fabrications Private Limited focuses on electronic and mechanical product
+              development. Potential project scopes are outlined here and confirmed individually.
             </p>
             <p
               className="text-[#8A9DB5] leading-relaxed mb-5"
               style={{ fontFamily: 'Inter, sans-serif' }}
             >
-              We work with clients ranging from individual engineers and research teams to
-              established companies requiring technical support for complex prototype and product
-              development projects. Our approach combines engineering rigour with practical
-              pragmatism to deliver solutions that work in the real world.
+              The company is building toward its own product range. No commercial products or
+              customer case studies have been confirmed for publication yet.
             </p>
             <p
               className="text-[#8A9DB5] leading-relaxed"
@@ -130,8 +123,7 @@ const About: React.FC = () => (
                   className="text-[#8A9DB5] text-sm leading-relaxed"
                   style={{ fontFamily: 'Inter, sans-serif' }}
                 >
-                  To deliver high-quality, integrated engineering solutions that help our clients
-                  bring their ideas to life as reliable, well-engineered products.
+                  To turn engineering ideas into carefully scoped product-development work.
                 </p>
               </div>
 
@@ -151,9 +143,7 @@ const About: React.FC = () => (
                   className="text-[#8A9DB5] text-sm leading-relaxed"
                   style={{ fontFamily: 'Inter, sans-serif' }}
                 >
-                  To be the preferred engineering partner for companies and innovators requiring
-                  reliable, end-to-end product development support — from initial concept to
-                  production-ready hardware.
+                  To build a product range alongside electronic and mechanical product development.
                 </p>
               </div>
 
@@ -195,8 +185,8 @@ const About: React.FC = () => (
             className="text-[#8A9DB5] max-w-2xl mx-auto"
             style={{ fontFamily: 'Inter, sans-serif' }}
           >
-            Our team brings together expertise across electronics, software, mechanical
-            engineering, and manufacturing.
+            Potential project scopes are listed for discussion. Availability and deliverables are
+            confirmed after reviewing each enquiry.
           </p>
         </ScrollReveal>
 
@@ -268,7 +258,7 @@ const About: React.FC = () => (
             className="text-[#8A9DB5] max-w-xl mx-auto mb-8"
             style={{ fontFamily: 'Inter, sans-serif' }}
           >
-            Meet the engineering team behind SORO Fabrications.
+            Team profiles will be added when verified details are available.
           </p>
           <div className="glass p-10 rounded-2xl max-w-xl mx-auto">
             <p

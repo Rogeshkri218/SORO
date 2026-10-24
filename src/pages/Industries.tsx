@@ -27,10 +27,10 @@ const colours = ['#F9A8D4', '#FCD34D', '#6EE7B7', '#86EFAC', '#C4B5FD', '#38BDF8
 const Industries: React.FC = () => (
   <HelmetProvider>
     <Helmet>
-      <title>Industries We Serve — SORO Fabrications Private Limited</title>
+      <title>Potential Applications — SORO Fabrications</title>
       <meta
         name="description"
-        content="SORO Fabrications serves Medical Devices, Industrial Automation, Agriculture, IoT, Education, and Research & Development industries."
+        content="Illustrative application areas for electronic and mechanical product development at SORO Fabrications."
       />
     </Helmet>
 
@@ -41,15 +41,15 @@ const Industries: React.FC = () => (
         <ScrollReveal>
           <div className="badge-blue mb-5 w-fit">Industries</div>
           <h1 className="text-display text-white mb-6 max-w-3xl">
-            Industries We{' '}
-            <span className="gradient-text">Serve</span>
+            Potential Engineering{' '}
+            <span className="gradient-text">Applications</span>
           </h1>
           <p
             className="text-[#8A9DB5] text-lg max-w-2xl leading-relaxed"
             style={{ fontFamily: 'Inter, sans-serif' }}
           >
-            Our engineering capabilities support a wide range of sectors — from medical
-            device development to precision agriculture and industrial automation.
+            These examples describe possible application areas, not confirmed customers,
+            engagements, or sector-specific experience.
           </p>
         </ScrollReveal>
       </div>
@@ -103,7 +103,7 @@ const Industries: React.FC = () => (
               >
                 {iconMap[industry.icon]}
               </div>
-              <div className="badge-blue mb-4 w-fit">Industry</div>
+              <div className="badge-blue mb-4 w-fit">Illustrative Application Area</div>
               <h2 className="text-section-title text-white mb-5">{industry.title}</h2>
               <p
                 className="text-[#8A9DB5] leading-relaxed mb-8"
@@ -155,14 +155,13 @@ const Industries: React.FC = () => (
             className="text-white font-bold text-2xl mb-4"
             style={{ fontFamily: 'Outfit, sans-serif' }}
           >
-            Engineering Support for Your Industry
+                  Discuss an Engineering Need
           </h2>
           <p
             className="text-[#8A9DB5] mb-8 max-w-xl mx-auto"
             style={{ fontFamily: 'Inter, sans-serif' }}
           >
-            Not sure if we can help? Contact us with your project requirements and we'll give
-            you an honest assessment.
+            Share your requirements and SORO can confirm whether the scope is a fit.
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <Link to="/quote" className="btn-primary">

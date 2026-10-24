@@ -1,30 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Cpu,
   Mail,
-  Phone,
-  MessageCircle,
-  ExternalLink,
-  MapPin,
 } from 'lucide-react';
-import {
-  FaLinkedinIn,
-  FaInstagram,
-  FaXTwitter,
-  FaFacebookF,
-  FaYoutube,
-} from 'react-icons/fa6';
 
 const serviceLinks = [
   { label: 'PCB Design', path: '/services/pcb-design' },
   { label: 'PCB Assembly', path: '/services/pcb-assembly' },
-  { label: 'Embedded Systems', path: '/services/embedded-systems' },
   { label: '3D Design', path: '/services/3d-design' },
   { label: '3D Printing', path: '/services/3d-printing' },
-  { label: 'CNC Machining', path: '/services/cnc-machining' },
-  { label: 'Laser Cutting', path: '/services/laser-cutting' },
-  { label: 'Sheet Metal', path: '/services/sheet-metal' },
+  { label: 'Prototype Design Review', path: '/services/prototype-design-review' },
+  { label: 'Manufacturing Support', path: '/services/manufacturing-support' },
 ];
 
 const companyLinks = [
@@ -37,22 +23,10 @@ const companyLinks = [
   { label: 'Get a Quote', path: '/quote' },
 ];
 
+const currentYear = new Date().getFullYear();
+
 const Footer: React.FC = () => {
-  const currentYear = new Date().getFullYear();
-
-  // Replace these placeholders with verified company details.
-  const COMPANY_EMAIL = 'info@sorofabrications.com';
-  const COMPANY_PHONE = '+91 [Phone Number]';
-  const COMPANY_WHATSAPP = '+91 [WhatsApp Number]';
-  const COMPANY_ADDRESS = '[Company Address, City, State, India]';
-
-  const socialLinks = [
-    { icon: FaLinkedinIn, label: 'LinkedIn', href: '#' },
-    { icon: FaXTwitter, label: 'Twitter / X', href: '#' },
-    { icon: FaInstagram, label: 'Instagram', href: '#' },
-    { icon: FaFacebookF, label: 'Facebook', href: '#' },
-    { icon: FaYoutube, label: 'YouTube', href: '#' },
-  ];
+  const COMPANY_EMAIL = 'orders@sorofabrication.in';
 
   return (
     <footer className="bg-[#050E1A] border-t border-[#1E3050]/60">
@@ -60,12 +34,7 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <Link to="/" className="flex items-center gap-3 group mb-5">
-              <div className="relative w-10 h-10 flex items-center justify-center">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#1E6FFF] to-[#00AAFF] rounded-xl" />
-                <Cpu className="relative w-5 h-5 text-white" />
-              </div>
-
+            <Link to="/" className="group mb-5 inline-flex">
               <div>
                 <span
                   className="text-xl font-extrabold text-white leading-none block"
@@ -86,25 +55,10 @@ const Footer: React.FC = () => {
               className="text-[#8A9DB5] text-sm leading-relaxed mb-6"
               style={{ fontFamily: 'Inter, sans-serif' }}
             >
-              Integrated engineering solutions spanning PCB design, embedded
-              systems, 3D design, prototyping, and precision fabrication.
+              Electronic and mechanical product development, with a focus on engineering and prototyping.
             </p>
 
             {/* Social links */}
-            <div className="flex flex-wrap gap-3">
-              {socialLinks.map(({ icon: Icon, label, href }) => (
-                <a
-                  key={label}
-                  href={href}
-                  aria-label={label}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-9 h-9 flex items-center justify-center rounded-lg bg-[#1C2A3A] border border-[#1E3050]/80 text-[#8A9DB5] hover:text-white hover:border-[#1E6FFF]/50 hover:bg-[#1E6FFF]/10 transition-all duration-200"
-                >
-                  <Icon className="w-4 h-4" />
-                </a>
-              ))}
-            </div>
           </div>
 
           {/* Services */}
@@ -177,50 +131,6 @@ const Footer: React.FC = () => {
                 </a>
               </li>
 
-              <li>
-                <a
-                  href={`tel:${COMPANY_PHONE.replace(/\s/g, '')}`}
-                  className="flex items-start gap-3 text-[#8A9DB5] hover:text-white transition-colors"
-                >
-                  <Phone className="w-4 h-4 mt-0.5 text-[#1E6FFF] shrink-0" />
-                  <span
-                    className="text-sm"
-                    style={{ fontFamily: 'Inter, sans-serif' }}
-                  >
-                    {COMPANY_PHONE}
-                  </span>
-                </a>
-              </li>
-
-              <li>
-                <a
-                  href={`https://wa.me/${COMPANY_WHATSAPP.replace(/\D/g, '')}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-start gap-3 text-[#8A9DB5] hover:text-[#25D366] transition-colors"
-                >
-                  <MessageCircle className="w-4 h-4 mt-0.5 text-[#25D366] shrink-0" />
-                  <span
-                    className="text-sm"
-                    style={{ fontFamily: 'Inter, sans-serif' }}
-                  >
-                    WhatsApp Chat
-                  </span>
-                  <ExternalLink className="w-3 h-3 mt-1 shrink-0" />
-                </a>
-              </li>
-
-              <li>
-                <div className="flex items-start gap-3 text-[#8A9DB5]">
-                  <MapPin className="w-4 h-4 mt-0.5 text-[#1E6FFF] shrink-0" />
-                  <span
-                    className="text-sm"
-                    style={{ fontFamily: 'Inter, sans-serif' }}
-                  >
-                    {COMPANY_ADDRESS}
-                  </span>
-                </div>
-              </li>
             </ul>
           </div>
         </div>
@@ -237,18 +147,6 @@ const Footer: React.FC = () => {
             reserved.
           </p>
 
-          <div className="flex gap-5">
-            {['Privacy Policy', 'Terms of Use'].map((label) => (
-              <a
-                key={label}
-                href="#"
-                className="text-[#8A9DB5] hover:text-white text-xs transition-colors"
-                style={{ fontFamily: 'Inter, sans-serif' }}
-              >
-                {label}
-              </a>
-            ))}
-          </div>
         </div>
       </div>
     </footer>
