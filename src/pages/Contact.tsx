@@ -7,6 +7,8 @@ import emailjs from '@emailjs/browser';
 import {
   Mail,
   MapPin,
+  Phone,
+  MessageCircle,
   Send,
   CheckCircle,
   AlertCircle,
@@ -61,7 +63,6 @@ const Contact: React.FC = () => {
     }
   };
 
-  // TODO: Replace with verified company details
   const COMPANY_EMAIL = 'orders@sorofabrication.in';
 
   return (
@@ -70,7 +71,7 @@ const Contact: React.FC = () => {
         <title>Contact Us — SORO Fabrications Private Limited</title>
         <meta
           name="description"
-          content="Get in touch with SORO Fabrications Private Limited. Contact us by email, phone, or WhatsApp, or use our enquiry form."
+          content="Contact SORO Fabrications Private Limited by email or submit an enquiry online."
         />
       </Helmet>
 
@@ -88,8 +89,7 @@ const Contact: React.FC = () => {
               className="text-[#8A9DB5] text-lg max-w-2xl leading-relaxed"
               style={{ fontFamily: 'Inter, sans-serif' }}
             >
-              Have a question or want to discuss a project? Reach out through any of the
-              channels below.
+              Use the enquiry form or email us directly. Additional contact details will be added when confirmed.
             </p>
           </ScrollReveal>
         </div>
@@ -126,7 +126,27 @@ const Contact: React.FC = () => {
                   </div>
                 </a>
 
-                {/* Phone */}
+                <div className="glass p-6 rounded-2xl flex items-start gap-4">
+                  <Phone className="mt-1 h-5 w-5 shrink-0 text-[#AEB8C4]" aria-hidden="true" />
+                  <div>
+                    <h3 className="text-white text-sm font-semibold">Business phone</h3>
+                    <p className="mt-1 text-sm text-[#AEB8C4]">To be confirmed</p>
+                  </div>
+                </div>
+                <div className="glass p-6 rounded-2xl flex items-start gap-4">
+                  <MessageCircle className="mt-1 h-5 w-5 shrink-0 text-[#AEB8C4]" aria-hidden="true" />
+                  <div>
+                    <h3 className="text-white text-sm font-semibold">WhatsApp</h3>
+                    <p className="mt-1 text-sm text-[#AEB8C4]">To be confirmed</p>
+                  </div>
+                </div>
+                <div className="glass p-6 rounded-2xl flex items-start gap-4">
+                  <MapPin className="mt-1 h-5 w-5 shrink-0 text-[#AEB8C4]" aria-hidden="true" />
+                  <div>
+                    <h3 className="text-white text-sm font-semibold">Business address</h3>
+                    <p className="mt-1 text-sm text-[#AEB8C4]">To be confirmed</p>
+                  </div>
+                </div>
               </div>
             </ScrollReveal>
 

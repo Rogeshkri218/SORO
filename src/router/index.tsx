@@ -6,6 +6,7 @@ import Layout from '@/components/layout/Layout';
 const Home = lazy(() => import('@/pages/Home'));
 const About = lazy(() => import('@/pages/About'));
 const Services = lazy(() => import('@/pages/Services'));
+const PcbDesign = lazy(() => import('@/pages/PcbDesign'));
 const ServiceDetail = lazy(() => import('@/pages/ServiceDetail'));
 const Portfolio = lazy(() => import('@/pages/Portfolio'));
 const ProjectDetail = lazy(() => import('@/pages/ProjectDetail'));
@@ -56,6 +57,7 @@ const AppRouter: React.FC = () => (
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/pcb-design" element={<PcbDesign />} />
           <Route path="/services/:slug" element={<ServiceDetail />} />
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/portfolio/:slug" element={<ProjectDetail />} />

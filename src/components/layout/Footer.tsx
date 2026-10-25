@@ -5,7 +5,7 @@ import {
 } from 'lucide-react';
 
 const serviceLinks = [
-  { label: 'PCB Design', path: '/services/pcb-design' },
+  { label: 'PCB Design', path: '/pcb-design' },
   { label: 'PCB Assembly', path: '/services/pcb-assembly' },
   { label: '3D Design', path: '/services/3d-design' },
   { label: '3D Printing', path: '/services/3d-printing' },
@@ -48,6 +48,9 @@ const Footer: React.FC = () => {
                 >
                   Fabrications
                 </span>
+                <span className="mt-2 block text-[0.55rem] uppercase tracking-[0.12em] text-[#AEB8C4]">
+                  DESIGN • FABRICATE • INNOVATE
+                </span>
               </div>
             </Link>
 
@@ -67,7 +70,7 @@ const Footer: React.FC = () => {
               className="text-white font-semibold text-sm mb-5 tracking-wide"
               style={{ fontFamily: 'Outfit, sans-serif' }}
             >
-              Services
+              Engineering Scopes
             </h3>
             <ul className="flex flex-col gap-2.5">
               {serviceLinks.map((link) => (

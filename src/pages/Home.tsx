@@ -100,6 +100,9 @@ const Home: React.FC = () => (
           <Link to="/services" className="inline-flex items-center gap-2 font-semibold text-[#174A7E] hover:text-[#F47745]">
             View capabilities <ArrowRight aria-hidden="true" className="h-4 w-4" />
           </Link>
+          <Link to="/pcb-design" className="inline-flex items-center gap-2 font-semibold text-[#174A7E] hover:text-[#F47745]">
+            PCB design <ArrowRight aria-hidden="true" className="h-4 w-4" />
+          </Link>
         </div>
         <div className="grid gap-x-10 md:grid-cols-2 lg:grid-cols-3">
           {capabilityItems.map((item, index) => (

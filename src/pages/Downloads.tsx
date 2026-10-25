@@ -6,7 +6,7 @@ import ScrollReveal from '@/components/ui/ScrollReveal';
 interface Document {
   title: string;
   description: string;
-  status: 'available' | 'preparation';
+  status: 'available' | 'unpublished';
   fileType?: string;
   fileSize?: string;
   downloadUrl?: string;
@@ -15,28 +15,33 @@ interface Document {
 const documents: Document[] = [
   {
     title: 'Company Brochure',
-    description: 'Overview of SORO Fabrications services, capabilities, and engineering approach.',
-    status: 'preparation',
+    description: 'Company overview and verified service information.',
+    status: 'unpublished',
   },
   {
-    title: 'Service Catalogue',
-    description: 'Detailed catalogue of all engineering services with specifications.',
-    status: 'preparation',
+    title: 'Engineering Capabilities Statement',
+    description: 'A confirmed summary of project scopes and engineering deliverables.',
+    status: 'unpublished',
   },
   {
-    title: 'Manufacturing Capability Statement',
-    description: 'Technical capability statement covering fabrication, assembly, and design services.',
-    status: 'preparation',
-  },
-  {
-    title: 'PCB Design Guide',
-    description: 'Engineering reference guide for PCB design requirements and file formats.',
-    status: 'preparation',
+    title: 'PCB Design Requirements',
+    description: 'Technical information customers may prepare for a PCB design enquiry.',
+    status: 'unpublished',
   },
   {
     title: 'File Format Requirements',
-    description: 'Required file formats for PCB, 3D printing, CNC, and laser cutting orders.',
-    status: 'preparation',
+    description: 'File formats for design review, fabrication outputs, or assembly coordination, where agreed.',
+    status: 'unpublished',
+  },
+  {
+    title: 'Product Datasheets',
+    description: 'Datasheets will be listed when SORO product status and specifications are confirmed.',
+    status: 'unpublished',
+  },
+  {
+    title: 'Approved Project Documentation',
+    description: 'Project material will be published only when details and image approvals are available.',
+    status: 'unpublished',
   },
 ];
 
@@ -46,7 +51,7 @@ const Downloads: React.FC = () => (
       <title>Downloads — SORO Fabrications Private Limited</title>
       <meta
         name="description"
-        content="Download company brochures, service catalogues, capability statements, and technical documents from SORO Fabrications Private Limited."
+        content="Request company and engineering documents from SORO Fabrications Private Limited. Only approved files are offered for download."
       />
     </Helmet>
 
@@ -57,14 +62,13 @@ const Downloads: React.FC = () => (
         <ScrollReveal>
           <div className="badge-blue mb-5 w-fit">Downloads</div>
           <h1 className="text-display text-white mb-6 max-w-3xl">
-            Company <span className="gradient-text">Documents</span>
+            Company <span className="gradient-text">Resources</span>
           </h1>
           <p
             className="text-[#8A9DB5] text-lg max-w-2xl leading-relaxed"
             style={{ fontFamily: 'Inter, sans-serif' }}
           >
-            Download company brochures, service catalogues, capability statements, and technical
-            reference documents.
+            Request company information and engineering documents. Files are offered for download only when approved for publication.
           </p>
         </ScrollReveal>
       </div>
@@ -76,7 +80,7 @@ const Downloads: React.FC = () => (
         <ScrollReveal>
           <div className="glass p-5 rounded-xl border border-[#1E6FFF]/20 mb-10">
             <p className="text-[#8A9DB5] text-sm text-center" style={{ fontFamily: 'Inter, sans-serif' }}>
-              Only published files include a download action. The documents below are in preparation;
+              Only published files include a download action. The documents below are not published;
               contact SORO to request a specific document.
             </p>
           </div>
@@ -109,7 +113,7 @@ const Downloads: React.FC = () => (
                       <span className="badge-blue text-xs">Available</span>
                     ) : (
                       <span className="badge-orange text-xs">
-                        <Clock className="w-3 h-3" /> In preparation
+                        <Clock className="w-3 h-3" /> Not published
                       </span>
                     )}
                   </div>
@@ -150,8 +154,7 @@ const Downloads: React.FC = () => (
               Need a Specific Document?
             </h3>
             <p className="text-[#8A9DB5] text-sm mb-5" style={{ fontFamily: 'Inter, sans-serif' }}>
-              If you need a specific technical document or capability statement for your procurement
-              process, contact us and we'll prepare the relevant documentation.
+              Contact SORO to ask whether an approved technical document or capability statement is available for your needs.
             </p>
             <a href="mailto:orders@sorofabrication.in" className="btn-primary">
               Contact Us

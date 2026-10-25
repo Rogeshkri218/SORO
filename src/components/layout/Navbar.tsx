@@ -6,7 +6,8 @@ import type { NavItem } from '@/types';
 const navItems: NavItem[] = [
   { label: 'Home', path: '/' },
   { label: 'Products', path: '/products' },
-  { label: 'Capabilities', path: '/services' },
+  { label: 'PCB Design', path: '/pcb-design' },
+  { label: 'Engineering Capabilities', path: '/services' },
   { label: 'Projects', path: '/portfolio' },
   { label: 'About Us', path: '/about' },
   { label: 'Resources', path: '/downloads' },
@@ -30,7 +31,7 @@ const Navbar: React.FC = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-6">
+          <div className="hidden xl:flex items-center gap-5">
             {navItems.map((item) =>
               item.children ? (
                 <div
@@ -92,7 +93,7 @@ const Navbar: React.FC = () => {
           </div>
 
           {/* Desktop CTA */}
-          <div className="hidden lg:flex items-center gap-3">
+          <div className="hidden xl:flex items-center gap-3">
             <Link to="/quote" className="btn-orange py-2 px-5 text-sm">
               Request a Quote
             </Link>
@@ -100,10 +101,11 @@ const Navbar: React.FC = () => {
 
           {/* Mobile Hamburger */}
           <button
-            className="lg:hidden p-2 rounded-lg text-white hover:bg-white/10 transition-colors"
+            className="xl:hidden p-2 rounded-lg text-white hover:bg-white/10 transition-colors"
             onClick={() => setIsMobileOpen(!isMobileOpen)}
             aria-label={isMobileOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={isMobileOpen}
+            aria-controls="mobile-nav-panel"
           >
             {isMobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -112,7 +114,7 @@ const Navbar: React.FC = () => {
 
       {/* Mobile Menu */}
       {isMobileOpen && (
-        <div className="lg:hidden bg-[#0A1628]/98 backdrop-blur-xl border-t border-[#1E3050]/60 max-h-[85vh] overflow-y-auto">
+        <div id="mobile-nav-panel" className="xl:hidden bg-[#0A1628]/98 backdrop-blur-xl border-t border-[#1E3050]/60 max-h-[85vh] overflow-y-auto">
           <div className="container-soro py-4 flex flex-col gap-1">
             {navItems.map((item) =>
               item.children ? (
@@ -168,7 +170,7 @@ const Navbar: React.FC = () => {
               )
             )}
             <div className="pt-4 pb-2 flex flex-col gap-3 border-t border-[#1E3050]/60 mt-2">
-              <Link to="/quote" className="btn-orange justify-center py-2.5">
+              <Link to="/quote" onClick={() => setIsMobileOpen(false)} className="btn-orange justify-center py-2.5">
                 Request a Quote
               </Link>
             </div>

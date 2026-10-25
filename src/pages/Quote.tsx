@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import emailjs from '@emailjs/browser';
+import { useSearchParams } from 'react-router-dom';
 import {
   CheckCircle,
   AlertCircle,
@@ -21,12 +22,14 @@ const quoteSchema = z.object({
   companyName: z.string().optional(),
   email: z.string().email('Please enter a valid business email'),
   phone: z.string().min(7, 'Please enter a valid phone number'),
-  serviceCategory: z.string().min(1, 'Please select a service category'),
+  serviceCategory: z.string().min(1, 'Please select an enquiry type'),
   projectTitle: z.string().min(3, 'Please provide a project title'),
   projectDescription: z.string().min(30, 'Please describe your project in at least 30 characters'),
-  estimatedQuantity: z.string().min(1, 'Please specify the quantity'),
+  estimatedQuantity: z.string().optional(),
   budgetRange: z.string().optional(),
   deliveryDate: z.string().optional(),
+  deliverables: z.string().optional(),
+  designSoftware: z.string().optional(),
   contactMethod: z.string().min(1, 'Please select a preferred contact method'),
   privacyConsent: z.literal(true, {
     error: () => 'You must agree to the privacy policy to submit',
@@ -36,16 +39,12 @@ const quoteSchema = z.object({
 type QuoteFormValues = z.infer<typeof quoteSchema>;
 
 const serviceCategories = [
-  'PCB Design',
-  'PCB Assembly',
-  'Embedded Systems / Firmware',
-  '3D Design (CAD)',
-  '3D Printing',
-  'CNC Machining',
-  'Laser Cutting',
-  'Sheet Metal Fabrication',
-  'Multiple Services',
-  'Other / Not Sure',
+  'PCB Schematic Design',
+  'PCB Layout',
+  'Electronic Product Development',
+  'Prototype Assembly',
+  '3D CAD or 3D Printing',
+  'Other Engineering Enquiry',
 ];
 
 const budgetRanges = [
@@ -75,6 +74,7 @@ const FieldError: React.FC<{ message?: string }> = ({ message }) =>
 // ==========================================
 const Quote: React.FC = () => {
   const [submitState, setSubmitState] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [searchParams] = useSearchParams();
 
   const {
     register,
@@ -113,7 +113,7 @@ const Quote: React.FC = () => {
         <title>Request a Quote — SORO Fabrications Private Limited</title>
         <meta
           name="description"
-          content="Request a detailed engineering quotation from SORO Fabrications. Submit your project requirements and receive a response from our engineering team."
+          content="Share your product-development requirements with SORO Fabrications. Scope, availability, deliverables, and pricing are confirmed after review."
         />
       </Helmet>
 
@@ -131,8 +131,8 @@ const Quote: React.FC = () => {
               className="text-[#8A9DB5] text-lg max-w-2xl leading-relaxed"
               style={{ fontFamily: 'Inter, sans-serif' }}
             >
-              Share your project details and we'll provide a thorough, transparent quotation.
-              All enquiries are reviewed by our engineering team.
+              Share the project information you have. Scope, availability, deliverables, and pricing
+              are confirmed after the enquiry is reviewed.
             </p>
           </ScrollReveal>
         </div>
@@ -154,9 +154,9 @@ const Quote: React.FC = () => {
                   </h3>
                   {[
                     'We receive your enquiry and review your requirements.',
-                    'Our engineering team evaluates the scope and technical feasibility.',
+                    'SORO reviews the requested scope and open technical questions.',
                     'We follow up to clarify scope and discuss a next step.',
-                    'On approval, we proceed with design and engineering.',
+                    'Work begins only after scope and deliverables are agreed.',
                   ].map((step, i) => (
                     <div key={i} className="flex gap-3 mb-4 last:mb-0">
                       <div className="w-6 h-6 rounded-full bg-[#1E6FFF]/20 border border-[#1E6FFF]/40 flex items-center justify-center shrink-0 mt-0.5">
@@ -278,7 +278,7 @@ const Quote: React.FC = () => {
                     </div>
                     <div>
                       <label htmlFor="phone" className="input-label">
-                        Phone Number <span className="text-red-400">*</span>
+                        Phone or WhatsApp <span className="text-red-400">*</span>
                       </label>
                       <input
                         id="phone"
@@ -295,13 +295,13 @@ const Quote: React.FC = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
                       <label htmlFor="serviceCategory" className="input-label">
-                        Service Category <span className="text-red-400">*</span>
+                        Enquiry Type <span className="text-red-400">*</span>
                       </label>
                       <select
                         id="serviceCategory"
                         className={`input-field ${errors.serviceCategory ? 'error' : ''}`}
                         {...register('serviceCategory')}
-                        defaultValue=""
+                        defaultValue={searchParams.get('enquiry') ?? ''}
                       >
                         <option value="" disabled>Select a service…</option>
                         {serviceCategories.map((s) => (
@@ -312,16 +312,15 @@ const Quote: React.FC = () => {
                     </div>
                     <div>
                       <label htmlFor="estimatedQuantity" className="input-label">
-                        Estimated Quantity <span className="text-red-400">*</span>
+                        Expected Quantity (if known)
                       </label>
                       <input
                         id="estimatedQuantity"
                         type="text"
-                        className={`input-field ${errors.estimatedQuantity ? 'error' : ''}`}
+                        className="input-field"
                         placeholder="e.g. 1 prototype, 10 units"
                         {...register('estimatedQuantity')}
                       />
-                      <FieldError message={errors.estimatedQuantity?.message} />
                     </div>
                   </div>
 
@@ -352,6 +351,29 @@ const Quote: React.FC = () => {
                       {...register('projectDescription')}
                     />
                     <FieldError message={errors.projectDescription?.message} />
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                      <label htmlFor="deliverables" className="input-label">Required Deliverables</label>
+                      <textarea
+                        id="deliverables"
+                        rows={3}
+                        className="input-field resize-y"
+                        placeholder="For example: source files, fabrication outputs, drawings"
+                        {...register('deliverables')}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="designSoftware" className="input-label">Preferred Design Software (optional)</label>
+                      <input
+                        id="designSoftware"
+                        type="text"
+                        className="input-field"
+                        placeholder="Tool or file format, if specified"
+                        {...register('designSoftware')}
+                      />
+                    </div>
                   </div>
 
                   {/* Budget & Timeline */}
@@ -424,12 +446,18 @@ const Quote: React.FC = () => {
                         className="text-[#8A9DB5] text-sm"
                         style={{ fontFamily: 'Inter, sans-serif' }}
                       >
-                        I consent to SORO Fabrications contacting me regarding this enquiry.{' '}
+                        I consent to SORO Fabrications using these details to respond to this enquiry.{' '}
                         <span className="text-red-400">*</span>
                       </span>
                     </label>
                     <FieldError message={errors.privacyConsent?.message} />
                   </div>
+                  <details className="border-t border-[#1E3050]/60 pt-4 text-sm text-[#AEB8C4]">
+                    <summary className="cursor-pointer font-semibold text-white">Privacy notice</summary>
+                    <p className="mt-3 leading-relaxed">
+                      When email delivery is configured, the details entered here are sent through the configured form provider to the intended SORO enquiry mailbox. Do not submit confidential design files or trade secrets through this form. SORO should confirm its full privacy and retention terms before launch.
+                    </p>
+                  </details>
 
                   {/* Submit */}
                   {submitState === 'error' && (
