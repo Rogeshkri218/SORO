@@ -452,6 +452,39 @@ h1, h2, h3, h4, h5, h6 {
   animation: hero-stagger-in 0.55s ease-out forwards;
 }
 
+.hero-workstation {
+  background-color: var(--color-blue);
+  background-image: url('/images/pcb-workstation.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center 58%;
+}
+
+.hero-workstation-overlay {
+  background: linear-gradient(90deg, rgba(10, 25, 40, 0.76) 0%, rgba(10, 25, 40, 0.58) 43%, rgba(10, 25, 40, 0.18) 100%);
+}
+
+@media (max-width: 1023px) {
+  .hero-workstation {
+    background-position: 58% center;
+  }
+
+  .hero-workstation-overlay {
+    background: linear-gradient(90deg, rgba(10, 25, 40, 0.78) 0%, rgba(10, 25, 40, 0.62) 58%, rgba(10, 25, 40, 0.34) 100%);
+  }
+}
+
+@media (max-width: 639px) {
+  .hero-workstation {
+    min-height: calc(100svh - 4rem);
+    background-position: 61% center;
+  }
+
+  .hero-workstation-overlay {
+    background: linear-gradient(90deg, rgba(10, 25, 40, 0.86) 0%, rgba(10, 25, 40, 0.72) 70%, rgba(10, 25, 40, 0.48) 100%);
+  }
+}
+
 @keyframes glow-pulse {
   0%, 100% { box-shadow: 0 0 20px rgba(34, 97, 146, 0.3); }
   50% { box-shadow: 0 0 40px rgba(34, 97, 146, 0.45), 0 0 80px rgba(239, 133, 87, 0.12); }

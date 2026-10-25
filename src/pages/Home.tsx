@@ -35,8 +35,9 @@ const Home: React.FC = () => (
       <meta property="og:type" content="website" />
     </Helmet>
 
-    <section className="bg-soro-blue pb-16 pt-32 text-soro-white sm:pb-24 sm:pt-40">
-      <div className="container-soro grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+    <section className="hero-workstation relative isolate flex min-h-[calc(100svh-5rem)] items-center overflow-hidden text-soro-white">
+      <div className="hero-workstation-overlay absolute inset-0" aria-hidden="true" />
+      <div className="container-soro relative z-10 py-20 sm:py-24 lg:py-28">
         <div className="max-w-2xl">
           <p className="hero-stagger-in mb-6 text-sm font-semibold uppercase tracking-[0.16em] text-soro-coral" style={{ animationDelay: '80ms' }}>
             PRECISION · INNOVATION · RELIABILITY
@@ -55,18 +56,6 @@ const Home: React.FC = () => (
             </Link>
             <Link to="/services" className="btn-secondary btn-secondary-on-dark">Explore Our Capabilities</Link>
           </div>
-        </div>
-        <div className="relative min-h-[320px] overflow-hidden border border-soro-white/20 bg-soro-blue sm:min-h-[460px]">
-          <img
-            src="/images/pcb-workstation.png"
-            alt="PCB workstation with a circuit board and design tools"
-            className="absolute inset-0 h-full w-full object-cover object-[center_58%]"
-            fetchPriority="high"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-soro-ink/45 via-transparent to-transparent" />
-          <p className="absolute bottom-5 left-5 text-xs uppercase tracking-[0.14em] text-soro-white/90">
-            Illustrative electronics image
-          </p>
         </div>
       </div>
     </section>
