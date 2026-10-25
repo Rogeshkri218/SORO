@@ -30,7 +30,13 @@ npm run preview
 3. Set `VITE_EMAILJS_SERVICE_ID`, `VITE_EMAILJS_QUOTE_TEMPLATE_ID`, `VITE_EMAILJS_CONTACT_TEMPLATE_ID`, and `VITE_EMAILJS_PUBLIC_KEY` in `.env` and in the Vercel project settings.
 4. Restart the development server after changing environment variables.
 
-The forms report success only after EmailJS confirms delivery. Without these values, submission shows an error and provides the company email as a fallback. File uploads are not enabled.
+The contact and quote forms report success only after EmailJS confirms delivery. Without these values, submission shows an error and provides the company email as a fallback. File uploads are not enabled.
+
+### PCB project form
+
+The form at `/pcb-design` currently provides a local, multi-step review only. Project details and selected file objects are not sent to SORO, and selecting files does not upload them. The form supports files up to 500 MB total for local selection and validates their extensions.
+
+Enabling real project submissions requires a secured server endpoint with server-side input validation, file type and size enforcement, private storage permissions, and a confirmed delivery workflow. Do not treat the browser-only review state as an enquiry received by SORO.
 
 ---
 

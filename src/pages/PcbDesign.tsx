@@ -12,6 +12,7 @@ import {
   Layers,
   Workflow,
 } from 'lucide-react';
+import PcbProjectForm from '@/components/shared/PcbProjectForm';
 
 const serviceCards = [
   {
@@ -217,9 +218,9 @@ const PcbDesign: React.FC = () => (
             engineering requirements into practical electronic products.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link to="/quote?enquiry=PCB%20Schematic%20Design" className="btn-orange">
+            <a href="#pcb-project-form" className="btn-orange">
               Discuss Your PCB Project <ArrowRight aria-hidden="true" className="h-4 w-4" />
-            </Link>
+            </a>
             <a href="#engineering-capabilities" className="btn-secondary">
               Explore Engineering Capabilities
             </a>
@@ -241,6 +242,8 @@ const PcbDesign: React.FC = () => (
         </div>
       </div>
     </section>
+
+    <PcbProjectForm />
 
     <section className="bg-soro-ivory py-16 text-soro-blue sm:py-20">
       <div className="container-soro grid gap-8 lg:grid-cols-[0.7fr_1.3fr]">
