@@ -8,13 +8,16 @@ import {
   Cpu,
   FileText,
   Layers,
+  Loader2,
   Trash2,
   Upload,
 } from 'lucide-react';
+import { sendWebsiteEnquiry } from '@/lib/enquiry';
 import './PcbProjectForm.css';
 
 type ProjectType = 'pcb-layout' | 'pcb-design' | 'mechanical-design';
 type Step = 1 | 2 | 3;
+type SubmitState = 'idle' | 'loading' | 'success' | 'error';
 
 interface ProjectRequirements {
   software: string;
@@ -118,7 +121,9 @@ const PcbProjectForm = () => {
   const [files, setFiles] = useState<File[]>([]);
   const [fileErrors, setFileErrors] = useState<string[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [submissionNotice, setSubmissionNotice] = useState(false);
+  const [submitState, setSubmitState] = useState<SubmitState>('idle');
+  const [submitError, setSubmitError] = useState('');
+  const [website, setWebsite] = useState('');
   const [dragging, setDragging] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
@@ -133,19 +138,22 @@ const PcbProjectForm = () => {
       [projectType]: { ...previous[projectType], [key]: value },
     }));
     setErrors((previous) => ({ ...previous, [key]: '' }));
-    setSubmissionNotice(false);
+    setSubmitState('idle');
+    setSubmitError('');
   };
 
   const updateContact = <K extends keyof ContactDetails>(key: K, value: ContactDetails[K]) => {
     setContact((previous) => ({ ...previous, [key]: value }));
     setErrors((previous) => ({ ...previous, [key]: '' }));
-    setSubmissionNotice(false);
+    setSubmitState('idle');
+    setSubmitError('');
   };
 
   const selectProjectType = (nextType: ProjectType) => {
     setProjectType(nextType);
     setErrors({});
-    setSubmissionNotice(false);
+    setSubmitState('idle');
+    setSubmitError('');
   };
 
   const onTabKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
@@ -212,7 +220,8 @@ const PcbProjectForm = () => {
       document.getElementById(`pcb-${firstInvalid}`)?.focus();
       return;
     }
-    setSubmissionNotice(false);
+    setSubmitState('idle');
+    setSubmitError('');
     setStep(2);
   };
 
@@ -231,12 +240,30 @@ const PcbProjectForm = () => {
       document.getElementById(`pcb-contact-${Object.keys(nextErrors)[0]}`)?.focus();
       return;
     }
-    setSubmissionNotice(false);
+    setSubmitState('idle');
+    setSubmitError('');
     setStep(3);
   };
 
-  const showSubmissionLimit = () => {
-    setSubmissionNotice(true);
+  const submitProjectRequest = async () => {
+    if (submitState === 'loading' || submitState === 'success') return;
+    setSubmitState('loading');
+    setSubmitError('');
+    try {
+      await sendWebsiteEnquiry('pcb-project', {
+        projectType,
+        ...currentRequirements,
+        deadline: contact.deadline,
+        contactMethod: contact.contactMethod,
+        contact,
+        selectedFiles: files.map(({ name, size }) => ({ name, size })),
+        website,
+      });
+      setSubmitState('success');
+    } catch (error) {
+      setSubmitState('error');
+      setSubmitError(error instanceof Error ? error.message : 'Your enquiry could not be delivered. Please retry.');
+    }
   };
 
   const selectedSoftware = currentRequirements.software === 'Other'
@@ -579,21 +606,59 @@ const PcbProjectForm = () => {
               <div className="pcb-upload-pending" role="note">
                 <AlertCircle aria-hidden="true" />
                 <p>
-                  <strong>Frontend review only.</strong> Project submission and file upload are not connected.
-                  Your information and selected files remain in this browser and are not sent to SORO.
+                  <strong>Files are not uploaded or attached.</strong> The enquiry email includes selected file names and sizes only.
+                  Do not select confidential designs; agree a secure transfer method with SORO before sharing sensitive files.
                 </p>
               </div>
-              {submissionNotice && (
+              <div aria-hidden="true" className="pcb-honeypot">
+                <label htmlFor="pcb-website">Leave this field blank</label>
+                <input
+                  autoComplete="off"
+                  id="pcb-website"
+                  onChange={(event) => setWebsite(event.target.value)}
+                  tabIndex={-1}
+                  value={website}
+                />
+              </div>
+              {submitState === 'success' && (
+                <p className="pcb-submit-success" role="status">
+                  Your enquiry was accepted by the email service for delivery to orders@sorofabrication.in.
+                  Selected files were not uploaded or attached.
+                </p>
+              )}
+              {submitState === 'error' && (
                 <p className="pcb-submit-notice" role="alert">
-                  This request was not submitted. A secure project-submission endpoint and file-storage integration are required before requests can be sent to SORO.
+                  {submitError} Selected information is still available here so you can retry.
                 </p>
               )}
               <div className="pcb-form-actions">
-                <button className="pcb-button pcb-button-secondary" onClick={() => { setSubmissionNotice(false); setStep(2); }} type="button">
+                <button
+                  className="pcb-button pcb-button-secondary"
+                  disabled={submitState === 'loading'}
+                  onClick={() => { setSubmitState('idle'); setSubmitError(''); setStep(2); }}
+                  type="button"
+                >
                   <ChevronLeft aria-hidden="true" /> Back to Edit
                 </button>
-                <button className="pcb-button pcb-button-primary" onClick={showSubmissionLimit} type="button">
-                  Submit Project Request <ChevronRight aria-hidden="true" />
+                <button
+                  className="pcb-button pcb-button-primary"
+                  disabled={submitState === 'loading' || submitState === 'success'}
+                  onClick={() => { void submitProjectRequest(); }}
+                  type="button"
+                >
+                  {submitState === 'loading' ? (
+                    <>
+                      <Loader2 aria-hidden="true" className="pcb-spinner" /> Sending…
+                    </>
+                  ) : submitState === 'success' ? (
+                    <>
+                      <Check aria-hidden="true" /> Request Sent
+                    </>
+                  ) : (
+                    <>
+                      Submit Project Request <ChevronRight aria-hidden="true" />
+                    </>
+                  )}
                 </button>
               </div>
             </div>

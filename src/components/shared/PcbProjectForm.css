@@ -373,6 +373,16 @@
   line-height: 1.5;
 }
 
+.pcb-submit-success {
+  margin: 1rem 0 0;
+  padding: 0.85rem 1rem;
+  border-left: 3px solid var(--pcb-accent);
+  background: #20372a;
+  color: #d0f4dd;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
 .pcb-file-disclosure {
   margin: 0.75rem 0 0;
   color: var(--pcb-secondary);
@@ -497,6 +507,27 @@
 .pcb-button-secondary:hover {
   border-color: var(--pcb-secondary);
   background: #303030;
+}
+
+.pcb-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.pcb-spinner {
+  animation: pcb-spin 900ms linear infinite;
+}
+
+@keyframes pcb-spin {
+  to { transform: rotate(360deg); }
+}
+
+.pcb-honeypot {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }
 
 .pcb-review h3 {

@@ -3,7 +3,6 @@ import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import emailjs from '@emailjs/browser';
 import {
   Mail,
   MapPin,
@@ -15,12 +14,14 @@ import {
   Loader2,
 } from 'lucide-react';
 import ScrollReveal from '@/components/ui/ScrollReveal';
+import { sendWebsiteEnquiry } from '@/lib/enquiry';
 
 const contactSchema = z.object({
   name: z.string().min(2, 'Please enter your name'),
   email: z.string().email('Please enter a valid email address'),
   subject: z.string().min(3, 'Please enter a subject'),
   message: z.string().min(20, 'Please enter a message of at least 20 characters'),
+  website: z.string().optional(),
 });
 
 type ContactFormValues = z.infer<typeof contactSchema>;
@@ -46,16 +47,7 @@ const Contact: React.FC = () => {
   const onSubmit = async (data: ContactFormValues) => {
     setSubmitState('loading');
     try {
-      const { VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_CONTACT_TEMPLATE_ID, VITE_EMAILJS_PUBLIC_KEY } = import.meta.env;
-      if (!VITE_EMAILJS_SERVICE_ID || !VITE_EMAILJS_CONTACT_TEMPLATE_ID || !VITE_EMAILJS_PUBLIC_KEY) {
-        throw new Error('Email delivery is not configured.');
-      }
-      await emailjs.send(
-        VITE_EMAILJS_SERVICE_ID,
-        VITE_EMAILJS_CONTACT_TEMPLATE_ID,
-        { ...data, to_email: 'orders@sorofabrication.in' },
-        { publicKey: VITE_EMAILJS_PUBLIC_KEY },
-      );
+      await sendWebsiteEnquiry('contact', data);
       setSubmitState('success');
       reset();
     } catch {
@@ -161,7 +153,7 @@ const Contact: React.FC = () => {
                     Message Sent!
                   </h2>
                   <p className="text-soro-ink mb-8" style={{ fontFamily: 'Inter, sans-serif' }}>
-                    Thank you. Your message was delivered successfully.
+                    The email service accepted your message for delivery to orders@sorofabrication.in.
                   </p>
                   <button onClick={() => setSubmitState('idle')} className="btn-secondary">
                     Send Another Message
@@ -173,6 +165,10 @@ const Contact: React.FC = () => {
                   className="glass p-8 rounded-2xl space-y-5"
                   noValidate
                 >
+                  <div aria-hidden="true" className="absolute -left-[10000px] h-px w-px overflow-hidden">
+                    <label htmlFor="contactWebsite">Leave this field blank</label>
+                    <input id="contactWebsite" tabIndex={-1} autoComplete="off" {...register('website')} />
+                  </div>
                   <h2 className="text-soro-blue font-bold text-xl mb-2" style={{ fontFamily: 'Outfit, sans-serif' }}>
                     Send Us a Message
                   </h2>
@@ -238,7 +234,7 @@ const Contact: React.FC = () => {
                   {submitState === 'error' && (
                     <div className="flex items-center gap-2 p-4 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
                       <AlertCircle className="w-4 h-4 shrink-0" />
-                      Message delivery failed or is not configured. Please email{' '}
+                      {submitState === 'error' ? 'Message delivery failed or is not configured. Please email ' : ''}
                       <a className="underline" href="mailto:orders@sorofabrication.in">orders@sorofabrication.in</a>.
                     </div>
                   )}

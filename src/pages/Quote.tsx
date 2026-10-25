@@ -3,7 +3,6 @@ import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import emailjs from '@emailjs/browser';
 import { useSearchParams } from 'react-router-dom';
 import {
   CheckCircle,
@@ -13,6 +12,7 @@ import {
   ArrowRight,
 } from 'lucide-react';
 import ScrollReveal from '@/components/ui/ScrollReveal';
+import { sendWebsiteEnquiry } from '@/lib/enquiry';
 
 // ==========================================
 // Zod Validation Schema
@@ -31,6 +31,7 @@ const quoteSchema = z.object({
   deliverables: z.string().optional(),
   designSoftware: z.string().optional(),
   contactMethod: z.string().min(1, 'Please select a preferred contact method'),
+  website: z.string().optional(),
   privacyConsent: z.literal(true, {
     error: () => 'You must agree to the privacy policy to submit',
   }),
@@ -89,16 +90,7 @@ const Quote: React.FC = () => {
     setSubmitState('loading');
 
     try {
-      const { VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_QUOTE_TEMPLATE_ID, VITE_EMAILJS_PUBLIC_KEY } = import.meta.env;
-      if (!VITE_EMAILJS_SERVICE_ID || !VITE_EMAILJS_QUOTE_TEMPLATE_ID || !VITE_EMAILJS_PUBLIC_KEY) {
-        throw new Error('Email delivery is not configured.');
-      }
-      await emailjs.send(
-        VITE_EMAILJS_SERVICE_ID,
-        VITE_EMAILJS_QUOTE_TEMPLATE_ID,
-        { ...data, to_email: 'orders@sorofabrication.in' },
-        { publicKey: VITE_EMAILJS_PUBLIC_KEY },
-      );
+      await sendWebsiteEnquiry('quote', data);
 
       setSubmitState('success');
       reset();
@@ -212,8 +204,8 @@ const Quote: React.FC = () => {
                     className="text-soro-ink mb-8"
                     style={{ fontFamily: 'Inter, sans-serif' }}
                   >
-                    Your enquiry was delivered successfully. SORO can follow up using the contact
-                    details you provided.
+                    The email service accepted your enquiry for delivery to orders@sorofabrication.in.
+                    SORO can follow up using the contact details you provided.
                   </p>
                   <button
                     onClick={() => setSubmitState('idle')}
@@ -228,6 +220,10 @@ const Quote: React.FC = () => {
                   className="glass p-8 rounded-2xl space-y-6"
                   noValidate
                 >
+                  <div aria-hidden="true" className="absolute -left-[10000px] h-px w-px overflow-hidden">
+                    <label htmlFor="quoteWebsite">Leave this field blank</label>
+                    <input id="quoteWebsite" tabIndex={-1} autoComplete="off" {...register('website')} />
+                  </div>
                   <h2
                     className="text-soro-blue font-bold text-xl mb-2"
                     style={{ fontFamily: 'Outfit, sans-serif' }}

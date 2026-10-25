@@ -25,18 +25,32 @@ npm run preview
 
 ## ⚙️ Environment Configuration
 
-1. Copy `.env.example` to `.env`.
-2. Create an EmailJS service and quote/contact templates.
-3. Set `VITE_EMAILJS_SERVICE_ID`, `VITE_EMAILJS_QUOTE_TEMPLATE_ID`, `VITE_EMAILJS_CONTACT_TEMPLATE_ID`, and `VITE_EMAILJS_PUBLIC_KEY` in `.env` and in the Vercel project settings.
+1. Copy `.env.example` to `.env` for local development.
+2. Configure the server-only `RESEND_API_KEY` and `ENQUIRY_FROM_EMAIL` values in the local environment and hosting provider's server environment. Do not prefix either value with `VITE_`.
+3. Set `ENQUIRY_ALLOWED_ORIGINS` to the exact local and production website origins, separated by commas. Do not include a path or trailing slash.
 4. Restart the development server after changing environment variables.
 
-The contact and quote forms report success only after EmailJS confirms delivery. Without these values, submission shows an error and provides the company email as a fallback. File uploads are not enabled.
+The quote, contact, and PCB project forms submit to the same-origin `/api/enquiry` endpoint. It validates input, checks the request origin, uses a honeypot and request-size limits, and applies a best-effort per-process rate limit before asking Resend to send plain-text email to the fixed recipient `orders@sorofabrication.in`. The customer's validated email is set only as `reply_to`; the sender is the server-configured address. A form reports success only after Resend accepts the request. Provider acceptance does not guarantee delivery to the recipient's inbox.
 
-### PCB project form
+### Email provider and mailbox setup
 
-The form at `/pcb-design` currently provides a local, multi-step review only. Project details and selected file objects are not sent to SORO, and selecting files does not upload them. The form supports files up to 500 MB total for local selection and validates their extensions.
+This project uses Resend's server-side email API. No Resend credentials, verified sender, or active provider setup are configured in the repository or local environment. Forms will show a not-configured error until the setup below is completed.
 
-Enabling real project submissions requires a secured server endpoint with server-side input validation, file type and size enforcement, private storage permissions, and a confirmed delivery workflow. Do not treat the browser-only review state as an enquiry received by SORO.
+Create a Resend account, generate a server API key, and verify a sender domain/address that you control. Configure:
+
+- `RESEND_API_KEY` — private server-side Resend API key.
+- `ENQUIRY_FROM_EMAIL` — an address on a domain verified in Resend; never use a customer's address as the sender.
+- `ENQUIRY_ALLOWED_ORIGINS` — exact origins of the deployed website and any permitted local development site.
+
+Add only the DNS records Resend provides for domain verification and email authentication (such as SPF/DKIM and any DMARC guidance). Do not guess DNS values. Separately confirm with the email host that `orders@sorofabrication.in` is an active mailbox or distribution address and that its domain's mail routing is configured. Website configuration alone cannot confirm that this mailbox exists or receives mail.
+
+Vercel is the recommended deployment target because it serves `api/enquiry.ts` as a serverless endpoint. Configure the server-side variables in Vercel project settings for each needed environment. Vite also mounts the endpoint locally for development. Static-only hosting does not provide this API route without deploying an equivalent server function; the forms will not deliver email on an unconfigured static host.
+
+The endpoint's in-memory rate limit is a baseline and is not shared between serverless instances. Configure a platform-level firewall/rate limit or shared rate-limit service before relying on it for production abuse protection.
+
+### PCB project file handling
+
+The PCB form sends selected file names and sizes as enquiry metadata only. File contents are not uploaded, stored, or attached to email. Do not select confidential designs; agree on a secure transfer method with SORO before sharing sensitive project files. Secure uploads require a separate private object-storage integration and server-side file scanning/validation.
 
 ---
 
@@ -95,7 +109,7 @@ npx vercel --prod
 Set environment variables in Vercel → Settings → Environment Variables.
 
 ### Netlify
-Add `public/_redirects` with: `/* /index.html 200`
+Add `public/_redirects` with `/* /index.html 200` for SPA routing, and separately deploy the enquiry handler as a compatible serverless function with the same private environment variables. Without that function, email submissions are unavailable.
 
 ### Manual (any static host)
 ```bash
@@ -103,27 +117,21 @@ npm run build
 # Upload dist/ to your server
 ```
 Configure server to serve `index.html` for all routes (SPA routing).
-
----
-
-## 📮 EmailJS Setup
-
-1. Create account at [emailjs.com](https://www.emailjs.com)
-2. Connect your email (Gmail/Outlook)
-3. Create two templates — Quote and Contact
-4. Copy Service ID, Template IDs, and Public Key to `.env`
-5. Configure the four `VITE_EMAILJS_*` variables in the hosting provider.
+The server must also expose a compatible `/api/enquiry` handler; static files alone cannot deliver enquiries.
 
 ---
 
 ## 🔒 Security
 
 - Never commit `.env` to git (already in `.gitignore`)
+- Keep `RESEND_API_KEY` and email-provider configuration in server-only environment variables; never expose them through Vite client variables.
 - Do not add phone, address, or WhatsApp details until verified
-- File attachments require a secure backend and are currently unavailable
+- Confirm the recipient mailbox and provider DNS settings before production use
+- Configure a hosting-provider firewall or shared rate-limit service for production abuse protection
+- File attachments require separately configured secure storage and are not currently uploaded
 
 ---
 
 ## 📦 Tech Stack
 
-React 19 · Vite 8 · TypeScript 5 · Tailwind CSS 4 · React Router 7 · Framer Motion · React Three Fiber / Three.js · React Hook Form · Zod · Lucide React · EmailJS · React Helmet Async
+React 19 · Vite 8 · TypeScript 6 · Tailwind CSS 4 · React Router 7 · Framer Motion · React Three Fiber / Three.js · React Hook Form · Zod · Lucide React · Resend API (server-side) · React Helmet Async
