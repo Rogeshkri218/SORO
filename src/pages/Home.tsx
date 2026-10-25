@@ -58,9 +58,9 @@ const Home: React.FC = () => (
         </div>
         <div className="relative min-h-[320px] overflow-hidden border border-soro-white/20 bg-soro-blue sm:min-h-[460px]">
           <img
-            src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1400&q=82"
-            alt="Close-up of an electronic circuit board"
-            className="absolute inset-0 h-full w-full object-cover"
+            src="/images/pcb-workstation.png"
+            alt="PCB workstation with a circuit board and design tools"
+            className="absolute inset-0 h-full w-full object-cover object-[center_58%]"
             fetchPriority="high"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-soro-ink/45 via-transparent to-transparent" />
