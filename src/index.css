@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 :root {
+  --header-height: 4.0625rem;
   --color-ivory: #EAE6DE;
   --color-blue: #226192;
   --color-coral: #EF8557;
@@ -49,6 +50,17 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: var(--header-height);
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --header-height: 5.0625rem;
+  }
+}
+
+:target {
+  scroll-margin-top: var(--header-height);
 }
 
 body {
@@ -453,6 +465,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .hero-workstation {
+  min-height: calc(100svh - var(--header-height));
   background-color: var(--color-blue);
   background-image: url('/images/pcb-workstation.png');
   background-repeat: no-repeat;
@@ -476,7 +489,6 @@ h1, h2, h3, h4, h5, h6 {
 
 @media (max-width: 639px) {
   .hero-workstation {
-    min-height: calc(100svh - 4rem);
     background-position: 61% center;
   }
 

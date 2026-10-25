@@ -35,7 +35,7 @@ const Home: React.FC = () => (
       <meta property="og:type" content="website" />
     </Helmet>
 
-    <section className="hero-workstation relative isolate flex min-h-[calc(100svh-5rem)] items-center overflow-hidden text-soro-white">
+    <section className="hero-workstation relative isolate flex items-center overflow-hidden text-soro-white">
       <div className="hero-workstation-overlay absolute inset-0" aria-hidden="true" />
       <div className="container-soro relative z-10 py-20 sm:py-24 lg:py-28">
         <div className="max-w-2xl">

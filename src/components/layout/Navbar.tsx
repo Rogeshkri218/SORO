@@ -18,7 +18,7 @@ const Navbar: React.FC = () => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-soro-border bg-soro-ivory">
+    <nav className="sticky top-0 z-50 border-b border-soro-border bg-soro-ivory">
       <div className="container-soro">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
