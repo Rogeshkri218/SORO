@@ -11,7 +11,7 @@ npm install
 Copy-Item .env.example .env
 ```
 
-Replace placeholder values in the ignored `.env` file. Do not commit it. For local development, set `MONGODB_URI`, `JWT_SECRET`, `CUSTOMER_TOKEN_SECRET`, `ADMIN_EMAIL`, and `FRONTEND_URL` at minimum. For server email and file uploads, configure SMTP and Supabase values as described below.
+Replace placeholder values in the ignored `.env` file. Do not commit it. For local development, set `MONGODB_URI`, `JWT_SECRET`, `CUSTOMER_TOKEN_SECRET`, `ADMIN_EMAIL`, and `CLIENT_ORIGIN` at minimum. For server email and file uploads, configure SMTP and Supabase values as described below.
 
 Run the API and website in separate terminals:
 
@@ -41,7 +41,7 @@ npm run test:server
 - **Project files:** use a private Supabase Storage bucket. The API's service-role key is server-only; the browser receives narrow, short-lived signed-upload tokens.
 - **Email:** the Express API sends SMTP mail only after the submission is persisted.
 
-Set `VITE_API_BASE_URL` in the Vercel build environment to the API origin, with no `/api` suffix, for example `https://api.example.com`. Set `FRONTEND_URL` on Render to the exact frontend origin(s), comma-separated and without paths. Include the Vercel preview origin only if previews should access the production API. Keep `VITE_API_BASE_URL` blank for same-origin local development.
+Set `VITE_API_BASE_URL` in the Vercel build environment to the API origin, with no `/api` suffix, for example `https://api.example.com`. Set `CLIENT_ORIGIN` on Render to the exact frontend origin(s), comma-separated and without paths. Include the Vercel preview origin only if previews should access the production API. Keep `VITE_API_BASE_URL` blank for same-origin local development.
 
 For administrator cookies, prefer a same-site custom API hostname under the same registered domain as the website (for example, a site host and an `api` subdomain). Configure the DNS target exactly as supplied by the hosting providers; do not guess DNS records. If using unrelated `vercel.app` and `onrender.com` origins, API CORS is configured for credentials and cookies use `SameSite=None; Secure`, but browsers that block third-party cookies may prevent persistent admin sessions. A same-site custom hostname or a same-origin API proxy is recommended for production admin use.
 
@@ -53,7 +53,7 @@ Configure these server-only variables in Render's service settings. Never expose
 |---|---|
 | `NODE_ENV` | Set to `production`. |
 | `PORT` | Supplied by Render; the service defaults to `5000` locally. |
-| `FRONTEND_URL` | Exact allowed website origins, separated by commas. |
+| `CLIENT_ORIGIN` | Exact allowed website origins, separated by commas, with no paths. |
 | `MONGODB_URI` | Atlas connection string for a database user with only the required database permissions. |
 | `MONGODB_DB_NAME` | Database name, for example `soro`. |
 | `JWT_SECRET` | At least 32 random characters for administrator sessions. |
@@ -66,6 +66,7 @@ Configure these server-only variables in Render's service settings. Never expose
 | `MAX_UPLOAD_TOTAL_BYTES` | Total per-submission upload limit; default `524288000` (500 MiB). |
 | `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS` | SMTP server credentials. |
 | `SMTP_FROM_EMAIL` | Sender address authorized by the SMTP provider. |
+| `ENQUIRY_RECIPIENT_VERIFIED` | Set to `true` only after confirming that `orders@sorofabrication.in` can receive mail; otherwise admin notification sending remains disabled. |
 | `TRUST_PROXY_HOPS` | Number of trusted reverse-proxy hops; Render's typical default is `1`. |
 | `PUBLIC_API_RATE_LIMIT` | Per-process public request limit per 15-minute window; default `30`. |
 
@@ -84,17 +85,17 @@ On Vercel, the browser-facing public values are `VITE_API_BASE_URL`, `VITE_SUPAB
 2. Set bucket-level file size and MIME restrictions to match the application's configured limits and allowed extensions. Configure the bucket for private access; do not create public read policies.
 3. Add the Supabase project URL and publishable key to Vercel as public `VITE_*` values. Put the service-role key only in Render's server environment.
 4. Configure Supabase Storage CORS to allow the deployed website origins and the required upload method/headers. Use the provider's current dashboard documentation rather than guessing CORS settings.
-5. The application checks extension, declared MIME type, and declared size and confirms the uploaded object and its size. **It does not perform automatic antivirus or magic-byte scanning.** Uploaded files are unavailable for administrator download until an administrator has performed an external safety review and recorded that review in `/admin`. Do not mark a file clean without scanning it with an approved tool. Establish a malware-scanning and retention process before accepting sensitive or production-critical uploads.
+5. The application checks extension, declared MIME type, and declared size and confirms the uploaded object and its size. **It does not perform content inspection, automatic antivirus, or magic-byte scanning.** The admin interface cannot mark files clean, and the API refuses all administrator downloads, including files with a legacy `clean` marker. The only available admin file action is rejection; it does not make a file safe or accessible. Keep the download gate closed until content inspection and malware scanning are genuinely implemented and configured.
 
 Uploads are private and are not attached to enquiry emails. The notification includes filenames, sizes, and upload state only; it does not claim that files were emailed. The public PCB form currently permits up to 50 files, 100 MiB per file, and 500 MiB total. Align Supabase's bucket limits with the backend configuration.
 
 ## SMTP, mailbox, and recipient setup
 
-The server sends administrator notifications to the fixed recipient `orders@sorofabrication.in`; customers' validated addresses are used as `Reply-To`, not as the sender. Customer receipt and status messages use the same verified server sender. The sender must be accepted by the configured SMTP service. A managed transactional provider such as Resend's SMTP service is a suitable option, as is another SMTP provider that supports authenticated sending from a verified domain.
+After the recipient mailbox is confirmed, the server can send administrator notifications to `orders@sorofabrication.in`; until then, the server must leave `ENQUIRY_RECIPIENT_VERIFIED=false` and will not attempt administrator notification delivery. Customers' validated addresses are used as `Reply-To`, not as the sender. Customer receipt and status messages use `SMTP_FROM_EMAIL`; it must be accepted by the configured SMTP service. A managed transactional provider such as Resend's SMTP service is a suitable option, as is another SMTP provider that supports authenticated sending from a verified domain.
 
 No mailbox, SMTP account, credentials, or DNS configuration are verified by this repository. Before production use:
 
-1. Confirm that `orders@sorofabrication.in` is an active mailbox or distribution address and that its mail host is configured to receive mail.
+1. Confirm that `orders@sorofabrication.in` is an active mailbox or distribution address and that its mail host is configured to receive mail. Only after this check, set `ENQUIRY_RECIPIENT_VERIFIED=true` in the backend environment.
 2. Choose an SMTP provider, verify an authorized sender address/domain, and set the provider-issued host, port, username, password, and sender in Render.
 3. Add only the SPF, DKIM, DMARC, or verification DNS records supplied by the provider. Do not invent records.
 4. Submit a controlled enquiry and verify the provider's acceptance and actual mailbox delivery. The UI records notification delivery attempts; SMTP acceptance alone does not guarantee inbox delivery.
@@ -111,7 +112,7 @@ npm run admin:create
 
 The script provisions or rotates the administrator account using bcrypt. Remove the temporary password from `.env` and rotate it after use. Never use the placeholder password in production and never provision an admin from a public endpoint.
 
-The admin site is available at `/admin`. It supports session login/logout, dashboard counts, paginated and searchable enquiry lists, status and internal-note updates, notification status display and retrying failed emails, and project-file review/download. Notification outcomes are also available through the authenticated API. Admin mutations require an HttpOnly session cookie and CSRF token. Download links are short-lived and are generated only after a file has been manually marked clean. Audit events are stored in MongoDB.
+The admin site is available at `/admin`. It supports session login/logout, dashboard counts, paginated and searchable enquiry lists, status and internal-note updates, notification status display and retrying failed emails, and rejection of uploaded files. Notification outcomes are also available through the authenticated API. Admin mutations require an HttpOnly session cookie and CSRF token. File downloads remain disabled until an actual safety-inspection and malware-scanning workflow is implemented and configured. Audit events are stored in MongoDB.
 
 Customer references and private access codes are returned after an enquiry has been persisted. The customer can use them at `/order-status`; confirmation email also includes the access code when SMTP is working. Treat that code as a bearer credential and do not share it publicly.
 
@@ -130,7 +131,8 @@ All endpoints are under `/api`:
 | `GET /admin/dashboard`, `GET /admin/orders` | Summary and paginated/filterable enquiry list. |
 | `GET /admin/orders/:id`, `PATCH /admin/orders/:id/status` | View/update an enquiry. |
 | `POST /admin/orders/:id/notifications/retry`, `GET /admin/notifications` | Retry failed notifications and review notification outcomes. |
-| `PATCH /admin/orders/:id/files/:fileId/scan`, `GET /admin/orders/:id/files/:fileId` | Record manual file review and request a short-lived download URL. |
+| `PATCH /admin/orders/:id/files/:fileId/scan` | Reject an uploaded file; marking a file clean is not supported. |
+| `GET /admin/orders/:id/files/:fileId` | Returns `423` while the file-safety workflow is not implemented. |
 
 Public endpoints validate fields with Zod, require an allowed origin for submissions and login, use honeypot fields and per-process rate limiting, and cap JSON request size. Rate limiting is not shared across Render instances; add a shared limiter or provider-level protection before scaling or relying on it as the only abuse control.
 

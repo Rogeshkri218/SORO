@@ -211,7 +211,7 @@ const Admin = () => {
     }
   };
 
-  const reviewFile = async (file: ProjectFile, status: 'clean' | 'rejected') => {
+  const reviewFile = async (file: ProjectFile) => {
     if (!selectedOrder || busy || reviewNote.trim().length < 10) {
       setError('Enter a review note of at least 10 characters before recording the file review.');
       return;
@@ -224,7 +224,7 @@ const Admin = () => {
         {
           method: 'PATCH',
           headers: { 'X-CSRF-Token': csrfToken },
-          body: JSON.stringify({ status, reviewNote }),
+          body: JSON.stringify({ status: 'rejected', reviewNote }),
         },
       );
       setSelectedOrder((previous) => previous ? {
@@ -238,18 +238,6 @@ const Admin = () => {
       setError(requestError instanceof Error ? requestError.message : 'Could not record the file review.');
     } finally {
       setBusy(false);
-    }
-  };
-
-  const downloadFile = async (file: ProjectFile) => {
-    if (!selectedOrder) return;
-    try {
-      const result = await apiRequest<{ url: string }>(
-        `/admin/orders/${encodeURIComponent(selectedOrder._id)}/files/${encodeURIComponent(file._id)}`,
-      );
-      window.location.assign(result.url);
-    } catch (requestError) {
-      setError(requestError instanceof Error ? requestError.message : 'Could not download this file.');
     }
   };
 
@@ -426,21 +414,18 @@ const Admin = () => {
 
               <section className="admin-files" aria-labelledby="admin-files-title">
                 <h3 id="admin-files-title">Project files ({selectedOrder.files.length})</h3>
+                <p role="note">Automated content inspection and malware scanning are not configured. File downloads remain disabled; files cannot be marked clean here.</p>
                 {selectedOrder.files.length === 0 && <p>No files uploaded.</p>}
                 {selectedOrder.files.map((file) => (
                   <article className="admin-file-card" key={file._id}>
                     <strong>{file.originalName}</strong>
-                    <span>{formatBytes(file.size)} · upload: {file.status} · safety review: {file.scanStatus}</span>
-                    {file.status === 'uploaded' && file.scanStatus === 'clean' && (
-                      <button className="admin-file-action" onClick={() => { void downloadFile(file); }} type="button">Download</button>
-                    )}
+                    <span>{formatBytes(file.size)} · upload: {file.status} · safety review: {file.scanStatus === 'clean' ? 'legacy clean marker (not scanner-verified)' : file.scanStatus}</span>
                     {file.status === 'uploaded' && file.scanStatus === 'pending' && (
                       <div className="admin-file-review">
-                        <label htmlFor={`review-note-${file._id}`}>Record safety review note</label>
+                        <label htmlFor={`review-note-${file._id}`}>Reason for rejecting this file</label>
                         <textarea id={`review-note-${file._id}`} onChange={(event) => setReviewNote(event.target.value)} value={reviewNote} />
                         <div>
-                          <button disabled={busy} onClick={() => { void reviewFile(file, 'clean'); }} type="button">Mark reviewed and clean</button>
-                          <button className="admin-reject" disabled={busy} onClick={() => { void reviewFile(file, 'rejected'); }} type="button">Reject file</button>
+                          <button className="admin-reject" disabled={busy} onClick={() => { void reviewFile(file); }} type="button">Reject file</button>
                         </div>
                       </div>
                     )}

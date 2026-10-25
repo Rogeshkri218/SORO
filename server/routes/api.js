@@ -9,7 +9,7 @@ import { NotificationLog } from '../models/NotificationLog.js';
 import { Submission } from '../models/Submission.js';
 import { clearAdminSession, createAdminSession, authenticateAdmin } from '../middleware/auth.js';
 import { sendStatusNotification, sendSubmissionNotifications } from '../services/email.js';
-import { confirmStoredObject, createSignedDownload, createSignedUpload, validateUploadDetails } from '../services/storage.js';
+import { confirmStoredObject, createSignedUpload, validateUploadDetails } from '../services/storage.js';
 
 const router = Router();
 const allowedProjectTypes = ['pcb-layout', 'pcb-design', 'mechanical-design'];
@@ -257,6 +257,7 @@ const normalizeError = (error, response) => {
   }
   const status = Number.isInteger(error?.statusCode) ? error.statusCode : 500;
   if (status >= 500) {
+    console.error('Request processing failed:', error instanceof Error ? error.name : 'unknown error');
     return response.status(status).json({ error: status === 503 ? error.message : 'The request could not be completed.' });
   }
   return response.status(status).json({ error: error.message });
@@ -360,10 +361,11 @@ router.post('/submissions', async (request, response) => {
 
     try {
       await sendSubmissionNotifications(submission, { accessToken });
-    } catch {
+    } catch (error) {
+      console.error('Submission notification processing failed:', error instanceof Error ? error.name : 'unknown error');
       submission.emailNotifications.admin = 'failed';
       submission.emailNotifications.customer = 'failed';
-      await submission.save().catch(() => undefined);
+      await submission.save();
     }
 
     return response.status(201).json({
@@ -632,10 +634,9 @@ router.get('/admin/orders/:id/files/:fileId', async (request, response, next) =>
     if (!submission) return response.status(404).json({ error: 'Submission was not found.' });
     const file = submission.files.id(request.params.fileId);
     if (!file || file.status !== 'uploaded') return response.status(404).json({ error: 'Uploaded file was not found.' });
-    if (file.scanStatus !== 'clean') {
-      return response.status(423).json({ error: 'This file is unavailable until it has been reviewed for malware.' });
-    }
-    response.json({ url: await createSignedDownload(file.storageKey), expiresInSeconds: 60 });
+    return response.status(423).json({
+      error: 'File downloads are disabled until automated content inspection and malware scanning are configured.',
+    });
   } catch (error) {
     next(error);
   }
@@ -644,7 +645,7 @@ router.get('/admin/orders/:id/files/:fileId', async (request, response, next) =>
 router.patch('/admin/orders/:id/files/:fileId/scan', async (request, response, next) => {
   try {
     const parsed = z.object({
-      status: z.enum(['clean', 'rejected']),
+      status: z.literal('rejected'),
       reviewNote: text(1000, true).min(10),
     }).strict().parse(request.body);
     const query = objectId(request.params.id) ? { _id: request.params.id } : { reference: request.params.id };
@@ -653,16 +654,16 @@ router.patch('/admin/orders/:id/files/:fileId/scan', async (request, response, n
     const file = submission.files.id(request.params.fileId);
     if (!file || file.status !== 'uploaded') return response.status(404).json({ error: 'Uploaded file was not found.' });
     const previousStatus = file.scanStatus;
-    file.scanStatus = parsed.status;
+    file.scanStatus = 'rejected';
     file.scanReviewedAt = new Date();
     file.scanReviewNote = parsed.reviewNote;
-    if (parsed.status === 'rejected') file.status = 'rejected';
+    file.status = 'rejected';
     await submission.save();
     await AuditLog.create({
       admin: request.admin._id,
       action: 'project-file.reviewed',
       submission: submission._id,
-      changes: { fileId: String(file._id), previousStatus, scanStatus: parsed.status, reviewNote: parsed.reviewNote },
+      changes: { fileId: String(file._id), previousStatus, scanStatus: 'rejected', reviewNote: parsed.reviewNote },
       ipAddress: request.ip,
     });
     response.json({ file: { id: file._id, scanStatus: file.scanStatus, status: file.status } });

@@ -5,16 +5,33 @@ import { rateLimit } from 'express-rate-limit';
 import helmet from 'helmet';
 import apiRouter from './routes/api.js';
 
-const getAllowedOrigins = () => (process.env.FRONTEND_URL || '')
-  .split(',')
-  .map((origin) => origin.trim())
-  .filter(Boolean)
-  .map((origin) => new URL(origin).origin);
+const getAllowedOrigins = () => {
+  const configuredOrigins = process.env.CLIENT_ORIGIN ?? process.env.FRONTEND_URL ?? '';
+  return configuredOrigins.split(',').map((value) => {
+    const origin = value.trim();
+    if (!origin) return null;
+    let parsed;
+    try {
+      parsed = new URL(origin);
+    } catch {
+      throw Object.assign(new Error('CLIENT_ORIGIN must contain valid HTTP or HTTPS origins.'), { statusCode: 500 });
+    }
+    if (!['http:', 'https:'].includes(parsed.protocol) || parsed.origin !== origin || parsed.pathname !== '/' || parsed.search || parsed.hash) {
+      throw Object.assign(new Error('CLIENT_ORIGIN must contain valid HTTP or HTTPS origins.'), { statusCode: 500 });
+    }
+    return parsed.origin;
+  }).filter(Boolean);
+};
 
 export const createApp = () => {
+  const allowedOrigins = getAllowedOrigins();
   const app = express();
   app.disable('x-powered-by');
-  app.set('trust proxy', Number(process.env.TRUST_PROXY_HOPS || 1));
+  const trustedProxyHops = Number(process.env.TRUST_PROXY_HOPS ?? 1);
+  if (!Number.isInteger(trustedProxyHops) || trustedProxyHops < 0) {
+    throw new Error('TRUST_PROXY_HOPS must be a non-negative integer.');
+  }
+  app.set('trust proxy', trustedProxyHops);
 
   app.use(helmet({
     crossOriginResourcePolicy: { policy: 'cross-origin' },
@@ -22,9 +39,8 @@ export const createApp = () => {
   }));
   app.use(cors({
     origin(origin, callback) {
-      const allowedOrigins = getAllowedOrigins();
       if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
-      return callback(new Error('Origin is not allowed.'));
+      return callback(Object.assign(new Error('Origin is not allowed.'), { statusCode: 403 }));
     },
     credentials: true,
     methods: ['GET', 'POST', 'PATCH', 'OPTIONS'],
@@ -36,9 +52,13 @@ export const createApp = () => {
   }));
   app.use(cookieParser());
 
+  const publicRequestLimit = Number(process.env.PUBLIC_API_RATE_LIMIT ?? 30);
+  if (!Number.isInteger(publicRequestLimit) || publicRequestLimit < 1) {
+    throw new Error('PUBLIC_API_RATE_LIMIT must be a positive integer.');
+  }
   const publicLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
-    limit: Number(process.env.PUBLIC_API_RATE_LIMIT || 30),
+    limit: publicRequestLimit,
     standardHeaders: 'draft-8',
     legacyHeaders: false,
     message: { error: 'Too many requests. Please try again later.' },
@@ -51,9 +71,20 @@ export const createApp = () => {
   app.use((error, request, response, next) => {
     if (response.headersSent) return next(error);
     if (error?.type === 'entity.too.large') return response.status(413).json({ error: 'Request is too large.' });
-    if (error?.message === 'Origin is not allowed.') return response.status(403).json({ error: 'Request origin is not allowed.' });
-    if (error?.name === 'SyntaxError' && error?.status === 400) return response.status(400).json({ error: 'Request JSON is invalid.' });
-    return response.status(500).json({ error: 'The request could not be completed.' });
+    if (error?.statusCode === 403 || error?.message === 'Origin is not allowed.') {
+      return response.status(403).json({ error: 'Request origin is not allowed.' });
+    }
+    if (error?.type === 'entity.parse.failed' || error?.name === 'SyntaxError' && error?.status === 400) {
+      return response.status(400).json({ error: 'Request JSON is invalid.' });
+    }
+    console.error('API request failed:', error instanceof Error ? error.name : 'unknown error');
+    return response.status(Number.isInteger(error?.statusCode) && error.statusCode >= 400 && error.statusCode < 500
+      ? error.statusCode
+      : 500).json({
+      error: error?.statusCode === 503 && typeof error.message === 'string'
+        ? error.message
+        : 'The request could not be completed.',
+    });
   });
 
   return app;

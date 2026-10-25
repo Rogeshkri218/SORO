@@ -48,7 +48,9 @@ export const authenticateAdmin = async (request, response, next) => {
   try {
     const admin = await AdminUser.findOne({ _id: claims.sub, active: true, role: 'admin' })
       .select('_id email role active');
-    if (!admin) return response.status(401).json({ error: 'Administrator authentication is required.' });
+    if (!admin || admin.active !== true || admin.role !== 'admin') {
+      return response.status(401).json({ error: 'Administrator authentication is required.' });
+    }
     request.admin = admin;
     request.csrfToken = claims.csrf;
     return next();
