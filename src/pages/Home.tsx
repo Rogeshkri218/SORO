@@ -28,35 +28,35 @@ const Home: React.FC = () => (
       <title>SORO Fabrications | Electronic Product Development &amp; Prototyping</title>
       <meta
         name="description"
-        content="Electronic product development, PCB engineering, and rapid prototyping. Discuss your next engineering project with SORO Fabrications."
+        content="From concept to prototype, we bring your ideas to life with reliable and efficient PCB design and manufacturing support."
       />
       <meta property="og:title" content="SORO Fabrications Private Limited" />
       <meta property="og:description" content="Electronic product development, PCB engineering, and rapid prototyping." />
       <meta property="og:type" content="website" />
     </Helmet>
 
-    <section className="bg-soro-ivory pb-16 pt-32 text-soro-blue sm:pb-24 sm:pt-40">
+    <section className="bg-soro-blue pb-16 pt-32 text-soro-white sm:pb-24 sm:pt-40">
       <div className="container-soro grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
         <div className="max-w-2xl">
-          <p className="mb-6 text-sm font-semibold uppercase tracking-[0.16em] text-soro-coral">
-            Electronic product development · PCB engineering · rapid prototyping
+          <p className="hero-stagger-in mb-6 text-sm font-semibold uppercase tracking-[0.16em] text-soro-coral" style={{ animationDelay: '80ms' }}>
+            PRECISION · INNOVATION · RELIABILITY
           </p>
-          <h1 className="text-hero max-w-2xl text-soro-blue">Engineering Ideas Into Products That Work.</h1>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-soro-ink">
-            Electronic product development, PCB engineering and rapid prototyping—with a vision to
-            build our own product range.
+          <h1 className="hero-stagger-in text-hero max-w-2xl text-soro-white" style={{ animationDelay: '180ms' }}>
+            Custom PCB Design
+            <span className="block text-soro-coral">&amp; Assembly Solutions</span>
+          </h1>
+          <p className="hero-stagger-in mt-6 max-w-xl text-lg leading-relaxed text-soro-white/85" style={{ animationDelay: '280ms' }}>
+            From concept to prototype, we bring your ideas to life with reliable and efficient PCB
+            design and manufacturing support.
           </p>
-          <div className="mt-9 flex flex-wrap gap-3">
+          <div className="hero-stagger-in mt-9 flex flex-wrap gap-3" style={{ animationDelay: '380ms' }}>
             <Link to="/quote" className="btn-orange">
               Request a Quote <ArrowRight aria-hidden="true" className="h-4 w-4" />
             </Link>
-            <Link to="/services" className="btn-secondary">Explore Our Capabilities</Link>
+            <Link to="/services" className="btn-secondary btn-secondary-on-dark">Explore Our Capabilities</Link>
           </div>
-          <p className="mt-8 text-sm text-soro-ink">
-            SORO Fabrications Private Limited · Design · Fabricate · Innovate
-          </p>
         </div>
-        <div className="relative min-h-[320px] overflow-hidden border border-soro-border bg-soro-blue sm:min-h-[460px]">
+        <div className="relative min-h-[320px] overflow-hidden border border-soro-white/20 bg-soro-blue sm:min-h-[460px]">
           <img
             src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1400&q=82"
             alt="Close-up of an electronic circuit board"
