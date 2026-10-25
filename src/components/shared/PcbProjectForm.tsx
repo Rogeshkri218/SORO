@@ -1,4 +1,5 @@
 import { useRef, useState, type DragEvent, type KeyboardEvent } from 'react';
+import { createClient } from '@supabase/supabase-js';
 import {
   AlertCircle,
   Box,
@@ -12,7 +13,7 @@ import {
   Trash2,
   Upload,
 } from 'lucide-react';
-import { sendWebsiteEnquiry } from '@/lib/enquiry';
+import { apiRequest, sendWebsiteEnquiry, type SubmissionResponse } from '@/lib/api';
 import './PcbProjectForm.css';
 
 type ProjectType = 'pcb-layout' | 'pcb-design' | 'mechanical-design';
@@ -26,6 +27,13 @@ interface ProjectRequirements {
   quantity: string;
   deliverables: string[];
   constraints: string;
+  specifications: {
+    dimensions: string;
+    layers: string;
+    material: string;
+    copperThickness: string;
+    surfaceFinish: string;
+  };
 }
 
 interface ContactDetails {
@@ -39,6 +47,7 @@ interface ContactDetails {
 
 const MAX_DESCRIPTION_LENGTH = 10_000;
 const MAX_TOTAL_FILE_BYTES = 500 * 1024 * 1024;
+const MAX_FILE_BYTES = 100 * 1024 * 1024;
 const ACCEPTED_EXTENSIONS = [
   '.pdf', '.png', '.jpg', '.jpeg', '.zip', '.7z', '.sch', '.kicad_sch',
   '.kicad_pcb', '.brd', '.pcbdoc', '.schdoc', '.step', '.stp', '.stl',
@@ -83,9 +92,9 @@ const deliverableOptions = [
 ];
 
 const emptyRequirements = (): Record<ProjectType, ProjectRequirements> => ({
-  'pcb-layout': { software: '', softwareOther: '', description: '', quantity: '', deliverables: [], constraints: '' },
-  'pcb-design': { software: '', softwareOther: '', description: '', quantity: '', deliverables: [], constraints: '' },
-  'mechanical-design': { software: '', softwareOther: '', description: '', quantity: '', deliverables: [], constraints: '' },
+  'pcb-layout': { software: '', softwareOther: '', description: '', quantity: '', deliverables: [], constraints: '', specifications: { dimensions: '', layers: '', material: '', copperThickness: '', surfaceFinish: '' } },
+  'pcb-design': { software: '', softwareOther: '', description: '', quantity: '', deliverables: [], constraints: '', specifications: { dimensions: '', layers: '', material: '', copperThickness: '', surfaceFinish: '' } },
+  'mechanical-design': { software: '', softwareOther: '', description: '', quantity: '', deliverables: [], constraints: '', specifications: { dimensions: '', layers: '', material: '', copperThickness: '', surfaceFinish: '' } },
 });
 
 const emptyContact: ContactDetails = {
@@ -123,10 +132,13 @@ const PcbProjectForm = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitState, setSubmitState] = useState<SubmitState>('idle');
   const [submitError, setSubmitError] = useState('');
+  const [savedSubmission, setSavedSubmission] = useState<SubmissionResponse | null>(null);
+  const [uploadedFileKeys, setUploadedFileKeys] = useState<string[]>([]);
   const [website, setWebsite] = useState('');
   const [dragging, setDragging] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const requestId = useRef(crypto.randomUUID());
 
   const currentRequirements = requirements[projectType];
   const activeProject = projectTypes.find((type) => type.id === projectType)!;
@@ -185,6 +197,18 @@ const PcbProjectForm = () => {
       }
       const key = fileKey(file);
       if (knownFileKeys.has(key)) continue;
+      if (file.size === 0) {
+        messages.push(`${file.name}: empty files cannot be uploaded.`);
+        continue;
+      }
+      if (file.size > MAX_FILE_BYTES) {
+        messages.push(`${file.name}: each file must be no larger than 100 MB.`);
+        continue;
+      }
+      if (files.length + accepted.length >= 50) {
+        messages.push('A maximum of 50 files can be selected.');
+        continue;
+      }
       if (projectedBytes + file.size > MAX_TOTAL_FILE_BYTES) {
         messages.push(`${file.name}: adding this file would exceed the 500 MB total selection limit.`);
         continue;
@@ -249,20 +273,69 @@ const PcbProjectForm = () => {
     if (submitState === 'loading' || submitState === 'success') return;
     setSubmitState('loading');
     setSubmitError('');
+    let persistedSubmission = savedSubmission;
     try {
-      await sendWebsiteEnquiry('pcb-project', {
-        projectType,
-        ...currentRequirements,
-        deadline: contact.deadline,
-        contactMethod: contact.contactMethod,
-        contact,
-        selectedFiles: files.map(({ name, size }) => ({ name, size })),
-        website,
-      });
+      const result = persistedSubmission ?? await sendWebsiteEnquiry('pcb-project', {
+          projectType,
+          ...currentRequirements,
+          deadline: contact.deadline,
+          contactMethod: contact.contactMethod,
+          contact,
+          selectedFiles: files.map(({ name, size, type }) => ({ name, size, contentType: type })),
+          website,
+        }, requestId.current);
+      if (!persistedSubmission) {
+        persistedSubmission = result;
+        setSavedSubmission(result);
+      }
+
+      const remainingFiles = files.filter((file) => !uploadedFileKeys.includes(fileKey(file)));
+      if (remainingFiles.length > 0) {
+        const storageUrl = import.meta.env.VITE_SUPABASE_URL;
+        const storageKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+        if (!storageUrl || !storageKey) {
+          throw new Error(`Submission ${result.submission.reference} was saved, but private file storage is not configured. Contact SORO to arrange a secure file transfer.`);
+        }
+        const client = createClient(storageUrl, storageKey, {
+          auth: { autoRefreshToken: false, persistSession: false },
+        });
+        const bucket = import.meta.env.VITE_SUPABASE_STORAGE_BUCKET || 'soro-project-files';
+        for (const file of remainingFiles) {
+          const signedResponse = await apiRequest<{
+            uploads: Array<{ fileId: string; path: string; token: string; alreadyUploaded?: boolean }>;
+          }>(`/submissions/${encodeURIComponent(result.submission.reference)}/uploads/sign`, {
+            method: 'POST',
+            headers: { 'X-Submission-Token': result.accessToken },
+            body: JSON.stringify({
+              files: [{ name: file.name, size: file.size, contentType: file.type || 'application/octet-stream' }],
+            }),
+          });
+          const signed = signedResponse.uploads[0];
+          if (!signed) throw new Error('Storage did not return a secure upload URL.');
+          if (!signed.alreadyUploaded) {
+            const { error } = await client.storage.from(bucket).uploadToSignedUrl(
+              signed.path,
+              signed.token,
+              file,
+              { contentType: file.type || 'application/octet-stream', upsert: false },
+            );
+            if (error) throw new Error(`Could not upload ${file.name}. Please retry the submission.`);
+          }
+          await apiRequest(`/submissions/${encodeURIComponent(result.submission.reference)}/uploads/${signed.fileId}/complete`, {
+            method: 'POST',
+            headers: { 'X-Submission-Token': result.accessToken },
+          });
+          setUploadedFileKeys((previous) => [...previous, fileKey(file)]);
+        }
+      }
       setSubmitState('success');
     } catch (error) {
       setSubmitState('error');
-      setSubmitError(error instanceof Error ? error.message : 'Your enquiry could not be delivered. Please retry.');
+      const message = error instanceof Error ? error.message : 'Your enquiry could not be delivered. Please retry.';
+      const savedReference = persistedSubmission?.submission.reference;
+      setSubmitError(savedReference && !message.includes(savedReference)
+        ? `Submission ${savedReference} was saved. ${message}`
+        : message);
     }
   };
 
@@ -359,6 +432,35 @@ const PcbProjectForm = () => {
                   </div>
                 </div>
 
+                {projectType !== 'mechanical-design' && (
+                  <fieldset className="pcb-field pcb-specifications">
+                    <legend>PCB Manufacturing Specifications <span className="pcb-optional">Optional</span></legend>
+                    <div className="pcb-form-grid">
+                      {([
+                        ['dimensions', 'Board Dimensions', 'e.g. 50 x 40 mm'],
+                        ['layers', 'Number of Layers', 'e.g. 2 or 4'],
+                        ['material', 'Board Material', 'e.g. FR-4'],
+                        ['copperThickness', 'Copper Thickness', 'e.g. 1 oz'],
+                        ['surfaceFinish', 'Surface Finish', 'e.g. HASL or ENIG'],
+                      ] as const).map(([field, label, placeholder]) => (
+                        <div className="pcb-field" key={field}>
+                          <label htmlFor={`pcb-${field}`}>{label}</label>
+                          <input
+                            className="pcb-input"
+                            id={`pcb-${field}`}
+                            onChange={(event) => updateRequirement('specifications', {
+                              ...currentRequirements.specifications,
+                              [field]: event.target.value,
+                            })}
+                            placeholder={placeholder}
+                            value={currentRequirements.specifications[field]}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </fieldset>
+                )}
+
                 <div className="pcb-field pcb-description-field">
                   <label htmlFor="pcb-description">Project Details <span className="pcb-required">Required</span></label>
                   <textarea
@@ -441,15 +543,15 @@ const PcbProjectForm = () => {
                   >
                     <Upload aria-hidden="true" />
                     <button className="pcb-upload-button" onClick={() => inputRef.current?.click()} type="button">
-                      Click to Upload Files (Up to 500MB)
+                      Click to Upload Files (Up to 100MB each)
                     </button>
                     <p>or drag and drop files here</p>
                     <span>Design files, schematics, PCB layouts, CAD models, drawings, BOMs, or reference documents.</span>
                   </div>
                   <FormError id="pcb-files-error">{fileErrors.join(' ')}</FormError>
                   <p className="pcb-file-disclosure">
-                    Accepted: {ACCEPTED_EXTENSIONS.join(', ')}. Proprietary formats may require compatible receiving software.
-                    Selections remain in this browser; files are not uploaded. Do not select confidential or sensitive designs.
+                    Accepted: {ACCEPTED_EXTENSIONS.join(', ')}. Up to 500 MB total and 100 MB per file.
+                    Files upload to private storage after you submit. Do not upload confidential designs without agreed handling terms.
                   </p>
                   {files.length > 0 && (
                     <ul className="pcb-file-list" aria-label="Selected files">
@@ -576,7 +678,7 @@ const PcbProjectForm = () => {
           {step === 3 && (
             <div className="pcb-review">
               <h3>Review your project request</h3>
-              <p className="pcb-review-intro">Check your details. Nothing will be sent or uploaded from this page.</p>
+              <p className="pcb-review-intro">Check your details before submitting your enquiry and securely uploading selected files.</p>
               <section className="pcb-review-group">
                 <h4>Project requirements</h4>
                 <dl>
@@ -589,6 +691,16 @@ const PcbProjectForm = () => {
                   <div><dt>Expected quantity</dt><dd>{currentRequirements.quantity || 'Not specified'}</dd></div>
                   <div><dt>Preferred deliverables</dt><dd>{currentRequirements.deliverables.join(', ') || 'Not specified'}</dd></div>
                   <div><dt>Additional constraints</dt><dd className="pcb-review-prewrap">{currentRequirements.constraints || 'Not specified'}</dd></div>
+                  {projectType !== 'mechanical-design' && (
+                    <div>
+                      <dt>PCB manufacturing specifications</dt>
+                      <dd>
+                        {Object.entries(currentRequirements.specifications)
+                          .filter(([, value]) => value)
+                          .map(([key, value]) => `${key}: ${value}`).join('; ') || 'Not specified'}
+                      </dd>
+                    </div>
+                  )}
                   <div><dt>Selected file names and sizes</dt><dd>{files.length ? files.map((file) => `${file.name} (${formatFileSize(file.size)})`).join('; ') : 'No files selected'}</dd></div>
                 </dl>
               </section>
@@ -606,8 +718,8 @@ const PcbProjectForm = () => {
               <div className="pcb-upload-pending" role="note">
                 <AlertCircle aria-hidden="true" />
                 <p>
-                  <strong>Files are not uploaded or attached.</strong> The enquiry email includes selected file names and sizes only.
-                  Do not select confidential designs; agree a secure transfer method with SORO before sharing sensitive files.
+                  <strong>Files are stored privately, not attached to email.</strong> Administrator access remains blocked until each file has been reviewed for safety.
+                  Avoid uploading confidential or sensitive material unless the handling process has been agreed with SORO.
                 </p>
               </div>
               <div aria-hidden="true" className="pcb-honeypot">
@@ -621,20 +733,33 @@ const PcbProjectForm = () => {
                 />
               </div>
               {submitState === 'success' && (
-                <p className="pcb-submit-success" role="status">
-                  Your enquiry was accepted by the email service for delivery to orders@sorofabrication.in.
-                  Selected files were not uploaded or attached.
-                </p>
+                <div className="pcb-submit-success" role="status">
+                  <strong>Submission saved: {savedSubmission?.submission.reference}</strong>
+                  <span> Status: {savedSubmission?.submission.status}.</span>
+                  {savedSubmission?.accessToken && (
+                    <span>
+                      Keep this private access code to check progress at the <a href="/order-status">Order Status page</a>: <code>{savedSubmission.accessToken}</code>
+                    </span>
+                  )}
+                  {savedSubmission?.submission.emailNotifications.admin !== 'sent' && (
+                    <span> The administrator email notification is not confirmed; please follow up at orders@sorofabrication.in.</span>
+                  )}
+                </div>
               )}
               {submitState === 'error' && (
                 <p className="pcb-submit-notice" role="alert">
                   {submitError} Selected information is still available here so you can retry.
+                  {savedSubmission?.accessToken && (
+                    <span>
+                      {' '}Your saved reference is {savedSubmission.submission.reference}; keep access code <code>{savedSubmission.accessToken}</code> to check status.
+                    </span>
+                  )}
                 </p>
               )}
               <div className="pcb-form-actions">
                 <button
                   className="pcb-button pcb-button-secondary"
-                  disabled={submitState === 'loading'}
+                  disabled={submitState === 'loading' || Boolean(savedSubmission)}
                   onClick={() => { setSubmitState('idle'); setSubmitError(''); setStep(2); }}
                   type="button"
                 >
@@ -652,11 +777,11 @@ const PcbProjectForm = () => {
                     </>
                   ) : submitState === 'success' ? (
                     <>
-                      <Check aria-hidden="true" /> Request Sent
+                      <Check aria-hidden="true" /> Submission Saved
                     </>
                   ) : (
                     <>
-                      Submit Project Request <ChevronRight aria-hidden="true" />
+                      {savedSubmission ? 'Retry File Upload' : 'Submit Project Request'} <ChevronRight aria-hidden="true" />
                     </>
                   )}
                 </button>

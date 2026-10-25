@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -12,7 +12,7 @@ import {
   ArrowRight,
 } from 'lucide-react';
 import ScrollReveal from '@/components/ui/ScrollReveal';
-import { sendWebsiteEnquiry } from '@/lib/enquiry';
+import { sendWebsiteEnquiry, type SubmissionResponse } from '@/lib/api';
 
 // ==========================================
 // Zod Validation Schema
@@ -75,7 +75,11 @@ const FieldError: React.FC<{ message?: string }> = ({ message }) =>
 // ==========================================
 const Quote: React.FC = () => {
   const [submitState, setSubmitState] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [submission, setSubmission] = useState<SubmissionResponse['submission'] | null>(null);
+  const [accessCode, setAccessCode] = useState('');
+  const [submitError, setSubmitError] = useState('');
   const [searchParams] = useSearchParams();
+  const requestId = useRef(crypto.randomUUID());
 
   const {
     register,
@@ -88,14 +92,19 @@ const Quote: React.FC = () => {
 
   const onSubmit = async (data: QuoteFormValues) => {
     setSubmitState('loading');
+    setSubmitError('');
 
     try {
-      await sendWebsiteEnquiry('quote', data);
+      const result = await sendWebsiteEnquiry('quote', data, requestId.current);
+      setSubmission(result.submission);
+      setAccessCode(result.accessToken);
 
       setSubmitState('success');
       reset();
-    } catch {
+      requestId.current = crypto.randomUUID();
+    } catch (error) {
       setSubmitState('error');
+      setSubmitError(error instanceof Error ? error.message : 'Your enquiry could not be saved. Please retry.');
     }
   };
 
@@ -204,8 +213,16 @@ const Quote: React.FC = () => {
                     className="text-soro-ink mb-8"
                     style={{ fontFamily: 'Inter, sans-serif' }}
                   >
-                    The email service accepted your enquiry for delivery to orders@sorofabrication.in.
-                    SORO can follow up using the contact details you provided.
+                    Your enquiry was saved as {submission?.reference ?? 'an enquiry'}. SORO can follow up using the contact details you provided.
+                  </p>
+                  {submission?.emailNotifications.admin !== 'sent' && (
+                    <p className="text-soro-ink mb-6 text-sm">
+                      The submission is saved, but the email notification to SORO is not confirmed. Please follow up at orders@sorofabrication.in.
+                    </p>
+                  )}
+                  <p className="text-soro-ink mb-4 text-sm">
+                    Keep this private access code to check progress on the <a className="text-soro-blue underline" href="/order-status">Order Status page</a>:
+                    <br /><code className="select-all break-all">{accessCode}</code>
                   </p>
                   <button
                     onClick={() => setSubmitState('idle')}
@@ -451,7 +468,7 @@ const Quote: React.FC = () => {
                   <details className="border-t border-soro-border/60 pt-4 text-sm text-soro-ink">
                     <summary className="cursor-pointer font-semibold text-soro-blue">Privacy notice</summary>
                     <p className="mt-3 leading-relaxed">
-                      When email delivery is configured, the details entered here are sent through the configured form provider to the intended SORO enquiry mailbox. Do not submit confidential design files or trade secrets through this form. SORO should confirm its full privacy and retention terms before launch.
+                      Your enquiry details are submitted to SORO's website service and stored for follow-up. An email notification is sent to the official enquiry mailbox when SMTP delivery is configured. Do not submit confidential design files or trade secrets through this form. SORO should confirm its full privacy and retention terms before launch.
                     </p>
                   </details>
 
@@ -459,7 +476,7 @@ const Quote: React.FC = () => {
                   {submitState === 'error' && (
                     <div className="flex items-center gap-2 p-4 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
                       <AlertCircle className="w-4 h-4 shrink-0" />
-                      Delivery failed or is not configured. Please try again or email{' '}
+                      {submitError || 'Your enquiry could not be saved. Please try again or email'}{' '}
                       <a className="underline" href="mailto:orders@sorofabrication.in">orders@sorofabrication.in</a>.
                     </div>
                   )}
@@ -496,7 +513,7 @@ const Quote: React.FC = () => {
                       className="text-soro-ink text-xs"
                       style={{ fontFamily: 'Inter, sans-serif' }}
                     >
-                      Your enquiry is sent only after the configured email service confirms delivery.
+                      Your enquiry is saved first; the notification status is shown after submission.
                     </span>
                   </div>
                 </form>

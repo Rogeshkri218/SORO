@@ -1,0 +1,97 @@
+.soro-order-status {
+  min-height: 70vh;
+  padding: clamp(2rem, 5vw, 4rem) max(1rem, calc((100vw - 900px) / 2));
+  background: var(--color-ivory, #EAE6DE);
+  color: var(--color-text, #252B30);
+}
+
+.order-status-card,
+.order-status-result {
+  margin-bottom: 1.25rem;
+  padding: clamp(1.4rem, 4vw, 2.5rem);
+  border: 1px solid var(--color-border, #D4CEC4);
+  border-radius: 0.75rem;
+  background: #fff;
+  box-shadow: 0 0.5rem 1.5rem rgb(37 43 48 / 6%);
+}
+
+.order-status-kicker {
+  margin: 0 0 0.5rem;
+  color: var(--color-coral, #EF8557);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.order-status-card h1,
+.order-status-result h2,
+.order-status-result h3 {
+  color: var(--color-blue, #226192);
+}
+
+.order-status-card > p:not(.order-status-kicker) {
+  line-height: 1.6;
+}
+
+.order-status-card form {
+  display: grid;
+  gap: 0.7rem;
+  max-width: 34rem;
+  margin-top: 1.5rem;
+}
+
+.order-status-card label {
+  color: var(--color-blue, #226192);
+  font-weight: 700;
+}
+
+.order-status-card input {
+  min-height: 2.8rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--color-border, #D4CEC4);
+  border-radius: 0.4rem;
+  background: #fff;
+  color: var(--color-text, #252B30);
+  font: inherit;
+}
+
+.order-status-card input:focus-visible,
+.soro-order-status button:focus-visible {
+  outline: 3px solid var(--color-coral, #EF8557);
+  outline-offset: 2px;
+}
+
+.soro-order-status button {
+  min-height: 2.75rem;
+  margin-top: 0.4rem;
+  padding: 0.65rem 0.9rem;
+  border: 0;
+  border-radius: 0.4rem;
+  background: var(--color-coral, #EF8557);
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+}
+
+.soro-order-status button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.order-status-error {
+  margin: 0;
+  color: #8b2e18;
+}
+
+.order-status-result ul {
+  padding-left: 1.25rem;
+}
+
+.order-status-private {
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--color-border, #D4CEC4);
+  color: #5b6469;
+  font-size: 0.9rem;
+}

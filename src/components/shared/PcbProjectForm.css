@@ -5,18 +5,18 @@
 }
 
 .pcb-project-form {
-  --pcb-panel: #202020;
-  --pcb-input: #303030;
-  --pcb-border: #484848;
-  --pcb-accent: #00B84A;
-  --pcb-secondary: #B8B8B8;
+  --pcb-panel: #FFFFFF;
+  --pcb-input: #EAE6DE;
+  --pcb-border: #D4CEC4;
+  --pcb-accent: #EF8557;
+  --pcb-secondary: #586168;
   max-width: 920px;
   margin: 0 auto;
   padding: clamp(1.25rem, 4vw, 3rem);
   border: 1px solid var(--pcb-border);
   border-radius: 1rem;
   background: var(--pcb-panel);
-  color: #fff;
+  color: #252B30;
 }
 
 .pcb-form-heading {
@@ -34,7 +34,7 @@
 
 .pcb-form-heading h2 {
   margin: 0;
-  color: #fff;
+  color: #226192;
   font-size: clamp(1.75rem, 4vw, 2.5rem);
   font-weight: 700;
 }
@@ -70,7 +70,7 @@
 }
 
 .pcb-step.is-active {
-  color: #fff;
+  color: #226192;
 }
 
 .pcb-step-number {
@@ -88,7 +88,7 @@
 .pcb-step.is-active .pcb-step-number {
   border-color: var(--pcb-accent);
   background: var(--pcb-accent);
-  color: #111;
+  color: #252B30;
   font-weight: 700;
 }
 
@@ -175,7 +175,7 @@
   flex-wrap: wrap;
   gap: 0.5rem;
   margin-bottom: 0.55rem;
-  color: #fff;
+  color: #252B30;
   font-size: 0.9rem;
   font-weight: 600;
 }
@@ -199,7 +199,7 @@
   border: 1px solid var(--pcb-border);
   border-radius: 0.4rem;
   background: var(--pcb-input);
-  color: #fff;
+  color: #252B30;
   font: inherit;
   font-size: 0.9rem;
 }
@@ -256,7 +256,7 @@
   align-items: flex-start;
   gap: 0.4rem;
   margin: 0.5rem 0 0;
-  color: #ffad8d;
+  color: #9b3320;
   font-size: 0.8rem;
   line-height: 1.45;
 }
@@ -338,7 +338,7 @@
 
 .pcb-dropzone.is-dragging {
   border-color: var(--pcb-accent);
-  background: #26372c;
+  background: #f8e5db;
 }
 
 .pcb-dropzone > svg {
@@ -361,7 +361,7 @@
 
 .pcb-dropzone p {
   margin: 0.25rem 0;
-  color: #fff;
+  color: #252B30;
   font-size: 0.85rem;
 }
 
@@ -377,8 +377,8 @@
   margin: 1rem 0 0;
   padding: 0.85rem 1rem;
   border-left: 3px solid var(--pcb-accent);
-  background: #20372a;
-  color: #d0f4dd;
+  background: #f7eee9;
+  color: #252B30;
   font-size: 0.85rem;
   line-height: 1.5;
 }
@@ -418,7 +418,7 @@
 
 .pcb-file-name {
   overflow: hidden;
-  color: #fff;
+  color: #252B30;
   font-size: 0.82rem;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -491,22 +491,22 @@
 
 .pcb-button-primary {
   background: var(--pcb-accent);
-  color: #111;
+  color: #252B30;
 }
 
 .pcb-button-primary:hover {
-  background: #19cf63;
+  background: #e97848;
 }
 
 .pcb-button-secondary {
   border-color: var(--pcb-border);
   background: transparent;
-  color: #fff;
+  color: #226192;
 }
 
 .pcb-button-secondary:hover {
   border-color: var(--pcb-secondary);
-  background: #303030;
+  background: #EAE6DE;
 }
 
 .pcb-button:disabled {
@@ -532,7 +532,7 @@
 
 .pcb-review h3 {
   margin: 0;
-  color: #fff;
+  color: #226192;
   font-size: 1.35rem;
 }
 
@@ -576,7 +576,7 @@
 .pcb-review-group dd {
   min-width: 0;
   margin: 0;
-  color: #fff;
+  color: #252B30;
   font-size: 0.85rem;
   overflow-wrap: anywhere;
 }
@@ -590,10 +590,10 @@
   gap: 0.75rem;
   margin-top: 1rem;
   padding: 1rem;
-  border: 1px solid #5e533e;
+  border: 1px solid #D4CEC4;
   border-radius: 0.45rem;
-  background: #302d26;
-  color: #f0dfb8;
+  background: #f2f5f6;
+  color: #252B30;
 }
 
 .pcb-upload-pending svg {

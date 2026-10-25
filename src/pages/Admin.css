@@ -1,0 +1,399 @@
+.soro-admin {
+  min-height: 70vh;
+  padding: clamp(2rem, 5vw, 4rem) max(1rem, calc((100vw - 1440px) / 2));
+  background: var(--color-ivory, #EAE6DE);
+  color: var(--color-text, #252B30);
+}
+
+.admin-login-card,
+.admin-stat-card,
+.admin-orders-panel,
+.admin-detail-panel {
+  border: 1px solid var(--color-border, #D4CEC4);
+  border-radius: 0.75rem;
+  background: #fff;
+  box-shadow: 0 0.5rem 1.5rem rgb(37 43 48 / 6%);
+}
+
+.admin-login-card {
+  width: min(100%, 30rem);
+  margin: 3rem auto;
+  padding: clamp(1.5rem, 5vw, 2.5rem);
+}
+
+.admin-login-card h1,
+.admin-header h1 {
+  margin: 0;
+  color: var(--color-blue, #226192);
+}
+
+.admin-login-card > p:not(.admin-kicker),
+.admin-header p:last-child {
+  color: var(--color-text, #252B30);
+  line-height: 1.6;
+}
+
+.admin-kicker {
+  margin: 0 0 0.5rem;
+  color: var(--color-coral, #EF8557);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.admin-login-card form,
+.admin-detail-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.admin-login-card label,
+.admin-detail-panel label,
+.admin-file-review label {
+  color: var(--color-blue, #226192);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.admin-login-card input,
+.admin-detail-panel textarea,
+.admin-detail-panel select,
+.admin-file-review textarea,
+.admin-filter-controls input,
+.admin-filter-controls select {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--color-border, #D4CEC4);
+  border-radius: 0.4rem;
+  background: #fff;
+  color: var(--color-text, #252B30);
+  font: inherit;
+}
+
+.admin-detail-panel textarea,
+.admin-file-review textarea {
+  min-height: 5rem;
+  resize: vertical;
+}
+
+.admin-login-card input:focus-visible,
+.admin-detail-panel textarea:focus-visible,
+.admin-detail-panel select:focus-visible,
+.admin-file-review textarea:focus-visible,
+.admin-filter-controls input:focus-visible,
+.admin-filter-controls select:focus-visible,
+.soro-admin button:focus-visible {
+  outline: 3px solid var(--color-coral, #EF8557);
+  outline-offset: 2px;
+}
+
+.soro-admin button {
+  min-height: 2.5rem;
+  padding: 0.55rem 0.9rem;
+  border: 0;
+  border-radius: 0.4rem;
+  background: var(--color-coral, #EF8557);
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+}
+
+.soro-admin button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.75rem;
+}
+
+.soro-admin .admin-logout,
+.soro-admin .admin-pagination button {
+  border: 1px solid var(--color-blue, #226192);
+  background: transparent;
+  color: var(--color-blue, #226192);
+}
+
+.admin-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin-bottom: 1.25rem;
+}
+
+.admin-stat-card {
+  display: grid;
+  gap: 0.4rem;
+  padding: 1rem;
+}
+
+.admin-stat-card span {
+  color: #5b6469;
+  font-size: 0.8rem;
+}
+
+.admin-stat-card strong {
+  color: var(--color-blue, #226192);
+  font-size: 1.7rem;
+}
+
+.admin-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(19rem, 0.9fr);
+  align-items: start;
+  gap: 1.25rem;
+}
+
+.admin-orders-panel,
+.admin-detail-panel {
+  min-width: 0;
+  padding: 1.2rem;
+}
+
+.admin-panel-heading {
+  display: flex;
+  justify-content: space-between;
+}
+
+.admin-panel-heading h2,
+.admin-detail-panel h2,
+.admin-files h3 {
+  margin: 0;
+  color: var(--color-blue, #226192);
+}
+
+.admin-panel-heading p,
+.admin-detail-empty,
+.admin-files > p {
+  margin: 0.35rem 0 1rem;
+  color: #5b6469;
+  font-size: 0.9rem;
+}
+
+.admin-filter-form {
+  margin-bottom: 1rem;
+}
+
+.admin-search-label {
+  display: block;
+  margin-bottom: 0.4rem;
+  color: var(--color-blue, #226192);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.admin-filter-controls {
+  display: grid;
+  grid-template-columns: minmax(8rem, 1fr) minmax(9rem, 0.75fr) auto;
+  gap: 0.5rem;
+}
+
+.admin-table-wrap {
+  overflow-x: auto;
+}
+
+.admin-table-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  text-align: left;
+}
+
+.admin-table-wrap th,
+.admin-table-wrap td {
+  padding: 0.7rem 0.5rem;
+  border-bottom: 1px solid var(--color-border, #D4CEC4);
+  vertical-align: top;
+}
+
+.admin-table-wrap th {
+  color: var(--color-blue, #226192);
+}
+
+.admin-table-wrap td small {
+  display: block;
+  margin-top: 0.2rem;
+  color: #5b6469;
+}
+
+.soro-admin .admin-reference {
+  min-height: auto;
+  padding: 0;
+  background: transparent;
+  color: var(--color-blue, #226192);
+  text-align: left;
+  text-decoration: underline;
+}
+
+.admin-status,
+.admin-order-reference {
+  color: var(--color-blue, #226192);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.admin-empty {
+  padding: 1.5rem !important;
+  color: #5b6469;
+  text-align: center;
+}
+
+.admin-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+}
+
+.admin-detail-panel {
+  position: sticky;
+  top: calc(var(--header-height, 5rem) + 1rem);
+  max-height: calc(100vh - var(--header-height, 5rem) - 2rem);
+  overflow: auto;
+}
+
+.admin-order-detail h3 {
+  margin: 0 0 0.75rem;
+  color: var(--color-text, #252B30);
+  font-size: 1.2rem;
+}
+
+.admin-order-detail dl {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0 0 1rem;
+}
+
+.admin-order-detail dl > div {
+  display: grid;
+  grid-template-columns: minmax(6rem, 0.55fr) minmax(0, 1fr);
+  gap: 0.65rem;
+  overflow-wrap: anywhere;
+}
+
+.admin-order-detail dt {
+  color: #5b6469;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.admin-order-detail dd {
+  margin: 0;
+  font-size: 0.86rem;
+  white-space: pre-wrap;
+}
+
+.admin-order-detail .admin-description {
+  display: block;
+}
+
+.admin-description dd {
+  margin-top: 0.25rem;
+}
+
+.admin-order-detail a {
+  color: var(--color-blue, #226192);
+}
+
+.soro-admin .admin-save-notes {
+  align-self: flex-start;
+  margin: 0.25rem 0 1rem;
+}
+
+.admin-files {
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--color-border, #D4CEC4);
+}
+
+.admin-files h3 {
+  margin-bottom: 0.7rem;
+  font-size: 1rem;
+}
+
+.admin-file-card {
+  display: grid;
+  gap: 0.4rem;
+  margin-bottom: 0.65rem;
+  padding: 0.8rem;
+  border: 1px solid var(--color-border, #D4CEC4);
+  border-radius: 0.5rem;
+  overflow-wrap: anywhere;
+}
+
+.admin-file-card > span {
+  color: #5b6469;
+  font-size: 0.8rem;
+}
+
+.admin-file-action,
+.admin-file-review > div {
+  justify-self: start;
+}
+
+.admin-file-review {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 0.4rem;
+}
+
+.admin-file-review > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.soro-admin .admin-file-review .admin-reject {
+  background: var(--color-blue, #226192);
+}
+
+.admin-error {
+  margin: 1rem 0;
+  padding: 0.8rem;
+  border: 1px solid #b74022;
+  border-radius: 0.4rem;
+  background: #fff5f1;
+  color: #8b2e18;
+}
+
+@media (max-width: 1080px) {
+  .admin-stat-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .admin-workspace {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .admin-detail-panel {
+    position: static;
+    max-height: none;
+  }
+}
+
+@media (max-width: 620px) {
+  .admin-header {
+    align-items: flex-start;
+  }
+
+  .admin-stat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .admin-filter-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-table-wrap table {
+    min-width: 40rem;
+  }
+}

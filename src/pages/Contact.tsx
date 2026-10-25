@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -14,7 +14,7 @@ import {
   Loader2,
 } from 'lucide-react';
 import ScrollReveal from '@/components/ui/ScrollReveal';
-import { sendWebsiteEnquiry } from '@/lib/enquiry';
+import { sendWebsiteEnquiry, type SubmissionResponse } from '@/lib/api';
 
 const contactSchema = z.object({
   name: z.string().min(2, 'Please enter your name'),
@@ -36,6 +36,10 @@ const FieldError: React.FC<{ message?: string }> = ({ message }) =>
 
 const Contact: React.FC = () => {
   const [submitState, setSubmitState] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [submission, setSubmission] = useState<SubmissionResponse['submission'] | null>(null);
+  const [accessCode, setAccessCode] = useState('');
+  const [submitError, setSubmitError] = useState('');
+  const requestId = useRef(crypto.randomUUID());
 
   const {
     register,
@@ -46,12 +50,17 @@ const Contact: React.FC = () => {
 
   const onSubmit = async (data: ContactFormValues) => {
     setSubmitState('loading');
+    setSubmitError('');
     try {
-      await sendWebsiteEnquiry('contact', data);
+      const result = await sendWebsiteEnquiry('contact', data, requestId.current);
+      setSubmission(result.submission);
+      setAccessCode(result.accessToken);
       setSubmitState('success');
       reset();
-    } catch {
+      requestId.current = crypto.randomUUID();
+    } catch (error) {
       setSubmitState('error');
+      setSubmitError(error instanceof Error ? error.message : 'Your enquiry could not be saved. Please retry.');
     }
   };
 
@@ -150,10 +159,19 @@ const Contact: React.FC = () => {
                     <CheckCircle className="w-8 h-8 text-green-400" />
                   </div>
                   <h2 className="text-soro-blue font-bold text-2xl mb-3" style={{ fontFamily: 'Outfit, sans-serif' }}>
-                    Message Sent!
+                    Enquiry Saved
                   </h2>
                   <p className="text-soro-ink mb-8" style={{ fontFamily: 'Inter, sans-serif' }}>
-                    The email service accepted your message for delivery to orders@sorofabrication.in.
+                    Your message was saved as {submission?.reference ?? 'an enquiry'}. You can reference this ID if you contact SORO directly.
+                  </p>
+                  {submission?.emailNotifications.admin !== 'sent' && (
+                    <p className="text-soro-ink mb-6 text-sm">
+                      The message is saved, but the email notification to SORO is not confirmed. Please follow up at {COMPANY_EMAIL}.
+                    </p>
+                  )}
+                  <p className="text-soro-ink mb-6 text-sm">
+                    Keep this private access code to check progress on the <a className="text-soro-blue underline" href="/order-status">Order Status page</a>:
+                    <br /><code className="select-all break-all">{accessCode}</code>
                   </p>
                   <button onClick={() => setSubmitState('idle')} className="btn-secondary">
                     Send Another Message
@@ -234,7 +252,7 @@ const Contact: React.FC = () => {
                   {submitState === 'error' && (
                     <div className="flex items-center gap-2 p-4 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
                       <AlertCircle className="w-4 h-4 shrink-0" />
-                      {submitState === 'error' ? 'Message delivery failed or is not configured. Please email ' : ''}
+                      {submitError || 'Your enquiry could not be saved. Please email'}{' '}
                       <a className="underline" href="mailto:orders@sorofabrication.in">orders@sorofabrication.in</a>.
                     </div>
                   )}
