@@ -22,10 +22,12 @@ const Navbar: React.FC = () => {
       <div className="container-soro">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <Link to="/" className="group flex items-center" aria-label="SORO Fabrications Home">
-            <span className="font-heading text-lg font-extrabold tracking-tight text-soro-blue" style={{ fontFamily: 'Outfit, sans-serif' }}>
-              SORO <span className="font-normal text-soro-blue/70">FABRICATIONS</span>
-            </span>
+          <Link to="/" className="group flex shrink-0 items-center" aria-label="SORO Fabrications Home">
+            <img
+              src="/images/soro-logo.png"
+              alt="SORO Fabrications — Precision Fabrication, Made Easy"
+              className="h-12 w-40 object-contain sm:w-44 lg:h-14 lg:w-52"
+            />
           </Link>
 
           {/* Desktop Navigation */}

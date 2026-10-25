@@ -34,24 +34,13 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <Link to="/" className="group mb-5 inline-flex">
-              <div>
-                <span
-                  className="text-xl font-extrabold text-soro-ivory leading-none block"
-                  style={{ fontFamily: 'Outfit, sans-serif' }}
-                >
-                  SORO
-                </span>
-                <span
-                  className="text-[0.6rem] text-soro-ivory/75 tracking-widest uppercase leading-none block"
-                  style={{ fontFamily: 'Inter, sans-serif' }}
-                >
-                  Fabrications
-                </span>
-                <span className="mt-2 block text-[0.55rem] uppercase tracking-[0.12em] text-soro-coral">
-                  DESIGN • FABRICATE • INNOVATE
-                </span>
-              </div>
+            <Link to="/" className="group mb-5 inline-flex max-w-full items-center" aria-label="SORO Fabrications Home">
+              <img
+                src="/images/soro-logo.png"
+                alt="SORO Fabrications — Precision Fabrication, Made Easy"
+                className="h-auto w-64 max-w-full object-contain"
+                loading="lazy"
+              />
             </Link>
 
             <p
