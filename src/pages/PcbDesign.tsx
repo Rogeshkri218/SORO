@@ -205,14 +205,14 @@ const PcbDesign: React.FC = () => (
       <meta property="og:description" content="PCB engineering and electronic product-development support, scoped to each project." />
     </Helmet>
 
-    <section className="bg-[#071321] pb-16 pt-32 text-white sm:pb-24 sm:pt-40">
+    <section className="bg-soro-ivory pb-16 pt-32 text-soro-blue sm:pb-24 sm:pt-40">
       <div className="container-soro grid items-center gap-12 lg:grid-cols-[1fr_0.9fr]">
         <div className="max-w-3xl min-w-0">
-          <p className="mb-5 text-sm font-semibold uppercase tracking-[0.14em] text-[#F47745]">
+          <p className="mb-5 text-sm font-semibold uppercase tracking-[0.14em] text-soro-coral">
             PCB engineering · product development · prototype planning
           </p>
           <h1 className="text-hero">PCB Design &amp; Electronic Product Development</h1>
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-[#AEB8C4]">
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-soro-ink">
             From circuit concepts and PCB layouts to prototype development, SORO aims to help turn
             engineering requirements into practical electronic products.
           </p>
@@ -224,38 +224,38 @@ const PcbDesign: React.FC = () => (
               Explore Engineering Capabilities
             </a>
           </div>
-          <p className="mt-6 text-sm text-[#AEB8C4]">
+          <p className="mt-6 text-sm text-soro-ink">
             Project scope, deliverables, manufacturing arrangements, and availability are confirmed individually.
           </p>
         </div>
-        <div className="relative flex min-h-[240px] min-w-0 flex-col items-center justify-center border border-white/15 bg-[#0B1F3A] p-8 text-center sm:aspect-[4/3] sm:min-h-[300px]">
-          <div className="absolute inset-4 border border-dashed border-[#AEB8C4]/35" aria-hidden="true" />
-          <Cpu className="mb-5 h-10 w-10 text-[#AEB8C4]" aria-hidden="true" />
-          <p className="max-w-xs text-lg font-semibold text-white">PCB image placeholder</p>
-          <p className="mt-2 max-w-sm text-sm leading-relaxed text-[#AEB8C4]">
+        <div className="relative flex min-h-[240px] min-w-0 flex-col items-center justify-center border border-soro-border bg-soro-white/40 p-8 text-center sm:aspect-[4/3] sm:min-h-[300px]">
+          <div className="absolute inset-4 border border-dashed border-soro-border" aria-hidden="true" />
+          <Cpu className="mb-5 h-10 w-10 text-soro-blue" aria-hidden="true" />
+          <p className="max-w-xs text-lg font-semibold text-soro-blue">PCB image placeholder</p>
+          <p className="mt-2 max-w-sm text-sm leading-relaxed text-soro-ink">
             Replace with an approved SORO PCB or engineering photograph before launch.
           </p>
-          <span className="mt-6 border border-[#AEB8C4]/30 px-3 py-1 text-xs uppercase tracking-wider text-[#AEB8C4]">
+          <span className="mt-6 border border-soro-border px-3 py-1 text-xs uppercase tracking-wider text-soro-ink">
             Placeholder, not project imagery
           </span>
         </div>
       </div>
     </section>
 
-    <section className="bg-[#F4F7FA] py-16 text-[#0B1F3A] sm:py-20">
+    <section className="bg-soro-ivory py-16 text-soro-blue sm:py-20">
       <div className="container-soro grid gap-8 lg:grid-cols-[0.7fr_1.3fr]">
         <div>
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.14em] text-[#174A7E]">Who this is for</p>
+          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.14em] text-soro-blue">Who this is for</p>
           <h2 className="text-section-title">Start with the problem you need to solve.</h2>
         </div>
         <div>
-          <p className="text-lg leading-relaxed text-[#425466]">
+          <p className="text-lg leading-relaxed text-soro-ink">
             Startups, product developers, businesses, engineers, and organisations can bring an
             early concept, an existing circuit, or a defined electronic requirement for discussion.
             SORO reviews the brief before confirming whether the requested design work fits its
             current capabilities.
           </p>
-          <p className="mt-4 text-sm leading-relaxed text-[#5B6876]">
+          <p className="mt-4 text-sm leading-relaxed text-soro-ink">
             PCB design, board fabrication, component assembly, and physical testing are distinct
             activities. A design enquiry does not automatically include fabrication, assembly, or testing.
           </p>
@@ -263,35 +263,35 @@ const PcbDesign: React.FC = () => (
       </div>
     </section>
 
-    <section id="engineering-capabilities" className="bg-white py-20 text-[#0B1F3A] sm:py-24">
+    <section id="engineering-capabilities" className="bg-soro-ivory py-20 text-soro-blue sm:py-24">
       <div className="container-soro">
         <div className="mb-10 max-w-3xl">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.14em] text-[#174A7E]">Engineering capabilities</p>
+          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.14em] text-soro-blue">Engineering capabilities</p>
           <h2 className="text-section-title">A clear scope before work begins.</h2>
-          <p className="mt-4 leading-relaxed text-[#5B6876]">
+          <p className="mt-4 leading-relaxed text-soro-ink">
             These categories describe possible project discussions, not guaranteed services. Availability, equipment, partner involvement, and deliverables are confirmed in writing for each enquiry.
           </p>
         </div>
         <div className="grid gap-x-8 md:grid-cols-2 xl:grid-cols-3">
           {serviceCards.map(({ title, enquiry, status, summary, requirements, deliverables: outputs, icon: Icon }) => (
-            <article key={title} className="border-t border-[#CDD6E0] py-7">
+            <article key={title} className="border-t border-soro-border py-7">
               <div className="mb-5 flex items-start justify-between gap-4">
-                <Icon className="h-7 w-7 shrink-0 text-[#174A7E]" aria-hidden="true" />
-                <span className="border border-[#174A7E]/20 px-2.5 py-1 text-xs text-[#174A7E]">{status}</span>
+                <Icon className="h-7 w-7 shrink-0 text-soro-blue" aria-hidden="true" />
+                <span className="border border-soro-blue/20 px-2.5 py-1 text-xs text-soro-blue">{status}</span>
               </div>
               <h3 className="text-xl font-semibold">{title}</h3>
-              <p className="mt-3 leading-relaxed text-[#536273]">{summary}</p>
-              <dl className="mt-5 space-y-4 border-t border-[#E1E6EC] pt-4 text-sm">
+              <p className="mt-3 leading-relaxed text-soro-ink">{summary}</p>
+              <dl className="mt-5 space-y-4 border-t border-soro-border pt-4 text-sm">
                 <div>
-                  <dt className="font-semibold text-[#0B1F3A]">Typical inputs</dt>
-                  <dd className="mt-1 leading-relaxed text-[#5B6876]">{requirements}</dd>
+                  <dt className="font-semibold text-soro-blue">Typical inputs</dt>
+                  <dd className="mt-1 leading-relaxed text-soro-ink">{requirements}</dd>
                 </div>
                 <div>
-                  <dt className="font-semibold text-[#0B1F3A]">Potential deliverables</dt>
-                  <dd className="mt-1 leading-relaxed text-[#5B6876]">{outputs}</dd>
+                  <dt className="font-semibold text-soro-blue">Potential deliverables</dt>
+                  <dd className="mt-1 leading-relaxed text-soro-ink">{outputs}</dd>
                 </div>
               </dl>
-              <Link to={`/quote?enquiry=${encodeURIComponent(enquiry)}`} className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#174A7E] hover:text-[#D95D30]">
+              <Link to={`/quote?enquiry=${encodeURIComponent(enquiry)}`} className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-soro-blue hover:text-soro-coral">
                 Discuss This Service <ArrowRight aria-hidden="true" className="h-4 w-4" />
               </Link>
             </article>
@@ -300,33 +300,33 @@ const PcbDesign: React.FC = () => (
       </div>
     </section>
 
-    <section className="bg-[#0B1F3A] py-20 text-white sm:py-24">
+    <section className="bg-soro-blue py-20 text-soro-white sm:py-24">
       <div className="container-soro">
         <div className="mb-10 max-w-3xl">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.14em] text-[#F47745]">PCB design workflow</p>
-          <h2 className="text-section-title">Eight review points, with approvals at each handoff.</h2>
-          <p className="mt-4 leading-relaxed text-[#C2CCD7]">
+          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.14em] text-soro-coral">PCB design workflow</p>
+          <h2 className="text-section-title text-soro-white">Eight review points, with approvals at each handoff.</h2>
+          <p className="mt-4 leading-relaxed text-soro-white/85">
             The sequence is a planning guide. Fabrication, assembly, supplier coordination, and physical testing are separate work and occur only when agreed.
           </p>
         </div>
         <ol className="grid gap-4 lg:grid-cols-2">
           {workflow.map((step, index) => (
-            <li key={step.title} className="grid gap-4 border border-white/15 bg-white/[0.03] p-5 sm:grid-cols-[3rem_1fr] sm:p-6">
-              <span className="font-mono text-sm text-[#F47745]">0{index + 1}</span>
+            <li key={step.title} className="grid gap-4 border border-soro-white/25 bg-soro-white/10 p-5 sm:grid-cols-[3rem_1fr] sm:p-6">
+              <span className="font-mono text-sm text-soro-coral">0{index + 1}</span>
               <div>
-                <h3 className="text-lg font-semibold">{step.title}</h3>
+                <h3 className="text-soro-white text-lg font-semibold">{step.title}</h3>
                 <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-3">
                   <div>
-                    <dt className="font-semibold text-[#FFFFFF]">Information needed</dt>
-                    <dd className="mt-1 leading-relaxed text-[#AEB8C4]">{step.needs}</dd>
+                    <dt className="font-semibold text-soro-white">Information needed</dt>
+                    <dd className="mt-1 leading-relaxed text-soro-white/85">{step.needs}</dd>
                   </div>
                   <div>
-                    <dt className="font-semibold text-[#FFFFFF]">Work that may happen</dt>
-                    <dd className="mt-1 leading-relaxed text-[#AEB8C4]">{step.work}</dd>
+                    <dt className="font-semibold text-soro-white">Work that may happen</dt>
+                    <dd className="mt-1 leading-relaxed text-soro-white/85">{step.work}</dd>
                   </div>
                   <div>
-                    <dt className="font-semibold text-[#FFFFFF]">Approval expected</dt>
-                    <dd className="mt-1 leading-relaxed text-[#AEB8C4]">{step.approval}</dd>
+                    <dt className="font-semibold text-soro-white">Approval expected</dt>
+                    <dd className="mt-1 leading-relaxed text-soro-white/85">{step.approval}</dd>
                   </div>
                 </dl>
               </div>
@@ -336,19 +336,19 @@ const PcbDesign: React.FC = () => (
       </div>
     </section>
 
-    <section className="bg-[#F4F7FA] py-20 text-[#0B1F3A] sm:py-24">
+    <section className="bg-soro-ivory py-20 text-soro-blue sm:py-24">
       <div className="container-soro grid gap-12 lg:grid-cols-2">
         <div>
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.14em] text-[#174A7E]">Prepare for a PCB enquiry</p>
+          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.14em] text-soro-blue">Prepare for a PCB enquiry</p>
           <h2 className="text-section-title">Useful technical inputs</h2>
-          <p className="mt-4 leading-relaxed text-[#536273]">
+          <p className="mt-4 leading-relaxed text-soro-ink">
             Not every project needs every item. Share what is known; requirements will be reviewed before quotation.
           </p>
         </div>
         <ul className="grid gap-x-8 sm:grid-cols-2">
           {customerInputs.map((input) => (
-            <li key={input} className="flex gap-3 border-t border-[#CDD6E0] py-3 text-sm leading-relaxed text-[#425466]">
-              <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#174A7E]" aria-hidden="true" />
+            <li key={input} className="flex gap-3 border-t border-soro-border py-3 text-sm leading-relaxed text-soro-ink">
+              <Check className="mt-0.5 h-4 w-4 shrink-0 text-soro-blue" aria-hidden="true" />
               {input}
             </li>
           ))}
@@ -356,19 +356,19 @@ const PcbDesign: React.FC = () => (
       </div>
     </section>
 
-    <section className="bg-white py-20 text-[#0B1F3A] sm:py-24">
+    <section className="bg-soro-ivory py-20 text-soro-blue sm:py-24">
       <div className="container-soro">
         <div className="mb-10 max-w-3xl">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.14em] text-[#174A7E]">Technical handoff</p>
+          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.14em] text-soro-blue">Technical handoff</p>
           <h2 className="text-section-title">Possible design deliverables</h2>
-          <p className="mt-4 text-sm leading-relaxed text-[#5B6876]">
+          <p className="mt-4 text-sm leading-relaxed text-soro-ink">
             Included only when agreed in the project scope. File formats and source-file availability depend on the selected tools and written agreement.
           </p>
         </div>
         <ul className="grid gap-x-8 sm:grid-cols-2 lg:grid-cols-3">
           {deliverables.map((deliverable) => (
-            <li key={deliverable} className="flex gap-3 border-t border-[#CDD6E0] py-4 text-sm text-[#425466]">
-              <FileText className="h-4 w-4 shrink-0 text-[#174A7E]" aria-hidden="true" />
+            <li key={deliverable} className="flex gap-3 border-t border-soro-border py-4 text-sm text-soro-ink">
+              <FileText className="h-4 w-4 shrink-0 text-soro-blue" aria-hidden="true" />
               {deliverable}
             </li>
           ))}
@@ -376,62 +376,62 @@ const PcbDesign: React.FC = () => (
       </div>
     </section>
 
-    <section className="bg-[#E9EEF3] py-16 text-[#0B1F3A] sm:py-20">
+    <section className="bg-soro-ivory py-16 text-soro-blue sm:py-20">
       <div className="container-soro grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
         <div>
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.14em] text-[#174A7E]">Possible applications</p>
+          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.14em] text-soro-blue">Possible applications</p>
           <h2 className="text-section-title">Use cases to discuss, not a project record.</h2>
         </div>
         <ul className="grid gap-x-8 sm:grid-cols-2">
           {applicationAreas.map((area) => (
-            <li key={area} className="flex gap-3 border-t border-[#C4CED8] py-4 text-sm text-[#425466]">
-              <Check className="h-4 w-4 shrink-0 text-[#174A7E]" aria-hidden="true" />
+            <li key={area} className="flex gap-3 border-t border-soro-border py-4 text-sm text-soro-ink">
+              <Check className="h-4 w-4 shrink-0 text-soro-blue" aria-hidden="true" />
               {area}
             </li>
           ))}
         </ul>
       </div>
-      <p className="container-soro mt-5 text-xs text-[#5B6876]">
+      <p className="container-soro mt-5 text-xs text-soro-ink">
         These examples are illustrative. They do not claim sector experience, completed projects, or regulatory capability.
       </p>
     </section>
 
-    <section className="bg-[#071321] py-20 text-white sm:py-24">
+    <section className="bg-soro-ivory py-20 text-soro-blue sm:py-24">
       <div className="container-soro grid gap-8 lg:grid-cols-2 lg:items-center">
         <div>
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.14em] text-[#F47745]">SORO products</p>
+          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.14em] text-soro-coral">SORO products</p>
           <h2 className="text-section-title">Product concepts need a verified status before they become listings.</h2>
         </div>
         <div>
-          <p className="leading-relaxed text-[#AEB8C4]">
+          <p className="leading-relaxed text-soro-ink">
             No SORO-owned product status or specifications have been verified for publication. Concepts, prototypes, pilots, and available products will be listed separately when confirmed.
           </p>
-          <Link to="/products" className="mt-5 inline-flex items-center gap-2 font-semibold text-white hover:text-[#F47745]">
+          <Link to="/products" className="mt-5 inline-flex items-center gap-2 font-semibold text-soro-blue hover:text-soro-coral">
             Product information <ArrowRight aria-hidden="true" className="h-4 w-4" />
           </Link>
         </div>
       </div>
     </section>
 
-    <section className="bg-[#F4F7FA] py-16 text-[#0B1F3A] sm:py-20">
+    <section className="bg-soro-ivory py-16 text-soro-blue sm:py-20">
       <div className="container-soro grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
         <div>
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.14em] text-[#174A7E]">Project portfolio</p>
+          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.14em] text-soro-blue">Project portfolio</p>
           <h2 className="text-section-title">Case studies require confirmed details and approved images.</h2>
         </div>
-        <div className="border-l-2 border-[#F47745] pl-5">
-          <p className="leading-relaxed text-[#536273]">Project details to be added. No customer, outcome, or project image is presented here until verified and approved for publication.</p>
-          <Link to="/portfolio" className="mt-5 inline-flex items-center gap-2 font-semibold text-[#174A7E] hover:text-[#D95D30]">
+        <div className="border-l-2 border-soro-coral pl-5">
+          <p className="leading-relaxed text-soro-ink">Project details to be added. No customer, outcome, or project image is presented here until verified and approved for publication.</p>
+          <Link to="/portfolio" className="mt-5 inline-flex items-center gap-2 font-semibold text-soro-blue hover:text-soro-coral">
             View projects <ArrowRight aria-hidden="true" className="h-4 w-4" />
           </Link>
         </div>
       </div>
     </section>
 
-    <section className="bg-white py-20 text-[#0B1F3A] sm:py-24">
+    <section className="bg-soro-ivory py-20 text-soro-blue sm:py-24">
       <div className="container-soro grid gap-10 lg:grid-cols-2">
         <div>
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.14em] text-[#174A7E]">Working approach</p>
+          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.14em] text-soro-blue">Working approach</p>
           <h2 className="text-section-title">Good engineering starts with clear decisions.</h2>
         </div>
         <ul className="grid gap-x-8 sm:grid-cols-2">
@@ -443,8 +443,8 @@ const PcbDesign: React.FC = () => (
             'Keep prototype work distinct from design work',
             'Confirm supplier and testing arrangements in advance',
           ].map((item) => (
-            <li key={item} className="flex gap-3 border-t border-[#CDD6E0] py-4 text-sm text-[#425466]">
-              <Check className="h-4 w-4 shrink-0 text-[#174A7E]" aria-hidden="true" />
+            <li key={item} className="flex gap-3 border-t border-soro-border py-4 text-sm text-soro-ink">
+              <Check className="h-4 w-4 shrink-0 text-soro-blue" aria-hidden="true" />
               {item}
             </li>
           ))}
@@ -452,30 +452,30 @@ const PcbDesign: React.FC = () => (
       </div>
     </section>
 
-    <section className="bg-[#0B1F3A] py-20 text-white sm:py-24">
+    <section className="bg-soro-blue py-20 text-soro-white sm:py-24">
       <div className="container-soro grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
         <div>
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.14em] text-[#F47745]">Frequently asked questions</p>
-          <h2 className="text-section-title">Before you send a PCB enquiry</h2>
+          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.14em] text-soro-coral">Frequently asked questions</p>
+          <h2 className="text-section-title text-soro-white">Before you send a PCB enquiry</h2>
         </div>
         <div className="divide-y divide-white/15 border-y border-white/15">
           {faqs.map((faq) => (
             <details key={faq.question} className="group py-5">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-white marker:hidden">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-soro-white marker:hidden">
                 {faq.question}
-                <CircleHelp className="h-5 w-5 shrink-0 text-[#F47745] transition-transform group-open:rotate-45" aria-hidden="true" />
+                <CircleHelp className="h-5 w-5 shrink-0 text-soro-coral transition-transform group-open:rotate-45" aria-hidden="true" />
               </summary>
-              <p className="max-w-3xl pt-4 text-sm leading-relaxed text-[#C2CCD7]">{faq.answer}</p>
+              <p className="max-w-3xl pt-4 text-sm leading-relaxed text-soro-white/85">{faq.answer}</p>
             </details>
           ))}
         </div>
       </div>
     </section>
 
-    <section className="bg-[#F4F7FA] py-16 text-[#0B1F3A]">
+    <section className="bg-soro-ivory py-16 text-soro-blue">
       <div className="container-soro flex flex-col justify-between gap-6 md:flex-row md:items-center">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.14em] text-[#174A7E]">Start a PCB enquiry</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.14em] text-soro-blue">Start a PCB enquiry</p>
           <h2 className="mt-2 text-3xl font-bold">Share what you know. We can clarify the rest.</h2>
         </div>
         <Link to="/quote?enquiry=PCB%20Schematic%20Design" className="btn-orange">

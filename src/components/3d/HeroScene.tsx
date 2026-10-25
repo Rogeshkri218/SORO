@@ -17,11 +17,11 @@ const PCBGrid: React.FC = () => {
     <mesh ref={meshRef} rotation={[-Math.PI / 2.5, 0, 0]} position={[0, -1.5, 0]}>
       <planeGeometry args={[12, 12, 24, 24]} />
       <meshStandardMaterial
-        color="#0D1B2A"
+        color="#EAE6DE"
         wireframe
         opacity={0.3}
         transparent
-        emissive={new THREE.Color('#1E6FFF')}
+        emissive={new THREE.Color('#226192')}
         emissiveIntensity={0.5}
       />
     </mesh>
@@ -45,10 +45,10 @@ const CircuitBoard: React.FC = () => {
       <mesh position={[0, 0, 0]} castShadow>
         <boxGeometry args={[3, 0.12, 2]} />
         <meshStandardMaterial
-          color="#0F3020"
+          color="#226192"
           roughness={0.4}
           metalness={0.1}
-          emissive={new THREE.Color('#0A2015')}
+          emissive={new THREE.Color('#226192')}
           emissiveIntensity={0.2}
         />
       </mesh>
@@ -57,7 +57,7 @@ const CircuitBoard: React.FC = () => {
       {[-0.5, 0, 0.5].map((z, i) => (
         <mesh key={`h-trace-${i}`} position={[0, 0.07, z]}>
           <boxGeometry args={[2.8, 0.02, 0.06]} />
-          <meshStandardMaterial color="#C8860A" roughness={0.2} metalness={0.8} />
+          <meshStandardMaterial color="#EF8557" roughness={0.2} metalness={0.8} />
         </mesh>
       ))}
 
@@ -65,14 +65,14 @@ const CircuitBoard: React.FC = () => {
       {[-0.8, -0.2, 0.4, 1.0].map((x, i) => (
         <mesh key={`v-trace-${i}`} position={[x, 0.07, 0]}>
           <boxGeometry args={[0.06, 0.02, 1.8]} />
-          <meshStandardMaterial color="#C8860A" roughness={0.2} metalness={0.8} />
+          <meshStandardMaterial color="#EF8557" roughness={0.2} metalness={0.8} />
         </mesh>
       ))}
 
       {/* IC Chip */}
       <mesh position={[-0.4, 0.15, 0]} castShadow>
         <boxGeometry args={[0.7, 0.18, 0.5]} />
-        <meshStandardMaterial color="#1A1A1A" roughness={0.6} metalness={0.2} />
+        <meshStandardMaterial color="#252B30" roughness={0.6} metalness={0.2} />
       </mesh>
 
       {/* Capacitors */}
@@ -83,7 +83,7 @@ const CircuitBoard: React.FC = () => {
       ].map(([x, y, z], i) => (
         <mesh key={`cap-${i}`} position={[x, y, z]} castShadow>
           <cylinderGeometry args={[0.08, 0.08, 0.3, 16]} />
-          <meshStandardMaterial color="#1A3A6A" roughness={0.3} metalness={0.5} />
+          <meshStandardMaterial color="#226192" roughness={0.3} metalness={0.5} />
         </mesh>
       ))}
 
@@ -95,8 +95,8 @@ const CircuitBoard: React.FC = () => {
         <mesh key={`led-${i}`} position={[x, y, z]}>
           <sphereGeometry args={[0.07, 12, 12]} />
           <meshStandardMaterial
-            color={i === 0 ? '#00FF80' : '#0080FF'}
-            emissive={new THREE.Color(i === 0 ? '#00FF80' : '#0080FF')}
+            color={i === 0 ? '#EF8557' : '#226192'}
+            emissive={new THREE.Color(i === 0 ? '#EF8557' : '#226192')}
             emissiveIntensity={2}
           />
         </mesh>
@@ -106,7 +106,7 @@ const CircuitBoard: React.FC = () => {
       {[-0.7, -0.4, -0.1, 0.2, 0.5].map((z, i) => (
         <mesh key={`pin-${i}`} position={[-1.55, 0.06, z - 0.1]}>
           <boxGeometry args={[0.06, 0.08, 0.04]} />
-          <meshStandardMaterial color="#C0C0C0" roughness={0.1} metalness={0.95} />
+          <meshStandardMaterial color="#D4CEC4" roughness={0.1} metalness={0.95} />
         </mesh>
       ))}
     </group>
@@ -135,7 +135,7 @@ const FloatingOrbs: React.FC = () => {
           <mesh>
             <icosahedronGeometry args={[0.25 + i * 0.05, 0]} />
             <MeshDistortMaterial
-              color={i % 2 === 0 ? '#1E6FFF' : '#00AAFF'}
+              color={i % 2 === 0 ? '#226192' : '#EF8557'}
               roughness={0.1}
               metalness={0.8}
               distort={0.3}
@@ -163,9 +163,9 @@ const HeroScene: React.FC = () => {
         {/* Lighting */}
         <ambientLight intensity={0.3} />
         <directionalLight position={[5, 5, 5]} intensity={1.2} color="#FFFFFF" />
-        <pointLight position={[-3, 3, 2]} intensity={2} color="#1E6FFF" />
-        <pointLight position={[3, -2, 2]} intensity={1.5} color="#00AAFF" />
-        <pointLight position={[0, 0, 4]} intensity={0.8} color="#FF6B2B" />
+        <pointLight position={[-3, 3, 2]} intensity={2} color="#226192" />
+        <pointLight position={[3, -2, 2]} intensity={1.5} color="#226192" />
+        <pointLight position={[0, 0, 4]} intensity={0.8} color="#EF8557" />
 
         <Suspense fallback={null}>
           <Float speed={1} rotationIntensity={0.2} floatIntensity={0.5}>

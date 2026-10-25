@@ -9,14 +9,14 @@ interface ProjectCardProps {
 }
 
 const categoryColour: Record<string, string> = {
-  'pcb-design': '#60A5FA',
-  'pcb-assembly': '#38BDF8',
-  'embedded-systems': '#FFA07A',
-  '3d-design': '#C4B5FD',
-  '3d-printing': '#6EE7B7',
-  'cnc-fabrication': '#FCD34D',
-  'medical-tech': '#F9A8D4',
-  iot: '#86EFAC',
+  'pcb-design': '#226192',
+  'pcb-assembly': '#EF8557',
+  'embedded-systems': '#226192',
+  '3d-design': '#EF8557',
+  '3d-printing': '#226192',
+  'cnc-fabrication': '#EF8557',
+  'medical-tech': '#226192',
+  iot: '#EF8557',
 };
 
 const categoryLabel: Record<string, string> = {
@@ -31,12 +31,12 @@ const categoryLabel: Record<string, string> = {
 };
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
-  const colour = categoryColour[project.category] ?? '#60A5FA';
+  const colour = categoryColour[project.category] ?? '#226192';
 
   return (
     <div className="card-engineering group h-full flex flex-col overflow-hidden">
       {/* Image Placeholder / Visual */}
-      <div className="relative h-48 bg-[#0D1B2A] overflow-hidden">
+      <div className="relative h-48 bg-soro-ivory overflow-hidden">
         {project.imageUrl ? (
           <img
             src={project.imageUrl}
@@ -55,7 +55,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
               >
                 🔧
               </div>
-              <span className="text-[#8A9DB5] text-xs">Project Image</span>
+              <span className="text-soro-ink text-xs">Project Image</span>
             </div>
           </div>
         )}
@@ -77,19 +77,19 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         </div>
 
         {/* Hover overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-gradient-to-t from-soro-blue/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
 
       {/* Content */}
       <div className="p-5 flex flex-col flex-1">
         <h3
-          className="text-white font-bold text-base mb-2 group-hover:text-[#00AAFF] transition-colors"
+          className="text-soro-blue font-bold text-base mb-2 group-hover:text-soro-coral transition-colors"
           style={{ fontFamily: 'Outfit, sans-serif' }}
         >
           {project.title}
         </h3>
         <p
-          className="text-[#8A9DB5] text-sm leading-relaxed mb-4 flex-1"
+          className="text-soro-ink text-sm leading-relaxed mb-4 flex-1"
           style={{ fontFamily: 'Inter, sans-serif' }}
         >
           {project.shortDesc}
@@ -100,7 +100,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           {project.tags.slice(0, 3).map((tag) => (
             <span
               key={tag}
-              className="px-2.5 py-0.5 rounded-full text-xs text-[#8A9DB5] bg-[#1C2A3A] border border-[#1E3050]/60"
+              className="px-2.5 py-0.5 rounded-full text-xs text-soro-ink bg-soro-ivory border border-soro-border"
               style={{ fontFamily: 'Inter, sans-serif' }}
             >
               {tag}

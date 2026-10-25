@@ -19,10 +19,10 @@ const Blog = lazy(() => import('@/pages/Blog'));
 
 // Page loading fallback
 const PageLoader: React.FC = () => (
-  <div className="min-h-screen flex items-center justify-center bg-[#0A1628]">
+  <div className="min-h-screen flex items-center justify-center bg-soro-ivory">
     <div className="flex flex-col items-center gap-4">
-      <div className="w-12 h-12 border-2 border-[#1E6FFF]/30 border-t-[#1E6FFF] rounded-full animate-spin" />
-      <span className="text-[#8A9DB5] text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+      <div className="w-12 h-12 border-2 border-soro-blue/30 border-t-soro-coral rounded-full animate-spin" />
+      <span className="text-soro-blue text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
         Loading…
       </span>
     </div>
@@ -36,10 +36,10 @@ const NotFound: React.FC = () => (
       <div className="text-8xl font-extrabold gradient-text-blue mb-4" style={{ fontFamily: 'Outfit, sans-serif' }}>
         404
       </div>
-      <h1 className="text-white text-2xl font-bold mb-3" style={{ fontFamily: 'Outfit, sans-serif' }}>
+      <h1 className="text-soro-blue text-2xl font-bold mb-3" style={{ fontFamily: 'Outfit, sans-serif' }}>
         Page Not Found
       </h1>
-      <p className="text-[#8A9DB5] mb-8" style={{ fontFamily: 'Inter, sans-serif' }}>
+      <p className="text-soro-ink mb-8" style={{ fontFamily: 'Inter, sans-serif' }}>
         The page you're looking for doesn't exist.
       </p>
       <a href="/" className="btn-primary">

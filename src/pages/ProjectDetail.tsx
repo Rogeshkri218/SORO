@@ -30,13 +30,13 @@ const ProjectDetail: React.FC = () => {
       </Helmet>
 
       {/* Hero */}
-      <section className="relative pt-36 pb-16 bg-[#0A1628] overflow-hidden">
+      <section className="relative pt-36 pb-16 bg-soro-ivory overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-30" />
         <div className="container-soro relative z-10">
           <ScrollReveal>
             <Link
               to="/portfolio"
-              className="inline-flex items-center gap-2 text-[#8A9DB5] hover:text-white text-sm mb-6 transition-colors"
+              className="inline-flex items-center gap-2 text-soro-ink hover:text-soro-blue text-sm mb-6 transition-colors"
               style={{ fontFamily: 'Inter, sans-serif' }}
             >
               <ChevronLeft className="w-4 h-4" />
@@ -51,7 +51,7 @@ const ProjectDetail: React.FC = () => {
               {project.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="px-3 py-1 bg-[#1C2A3A] border border-[#1E3050]/60 rounded-full text-xs text-[#8A9DB5]"
+                  className="px-3 py-1 bg-soro-ivory border border-soro-border/60 rounded-full text-xs text-soro-ink"
                   style={{ fontFamily: 'Inter, sans-serif' }}
                 >
                   {tag}
@@ -59,11 +59,11 @@ const ProjectDetail: React.FC = () => {
               ))}
             </div>
 
-            <h1 className="text-display text-white mb-6 max-w-3xl">
+            <h1 className="text-display text-soro-blue mb-6 max-w-3xl">
               {project.title}
             </h1>
             <p
-              className="text-[#8A9DB5] text-lg max-w-2xl leading-relaxed"
+              className="text-soro-ink text-lg max-w-2xl leading-relaxed"
               style={{ fontFamily: 'Inter, sans-serif' }}
             >
               {project.shortDesc}
@@ -73,7 +73,7 @@ const ProjectDetail: React.FC = () => {
       </section>
 
       {/* Project Content */}
-      <section className="py-16 bg-[#0D1B2A]">
+      <section className="py-16 bg-soro-ivory">
         <div className="container-soro">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
             {/* Main Content */}
@@ -81,13 +81,13 @@ const ProjectDetail: React.FC = () => {
               <ScrollReveal>
                 <div className="glass p-7 rounded-2xl">
                   <h2
-                    className="text-white font-bold text-lg mb-4"
+                    className="text-soro-blue font-bold text-lg mb-4"
                     style={{ fontFamily: 'Outfit, sans-serif' }}
                   >
                     Project Overview
                   </h2>
                   <p
-                    className="text-[#8A9DB5] leading-relaxed"
+                    className="text-soro-ink leading-relaxed"
                     style={{ fontFamily: 'Inter, sans-serif' }}
                   >
                     {project.description}
@@ -99,13 +99,13 @@ const ProjectDetail: React.FC = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div className="glass p-6 rounded-2xl">
                     <h3
-                      className="text-white font-bold text-base mb-4"
+                      className="text-soro-blue font-bold text-base mb-4"
                       style={{ fontFamily: 'Outfit, sans-serif' }}
                     >
                       Problem Statement
                     </h3>
                     <p
-                      className="text-[#8A9DB5] text-sm leading-relaxed"
+                      className="text-soro-ink text-sm leading-relaxed"
                       style={{ fontFamily: 'Inter, sans-serif' }}
                     >
                       {project.problemStatement}
@@ -113,13 +113,13 @@ const ProjectDetail: React.FC = () => {
                   </div>
                   <div className="glass p-6 rounded-2xl">
                     <h3
-                      className="text-white font-bold text-base mb-4"
+                      className="text-soro-blue font-bold text-base mb-4"
                       style={{ fontFamily: 'Outfit, sans-serif' }}
                     >
                       Our Solution
                     </h3>
                     <p
-                      className="text-[#8A9DB5] text-sm leading-relaxed"
+                      className="text-soro-ink text-sm leading-relaxed"
                       style={{ fontFamily: 'Inter, sans-serif' }}
                     >
                       {project.solution}
@@ -139,9 +139,9 @@ const ProjectDetail: React.FC = () => {
                     />
                   ) : (
                     <div className="text-center">
-                      <div className="text-4xl mb-3">🔧</div>
+                      <div className="text-4xl mb-3 text-soro-coral">🔧</div>
                       <p
-                        className="text-[#8A9DB5]/60 text-sm"
+                        className="text-soro-ink/70 text-sm"
                         style={{ fontFamily: 'Inter, sans-serif' }}
                       >
                         Project images will be added when photography is available.
@@ -157,7 +157,7 @@ const ProjectDetail: React.FC = () => {
               <ScrollReveal delay={0.1}>
                 <div className="glass p-6 rounded-2xl">
                   <h3
-                    className="text-white font-bold text-sm mb-4 uppercase tracking-wide"
+                    className="text-soro-blue font-bold text-sm mb-4 uppercase tracking-wide"
                     style={{ fontFamily: 'Outfit, sans-serif' }}
                   >
                     Technology Stack
@@ -166,7 +166,7 @@ const ProjectDetail: React.FC = () => {
                     {project.techStack.map((tech) => (
                       <span
                         key={tech}
-                        className="px-2.5 py-1 bg-[#1C2A3A] border border-[#1E3050]/60 rounded text-xs text-[#8A9DB5]"
+                        className="px-2.5 py-1 bg-soro-ivory border border-soro-border/60 rounded text-xs text-soro-ink"
                         style={{ fontFamily: 'Inter, sans-serif' }}
                       >
                         {tech}
@@ -179,7 +179,7 @@ const ProjectDetail: React.FC = () => {
               <ScrollReveal delay={0.15}>
                 <div className="glass p-6 rounded-2xl">
                   <h3
-                    className="text-white font-bold text-sm mb-4 uppercase tracking-wide"
+                    className="text-soro-blue font-bold text-sm mb-4 uppercase tracking-wide"
                     style={{ fontFamily: 'Outfit, sans-serif' }}
                   >
                     Hardware Used
@@ -188,10 +188,10 @@ const ProjectDetail: React.FC = () => {
                     {project.hardware.map((hw) => (
                       <li
                         key={hw}
-                        className="flex items-start gap-2 text-sm text-[#8A9DB5]"
+                        className="flex items-start gap-2 text-sm text-soro-ink"
                         style={{ fontFamily: 'Inter, sans-serif' }}
                       >
-                        <div className="w-1.5 h-1.5 rounded-full bg-[#1E6FFF] shrink-0 mt-1.5" />
+                        <div className="w-1.5 h-1.5 rounded-full bg-soro-blue shrink-0 mt-1.5" />
                         {hw}
                       </li>
                     ))}
@@ -203,7 +203,7 @@ const ProjectDetail: React.FC = () => {
                 <ScrollReveal delay={0.2}>
                   <div className="glass p-6 rounded-2xl">
                     <h3
-                      className="text-white font-bold text-sm mb-4 uppercase tracking-wide"
+                      className="text-soro-blue font-bold text-sm mb-4 uppercase tracking-wide"
                       style={{ fontFamily: 'Outfit, sans-serif' }}
                     >
                       Software & Firmware
@@ -212,10 +212,10 @@ const ProjectDetail: React.FC = () => {
                       {project.software.map((sw) => (
                         <li
                           key={sw}
-                          className="flex items-start gap-2 text-sm text-[#8A9DB5]"
+                          className="flex items-start gap-2 text-sm text-soro-ink"
                           style={{ fontFamily: 'Inter, sans-serif' }}
                         >
-                          <div className="w-1.5 h-1.5 rounded-full bg-[#FF6B2B] shrink-0 mt-1.5" />
+                          <div className="w-1.5 h-1.5 rounded-full bg-soro-coral shrink-0 mt-1.5" />
                           {sw}
                         </li>
                       ))}
@@ -227,7 +227,7 @@ const ProjectDetail: React.FC = () => {
               <ScrollReveal delay={0.25}>
                 <div className="glass p-6 rounded-2xl">
                   <p
-                    className="text-[#8A9DB5] text-sm mb-5"
+                    className="text-soro-ink text-sm mb-5"
                     style={{ fontFamily: 'Inter, sans-serif' }}
                   >
                     Have a similar project in mind? We'd love to discuss how we can help.

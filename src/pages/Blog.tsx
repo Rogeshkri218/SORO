@@ -62,16 +62,16 @@ const Blog: React.FC = () => {
       </Helmet>
 
       {/* Hero */}
-      <section className="relative pt-36 pb-20 bg-[#0A1628] overflow-hidden">
+      <section className="relative pt-36 pb-20 bg-soro-ivory overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-30" />
         <div className="container-soro relative z-10">
           <ScrollReveal>
             <div className="badge-blue mb-5 w-fit">Blog</div>
-            <h1 className="text-display text-white mb-6 max-w-3xl">
+            <h1 className="text-display text-soro-blue mb-6 max-w-3xl">
               Engineering <span className="gradient-text">Insights & Articles</span>
             </h1>
             <p
-              className="text-[#8A9DB5] text-lg max-w-2xl leading-relaxed"
+              className="text-soro-ink text-lg max-w-2xl leading-relaxed"
               style={{ fontFamily: 'Inter, sans-serif' }}
             >
               Technical articles, engineering guides, and project insights from the SORO
@@ -82,12 +82,12 @@ const Blog: React.FC = () => {
       </section>
 
       {/* Filter & Search Bar */}
-      <section className="sticky top-16 lg:top-20 z-30 bg-[#0D1B2A]/95 backdrop-blur-xl border-b border-[#1E3050]/60 py-4">
+      <section className="sticky top-16 lg:top-20 z-30 bg-soro-ivory/95 backdrop-blur-xl border-b border-soro-border/60 py-4">
         <div className="container-soro">
           <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
             {/* Search */}
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#8A9DB5]" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-soro-ink" />
               <input
                 type="search"
                 placeholder="Search articles…"
@@ -105,8 +105,8 @@ const Blog: React.FC = () => {
                   onClick={() => setActiveCategory(cat.id)}
                   className={`px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all shrink-0 ${
                     activeCategory === cat.id
-                      ? 'bg-[#1E6FFF] text-white'
-                      : 'text-[#8A9DB5] bg-[#1C2A3A] border border-[#1E3050]/60 hover:text-white'
+                      ? 'bg-soro-blue text-soro-white'
+                      : 'text-soro-ink bg-soro-ivory border border-soro-border/60 hover:text-soro-blue'
                   }`}
                   style={{ fontFamily: 'Outfit, sans-serif' }}
                 >
@@ -119,21 +119,21 @@ const Blog: React.FC = () => {
       </section>
 
       {/* Blog Content */}
-      <section className="py-16 bg-[#0A1628] min-h-[400px]">
+      <section className="py-16 bg-soro-ivory min-h-[400px]">
         <div className="container-soro">
           {filtered.length === 0 ? (
             <div className="text-center py-20">
-              <div className="w-20 h-20 rounded-2xl bg-[#1C2A3A] border border-[#1E3050]/60 flex items-center justify-center mx-auto mb-6">
-                <Tag className="w-8 h-8 text-[#8A9DB5]/40" />
+              <div className="w-20 h-20 rounded-2xl bg-soro-ivory border border-soro-border/60 flex items-center justify-center mx-auto mb-6">
+                <Tag className="w-8 h-8 text-soro-ink/40" />
               </div>
               <h2
-                className="text-white font-bold text-xl mb-3"
+                className="text-soro-blue font-bold text-xl mb-3"
                 style={{ fontFamily: 'Outfit, sans-serif' }}
               >
                 No Articles Yet
               </h2>
               <p
-                className="text-[#8A9DB5] max-w-md mx-auto mb-8"
+                className="text-soro-ink max-w-md mx-auto mb-8"
                 style={{ fontFamily: 'Inter, sans-serif' }}
               >
                 Engineering articles and technical content will be published here. Check back soon,
@@ -158,18 +158,18 @@ const Blog: React.FC = () => {
                       {categories.find((c) => c.id === post.category)?.label}
                     </div>
                     <h2
-                      className="text-white font-bold text-lg mb-3 group-hover:text-[#00AAFF] transition-colors"
+                      className="text-soro-blue font-bold text-lg mb-3 group-hover:text-soro-blue transition-colors"
                       style={{ fontFamily: 'Outfit, sans-serif' }}
                     >
                       {post.title}
                     </h2>
                     <p
-                      className="text-[#8A9DB5] text-sm leading-relaxed flex-1 mb-5"
+                      className="text-soro-ink text-sm leading-relaxed flex-1 mb-5"
                       style={{ fontFamily: 'Inter, sans-serif' }}
                     >
                       {post.excerpt}
                     </p>
-                    <div className="flex items-center justify-between text-xs text-[#8A9DB5]/70 mb-4 pt-4 border-t border-[#1E3050]/40">
+                    <div className="flex items-center justify-between text-xs text-soro-ink/70 mb-4 pt-4 border-t border-soro-border/40">
                       <span style={{ fontFamily: 'Inter, sans-serif' }}>{post.date}</span>
                       <span className="flex items-center gap-1" style={{ fontFamily: 'Inter, sans-serif' }}>
                         <Clock className="w-3 h-3" />
@@ -178,7 +178,7 @@ const Blog: React.FC = () => {
                     </div>
                     <Link
                       to={`/blog/${post.slug}`}
-                      className="inline-flex items-center gap-2 text-sm font-semibold text-[#1E6FFF] hover:gap-3 transition-all"
+                      className="inline-flex items-center gap-2 text-sm font-semibold text-soro-blue hover:gap-3 transition-all"
                       style={{ fontFamily: 'Outfit, sans-serif' }}
                     >
                       Read Article

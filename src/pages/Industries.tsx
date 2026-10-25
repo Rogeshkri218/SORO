@@ -22,7 +22,7 @@ const iconMap: Record<string, React.ReactNode> = {
   'flask-conical': <FlaskConical className="w-8 h-8" />,
 };
 
-const colours = ['#F9A8D4', '#FCD34D', '#6EE7B7', '#86EFAC', '#C4B5FD', '#38BDF8'];
+const colours = ['#226192', '#EF8557', '#226192', '#EF8557', '#226192', '#EF8557'];
 
 const Industries: React.FC = () => (
   <HelmetProvider>
@@ -35,17 +35,17 @@ const Industries: React.FC = () => (
     </Helmet>
 
     {/* Hero */}
-    <section className="relative pt-36 pb-20 bg-[#0A1628] overflow-hidden">
+    <section className="relative pt-36 pb-20 bg-soro-ivory overflow-hidden">
       <div className="absolute inset-0 bg-grid-pattern opacity-30" />
       <div className="container-soro relative z-10">
         <ScrollReveal>
           <div className="badge-blue mb-5 w-fit">Industries</div>
-          <h1 className="text-display text-white mb-6 max-w-3xl">
+          <h1 className="text-display text-soro-blue mb-6 max-w-3xl">
             Potential Engineering{' '}
             <span className="gradient-text">Applications</span>
           </h1>
           <p
-            className="text-[#8A9DB5] text-lg max-w-2xl leading-relaxed"
+            className="text-soro-ink text-lg max-w-2xl leading-relaxed"
             style={{ fontFamily: 'Inter, sans-serif' }}
           >
             These examples describe possible application areas, not confirmed customers,
@@ -56,7 +56,7 @@ const Industries: React.FC = () => (
     </section>
 
     {/* Industries Grid Overview */}
-    <section className="py-10 bg-[#0D1B2A]">
+    <section className="py-10 bg-soro-ivory">
       <div className="container-soro">
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
           {industries.map((ind, i) => (
@@ -72,7 +72,7 @@ const Industries: React.FC = () => (
                 {iconMap[ind.icon]}
               </div>
               <span
-                className="text-[#8A9DB5] text-xs group-hover:text-white transition-colors"
+                className="text-soro-ink text-xs group-hover:text-soro-blue transition-colors"
                 style={{ fontFamily: 'Inter, sans-serif' }}
               >
                 {ind.title}
@@ -88,7 +88,7 @@ const Industries: React.FC = () => (
       <section
         key={industry.id}
         id={industry.id}
-        className={`py-24 ${i % 2 === 0 ? 'bg-[#0A1628]' : 'bg-[#0D1B2A]'}`}
+        className={`py-24 ${i % 2 === 0 ? 'bg-soro-ivory' : 'bg-soro-white/40'}`}
       >
         <div className="container-soro">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
@@ -104,9 +104,9 @@ const Industries: React.FC = () => (
                 {iconMap[industry.icon]}
               </div>
               <div className="badge-blue mb-4 w-fit">Illustrative Application Area</div>
-              <h2 className="text-section-title text-white mb-5">{industry.title}</h2>
+              <h2 className="text-section-title text-soro-blue mb-5">{industry.title}</h2>
               <p
-                className="text-[#8A9DB5] leading-relaxed mb-8"
+                className="text-soro-ink leading-relaxed mb-8"
                 style={{ fontFamily: 'Inter, sans-serif' }}
               >
                 {industry.description}
@@ -120,7 +120,7 @@ const Industries: React.FC = () => (
             <ScrollReveal delay={0.15} className={i % 2 !== 0 ? 'lg:order-1' : ''}>
               <div className="glass p-7 rounded-2xl">
                 <h3
-                  className="text-white font-bold mb-5 text-sm uppercase tracking-wide"
+                  className="text-soro-blue font-bold mb-5 text-sm uppercase tracking-wide"
                   style={{ fontFamily: 'Outfit, sans-serif' }}
                 >
                   Engineering Applications
@@ -129,7 +129,7 @@ const Industries: React.FC = () => (
                   {industry.applications.map((app) => (
                     <li
                       key={app}
-                      className="flex items-start gap-3 text-sm text-[#8A9DB5]"
+                      className="flex items-start gap-3 text-sm text-soro-ink"
                       style={{ fontFamily: 'Inter, sans-serif' }}
                     >
                       <CheckCircle
@@ -148,17 +148,17 @@ const Industries: React.FC = () => (
     ))}
 
     {/* CTA */}
-    <section className="py-16 bg-[#0D1B2A]">
+    <section className="py-16 bg-soro-ivory">
       <div className="container-soro text-center">
         <ScrollReveal>
           <h2
-            className="text-white font-bold text-2xl mb-4"
+            className="text-soro-blue font-bold text-2xl mb-4"
             style={{ fontFamily: 'Outfit, sans-serif' }}
           >
                   Discuss an Engineering Need
           </h2>
           <p
-            className="text-[#8A9DB5] mb-8 max-w-xl mx-auto"
+            className="text-soro-ink mb-8 max-w-xl mx-auto"
             style={{ fontFamily: 'Inter, sans-serif' }}
           >
             Share your requirements and SORO can confirm whether the scope is a fit.

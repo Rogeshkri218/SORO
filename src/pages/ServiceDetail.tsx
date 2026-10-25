@@ -19,24 +19,24 @@ const ServiceDetail: React.FC = () => {
       </Helmet>
 
       {/* Hero */}
-      <section className="relative pt-36 pb-20 bg-[#0A1628] overflow-hidden">
+      <section className="relative pt-36 pb-20 bg-soro-ivory overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-30" />
         <div className="container-soro relative z-10">
           <ScrollReveal>
             <Link
               to="/services"
-              className="inline-flex items-center gap-2 text-[#8A9DB5] hover:text-white text-sm mb-6 transition-colors"
+              className="inline-flex items-center gap-2 text-soro-ink hover:text-soro-blue text-sm mb-6 transition-colors"
               style={{ fontFamily: 'Inter, sans-serif' }}
             >
               <ChevronLeft className="w-4 h-4" />
               All Services
             </Link>
             <div className="badge-blue mb-5 w-fit">Service</div>
-            <h1 className="text-display text-white mb-6 max-w-3xl">
+            <h1 className="text-display text-soro-blue mb-6 max-w-3xl">
               {service.title}
             </h1>
             <p
-              className="text-[#8A9DB5] text-lg max-w-2xl leading-relaxed"
+              className="text-soro-ink text-lg max-w-2xl leading-relaxed"
               style={{ fontFamily: 'Inter, sans-serif' }}
             >
               {service.shortDesc}
@@ -46,25 +46,25 @@ const ServiceDetail: React.FC = () => {
       </section>
 
       {/* Details */}
-      <section className="py-20 bg-[#0D1B2A]">
+      <section className="py-20 bg-soro-ivory">
         <div className="container-soro">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
             {/* Description */}
             <ScrollReveal className="lg:col-span-2">
               <h2
-                className="text-section-title text-white mb-6"
+                className="text-section-title text-soro-blue mb-6"
               >
                 About This Service
               </h2>
               <p
-                className="text-[#8A9DB5] leading-relaxed text-base mb-10"
+                className="text-soro-ink leading-relaxed text-base mb-10"
                 style={{ fontFamily: 'Inter, sans-serif' }}
               >
                 {service.description}
               </p>
 
               <h3
-                className="text-white font-bold text-lg mb-5"
+                className="text-soro-blue font-bold text-lg mb-5"
                 style={{ fontFamily: 'Outfit, sans-serif' }}
               >
                 Applications
@@ -73,10 +73,10 @@ const ServiceDetail: React.FC = () => {
                 {service.applications.map((app) => (
                   <li
                     key={app}
-                    className="flex items-start gap-3 glass-light p-3 rounded-lg text-sm text-[#8A9DB5]"
+                    className="flex items-start gap-3 glass-light p-3 rounded-lg text-sm text-soro-ink"
                     style={{ fontFamily: 'Inter, sans-serif' }}
                   >
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#FF6B2B] shrink-0 mt-1.5" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-soro-coral shrink-0 mt-1.5" />
                     {app}
                   </li>
                 ))}
@@ -92,7 +92,7 @@ const ServiceDetail: React.FC = () => {
             <ScrollReveal delay={0.15}>
               <div className="glass p-7 rounded-2xl">
                 <h3
-                  className="text-white font-bold mb-5 text-sm uppercase tracking-wide"
+                  className="text-soro-blue font-bold mb-5 text-sm uppercase tracking-wide"
                   style={{ fontFamily: 'Outfit, sans-serif' }}
                 >
                   Capabilities
@@ -101,10 +101,10 @@ const ServiceDetail: React.FC = () => {
                   {service.capabilities.map((cap) => (
                     <li
                       key={cap}
-                      className="flex items-start gap-3 text-sm text-[#8A9DB5]"
+                      className="flex items-start gap-3 text-sm text-soro-ink"
                       style={{ fontFamily: 'Inter, sans-serif' }}
                     >
-                      <CheckCircle className="w-4 h-4 text-[#1E6FFF] shrink-0 mt-0.5" />
+                      <CheckCircle className="w-4 h-4 text-soro-blue shrink-0 mt-0.5" />
                       {cap}
                     </li>
                   ))}
@@ -127,11 +127,11 @@ const ServiceDetail: React.FC = () => {
       </section>
 
       {/* Related Services */}
-      <section className="py-16 bg-[#0A1628]">
+      <section className="py-16 bg-soro-ivory">
         <div className="container-soro">
           <ScrollReveal className="text-center mb-8">
             <h2
-              className="text-white font-bold text-xl"
+              className="text-soro-blue font-bold text-xl"
               style={{ fontFamily: 'Outfit, sans-serif' }}
             >
               Other Services
@@ -144,7 +144,7 @@ const ServiceDetail: React.FC = () => {
                 <Link
                   key={s.slug}
                   to={`/services/${s.slug}`}
-                  className="px-4 py-2 bg-[#1C2A3A] border border-[#1E3050]/60 hover:border-[#1E6FFF]/40 hover:text-white text-[#8A9DB5] rounded-full text-sm transition-colors"
+                  className="px-4 py-2 bg-soro-ivory border border-soro-border/60 hover:border-soro-blue/40 hover:text-soro-blue text-soro-ink rounded-full text-sm transition-colors"
                   style={{ fontFamily: 'Outfit, sans-serif' }}
                 >
                   {s.title}

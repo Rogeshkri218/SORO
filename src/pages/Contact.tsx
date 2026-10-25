@@ -76,17 +76,17 @@ const Contact: React.FC = () => {
       </Helmet>
 
       {/* Hero */}
-      <section className="relative pt-36 pb-20 bg-[#0A1628] overflow-hidden">
+      <section className="relative pt-36 pb-20 bg-soro-ivory overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-30" />
         <div className="container-soro relative z-10">
           <ScrollReveal>
             <div className="badge-blue mb-5 w-fit">Contact</div>
-            <h1 className="text-display text-white mb-6 max-w-3xl">
+            <h1 className="text-display text-soro-blue mb-6 max-w-3xl">
               Let's Talk About{' '}
               <span className="gradient-text">Your Project</span>
             </h1>
             <p
-              className="text-[#8A9DB5] text-lg max-w-2xl leading-relaxed"
+              className="text-soro-ink text-lg max-w-2xl leading-relaxed"
               style={{ fontFamily: 'Inter, sans-serif' }}
             >
               Use the enquiry form or email us directly. Additional contact details will be added when confirmed.
@@ -96,7 +96,7 @@ const Contact: React.FC = () => {
       </section>
 
       {/* Contact Content */}
-      <section className="py-16 bg-[#0D1B2A]">
+      <section className="py-16 bg-soro-ivory">
         <div className="container-soro">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
             {/* Contact Info */}
@@ -105,20 +105,20 @@ const Contact: React.FC = () => {
                 {/* Email */}
                 <a
                   href={`mailto:${COMPANY_EMAIL}`}
-                  className="glass p-6 rounded-2xl flex items-start gap-4 hover:border-[#1E6FFF]/30 transition-colors group block"
+                  className="glass p-6 rounded-2xl flex items-start gap-4 hover:border-soro-blue/30 transition-colors group block"
                 >
-                  <div className="w-11 h-11 rounded-xl bg-[#1E6FFF]/15 border border-[#1E6FFF]/30 flex items-center justify-center shrink-0">
-                    <Mail className="w-5 h-5 text-[#1E6FFF]" />
+                  <div className="w-11 h-11 rounded-xl bg-soro-blue/15 border border-soro-blue/30 flex items-center justify-center shrink-0">
+                    <Mail className="w-5 h-5 text-soro-blue" />
                   </div>
                   <div>
                     <h3
-                      className="text-white font-semibold text-sm mb-1"
+                      className="text-soro-blue font-semibold text-sm mb-1"
                       style={{ fontFamily: 'Outfit, sans-serif' }}
                     >
                       Email
                     </h3>
                     <span
-                      className="text-[#8A9DB5] text-sm group-hover:text-[#00AAFF] transition-colors"
+                      className="text-soro-ink text-sm group-hover:text-soro-blue transition-colors"
                       style={{ fontFamily: 'Inter, sans-serif' }}
                     >
                       {COMPANY_EMAIL}
@@ -127,24 +127,24 @@ const Contact: React.FC = () => {
                 </a>
 
                 <div className="glass p-6 rounded-2xl flex items-start gap-4">
-                  <Phone className="mt-1 h-5 w-5 shrink-0 text-[#AEB8C4]" aria-hidden="true" />
+                  <Phone className="mt-1 h-5 w-5 shrink-0 text-soro-ink" aria-hidden="true" />
                   <div>
-                    <h3 className="text-white text-sm font-semibold">Business phone</h3>
-                    <p className="mt-1 text-sm text-[#AEB8C4]">To be confirmed</p>
+                    <h3 className="text-soro-blue text-sm font-semibold">Business phone</h3>
+                    <p className="mt-1 text-sm text-soro-ink">To be confirmed</p>
                   </div>
                 </div>
                 <div className="glass p-6 rounded-2xl flex items-start gap-4">
-                  <MessageCircle className="mt-1 h-5 w-5 shrink-0 text-[#AEB8C4]" aria-hidden="true" />
+                  <MessageCircle className="mt-1 h-5 w-5 shrink-0 text-soro-ink" aria-hidden="true" />
                   <div>
-                    <h3 className="text-white text-sm font-semibold">WhatsApp</h3>
-                    <p className="mt-1 text-sm text-[#AEB8C4]">To be confirmed</p>
+                    <h3 className="text-soro-blue text-sm font-semibold">WhatsApp</h3>
+                    <p className="mt-1 text-sm text-soro-ink">To be confirmed</p>
                   </div>
                 </div>
                 <div className="glass p-6 rounded-2xl flex items-start gap-4">
-                  <MapPin className="mt-1 h-5 w-5 shrink-0 text-[#AEB8C4]" aria-hidden="true" />
+                  <MapPin className="mt-1 h-5 w-5 shrink-0 text-soro-ink" aria-hidden="true" />
                   <div>
-                    <h3 className="text-white text-sm font-semibold">Business address</h3>
-                    <p className="mt-1 text-sm text-[#AEB8C4]">To be confirmed</p>
+                    <h3 className="text-soro-blue text-sm font-semibold">Business address</h3>
+                    <p className="mt-1 text-sm text-soro-ink">To be confirmed</p>
                   </div>
                 </div>
               </div>
@@ -157,10 +157,10 @@ const Contact: React.FC = () => {
                   <div className="w-16 h-16 rounded-full bg-green-500/20 border border-green-500/40 flex items-center justify-center mx-auto mb-6">
                     <CheckCircle className="w-8 h-8 text-green-400" />
                   </div>
-                  <h2 className="text-white font-bold text-2xl mb-3" style={{ fontFamily: 'Outfit, sans-serif' }}>
+                  <h2 className="text-soro-blue font-bold text-2xl mb-3" style={{ fontFamily: 'Outfit, sans-serif' }}>
                     Message Sent!
                   </h2>
-                  <p className="text-[#8A9DB5] mb-8" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  <p className="text-soro-ink mb-8" style={{ fontFamily: 'Inter, sans-serif' }}>
                     Thank you. Your message was delivered successfully.
                   </p>
                   <button onClick={() => setSubmitState('idle')} className="btn-secondary">
@@ -173,7 +173,7 @@ const Contact: React.FC = () => {
                   className="glass p-8 rounded-2xl space-y-5"
                   noValidate
                 >
-                  <h2 className="text-white font-bold text-xl mb-2" style={{ fontFamily: 'Outfit, sans-serif' }}>
+                  <h2 className="text-soro-blue font-bold text-xl mb-2" style={{ fontFamily: 'Outfit, sans-serif' }}>
                     Send Us a Message
                   </h2>
                   <div className="divider-glow" />
@@ -245,7 +245,7 @@ const Contact: React.FC = () => {
 
                   <button
                     type="submit"
-                    className="btn-primary w-full justify-center py-3"
+                    className="btn-orange w-full justify-center py-3"
                     disabled={submitState === 'loading'}
                     id="submitContactButton"
                   >
@@ -267,8 +267,8 @@ const Contact: React.FC = () => {
               {/* Map Placeholder */}
               <div className="mt-6 glass rounded-2xl overflow-hidden h-48 flex items-center justify-center">
                 <div className="text-center">
-                  <MapPin className="w-8 h-8 text-[#8A9DB5]/40 mx-auto mb-2" />
-                  <p className="text-[#8A9DB5]/60 text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  <MapPin className="w-8 h-8 text-soro-ink/40 mx-auto mb-2" />
+                  <p className="text-soro-ink/60 text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
                     Map will be embedded once the verified company address is confirmed.
                   </p>
                 </div>

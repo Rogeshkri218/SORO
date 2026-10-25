@@ -29,7 +29,7 @@ const Footer: React.FC = () => {
   const COMPANY_EMAIL = 'orders@sorofabrication.in';
 
   return (
-    <footer className="bg-[#050E1A] border-t border-[#1E3050]/60">
+    <footer className="bg-soro-blue border-t border-soro-white/20 text-soro-ivory">
       <div className="container-soro py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
           {/* Brand */}
@@ -37,25 +37,25 @@ const Footer: React.FC = () => {
             <Link to="/" className="group mb-5 inline-flex">
               <div>
                 <span
-                  className="text-xl font-extrabold text-white leading-none block"
+                  className="text-xl font-extrabold text-soro-ivory leading-none block"
                   style={{ fontFamily: 'Outfit, sans-serif' }}
                 >
                   SORO
                 </span>
                 <span
-                  className="text-[0.6rem] text-[#8A9DB5] tracking-widest uppercase leading-none block"
+                  className="text-[0.6rem] text-soro-ivory/75 tracking-widest uppercase leading-none block"
                   style={{ fontFamily: 'Inter, sans-serif' }}
                 >
                   Fabrications
                 </span>
-                <span className="mt-2 block text-[0.55rem] uppercase tracking-[0.12em] text-[#AEB8C4]">
+                <span className="mt-2 block text-[0.55rem] uppercase tracking-[0.12em] text-soro-coral">
                   DESIGN • FABRICATE • INNOVATE
                 </span>
               </div>
             </Link>
 
             <p
-              className="text-[#8A9DB5] text-sm leading-relaxed mb-6"
+              className="text-soro-ivory/75 text-sm leading-relaxed mb-6"
               style={{ fontFamily: 'Inter, sans-serif' }}
             >
               Electronic and mechanical product development, with a focus on engineering and prototyping.
@@ -67,7 +67,7 @@ const Footer: React.FC = () => {
           {/* Services */}
           <div>
             <h3
-              className="text-white font-semibold text-sm mb-5 tracking-wide"
+              className="text-soro-ivory font-semibold text-sm mb-5 tracking-wide"
               style={{ fontFamily: 'Outfit, sans-serif' }}
             >
               Engineering Scopes
@@ -77,7 +77,7 @@ const Footer: React.FC = () => {
                 <li key={link.path}>
                   <Link
                     to={link.path}
-                    className="text-[#8A9DB5] hover:text-[#00AAFF] text-sm transition-colors"
+                    className="text-soro-ivory/75 hover:text-soro-coral text-sm transition-colors"
                     style={{ fontFamily: 'Inter, sans-serif' }}
                   >
                     {link.label}
@@ -90,7 +90,7 @@ const Footer: React.FC = () => {
           {/* Company */}
           <div>
             <h3
-              className="text-white font-semibold text-sm mb-5 tracking-wide"
+              className="text-soro-ivory font-semibold text-sm mb-5 tracking-wide"
               style={{ fontFamily: 'Outfit, sans-serif' }}
             >
               Company
@@ -100,7 +100,7 @@ const Footer: React.FC = () => {
                 <li key={link.path}>
                   <Link
                     to={link.path}
-                    className="text-[#8A9DB5] hover:text-[#00AAFF] text-sm transition-colors"
+                    className="text-soro-ivory/75 hover:text-soro-coral text-sm transition-colors"
                     style={{ fontFamily: 'Inter, sans-serif' }}
                   >
                     {link.label}
@@ -113,7 +113,7 @@ const Footer: React.FC = () => {
           {/* Contact */}
           <div>
             <h3
-              className="text-white font-semibold text-sm mb-5 tracking-wide"
+              className="text-soro-ivory font-semibold text-sm mb-5 tracking-wide"
               style={{ fontFamily: 'Outfit, sans-serif' }}
             >
               Contact
@@ -122,9 +122,9 @@ const Footer: React.FC = () => {
               <li>
                 <a
                   href={`mailto:${COMPANY_EMAIL}`}
-                  className="flex items-start gap-3 text-[#8A9DB5] hover:text-white transition-colors"
+                  className="flex items-start gap-3 text-soro-ivory/75 hover:text-soro-ivory transition-colors"
                 >
-                  <Mail className="w-4 h-4 mt-0.5 text-[#1E6FFF] shrink-0" />
+                  <Mail className="w-4 h-4 mt-0.5 text-soro-coral shrink-0" />
                   <span
                     className="text-sm"
                     style={{ fontFamily: 'Inter, sans-serif' }}
@@ -140,10 +140,10 @@ const Footer: React.FC = () => {
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-[#1E3050]/40">
+      <div className="border-t border-soro-white/20">
         <div className="container-soro py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p
-            className="text-[#8A9DB5] text-xs"
+            className="text-soro-ivory/75 text-xs"
             style={{ fontFamily: 'Inter, sans-serif' }}
           >
             &copy; {currentYear} SORO Fabrications Private Limited. All rights

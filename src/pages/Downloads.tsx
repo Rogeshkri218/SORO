@@ -56,16 +56,16 @@ const Downloads: React.FC = () => (
     </Helmet>
 
     {/* Hero */}
-    <section className="relative pt-36 pb-20 bg-[#0A1628] overflow-hidden">
+    <section className="relative pt-36 pb-20 bg-soro-ivory overflow-hidden">
       <div className="absolute inset-0 bg-grid-pattern opacity-30" />
       <div className="container-soro relative z-10">
         <ScrollReveal>
           <div className="badge-blue mb-5 w-fit">Downloads</div>
-          <h1 className="text-display text-white mb-6 max-w-3xl">
+          <h1 className="text-display text-soro-blue mb-6 max-w-3xl">
             Company <span className="gradient-text">Resources</span>
           </h1>
           <p
-            className="text-[#8A9DB5] text-lg max-w-2xl leading-relaxed"
+            className="text-soro-ink text-lg max-w-2xl leading-relaxed"
             style={{ fontFamily: 'Inter, sans-serif' }}
           >
             Request company information and engineering documents. Files are offered for download only when approved for publication.
@@ -75,11 +75,11 @@ const Downloads: React.FC = () => (
     </section>
 
     {/* Documents */}
-    <section className="py-16 bg-[#0D1B2A]">
+    <section className="py-16 bg-soro-ivory">
       <div className="container-soro">
         <ScrollReveal>
-          <div className="glass p-5 rounded-xl border border-[#1E6FFF]/20 mb-10">
-            <p className="text-[#8A9DB5] text-sm text-center" style={{ fontFamily: 'Inter, sans-serif' }}>
+          <div className="glass p-5 rounded-xl border border-soro-blue/20 mb-10">
+            <p className="text-soro-ink text-sm text-center" style={{ fontFamily: 'Inter, sans-serif' }}>
               Only published files include a download action. The documents below are not published;
               contact SORO to request a specific document.
             </p>
@@ -99,12 +99,12 @@ const Downloads: React.FC = () => (
                   >
                     <FileText
                       className="w-5 h-5"
-                      style={{ color: doc.status === 'available' ? '#60A5FA' : '#FFA07A' }}
+                      style={{ color: doc.status === 'available' ? '#226192' : '#EF8557' }}
                     />
                   </div>
                   <div className="flex-1">
                     <h3
-                      className="text-white font-semibold text-sm mb-1"
+                      className="text-soro-blue font-semibold text-sm mb-1"
                       style={{ fontFamily: 'Outfit, sans-serif' }}
                     >
                       {doc.title}
@@ -120,7 +120,7 @@ const Downloads: React.FC = () => (
                 </div>
 
                 <p
-                  className="text-[#8A9DB5] text-sm leading-relaxed flex-1 mb-5"
+                  className="text-soro-ink text-sm leading-relaxed flex-1 mb-5"
                   style={{ fontFamily: 'Inter, sans-serif' }}
                 >
                   {doc.description}
@@ -150,10 +150,10 @@ const Downloads: React.FC = () => (
 
         <ScrollReveal className="mt-12 text-center">
           <div className="glass p-8 rounded-2xl max-w-2xl mx-auto">
-            <h3 className="text-white font-bold mb-3" style={{ fontFamily: 'Outfit, sans-serif' }}>
+            <h3 className="text-soro-blue font-bold mb-3" style={{ fontFamily: 'Outfit, sans-serif' }}>
               Need a Specific Document?
             </h3>
-            <p className="text-[#8A9DB5] text-sm mb-5" style={{ fontFamily: 'Inter, sans-serif' }}>
+            <p className="text-soro-ink text-sm mb-5" style={{ fontFamily: 'Inter, sans-serif' }}>
               Contact SORO to ask whether an approved technical document or capability statement is available for your needs.
             </p>
             <a href="mailto:orders@sorofabrication.in" className="btn-primary">

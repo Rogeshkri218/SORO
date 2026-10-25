@@ -118,17 +118,17 @@ const Quote: React.FC = () => {
       </Helmet>
 
       {/* Hero */}
-      <section className="relative pt-36 pb-16 bg-[#0A1628] overflow-hidden">
+      <section className="relative pt-36 pb-16 bg-soro-ivory overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-30" />
         <div className="container-soro relative z-10">
           <ScrollReveal>
             <div className="badge-blue mb-5 w-fit">Get a Quote</div>
-            <h1 className="text-display text-white mb-6 max-w-3xl">
+            <h1 className="text-display text-soro-blue mb-6 max-w-3xl">
               Request an{' '}
               <span className="gradient-text">Engineering Quotation</span>
             </h1>
             <p
-              className="text-[#8A9DB5] text-lg max-w-2xl leading-relaxed"
+              className="text-soro-ink text-lg max-w-2xl leading-relaxed"
               style={{ fontFamily: 'Inter, sans-serif' }}
             >
               Share the project information you have. Scope, availability, deliverables, and pricing
@@ -139,7 +139,7 @@ const Quote: React.FC = () => {
       </section>
 
       {/* Form Section */}
-      <section className="py-16 bg-[#0D1B2A]">
+      <section className="py-16 bg-soro-ivory">
         <div className="container-soro">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
             {/* Side Info */}
@@ -147,7 +147,7 @@ const Quote: React.FC = () => {
               <div className="space-y-6">
                 <div className="glass p-6 rounded-2xl">
                   <h3
-                    className="text-white font-bold mb-4"
+                    className="text-soro-blue font-bold mb-4"
                     style={{ fontFamily: 'Outfit, sans-serif' }}
                   >
                     What happens next?
@@ -159,16 +159,16 @@ const Quote: React.FC = () => {
                     'Work begins only after scope and deliverables are agreed.',
                   ].map((step, i) => (
                     <div key={i} className="flex gap-3 mb-4 last:mb-0">
-                      <div className="w-6 h-6 rounded-full bg-[#1E6FFF]/20 border border-[#1E6FFF]/40 flex items-center justify-center shrink-0 mt-0.5">
+                      <div className="w-6 h-6 rounded-full bg-soro-blue/20 border border-soro-blue/40 flex items-center justify-center shrink-0 mt-0.5">
                         <span
-                          className="text-[#1E6FFF] text-xs font-bold"
+                          className="text-soro-blue text-xs font-bold"
                           style={{ fontFamily: 'Outfit, sans-serif' }}
                         >
                           {i + 1}
                         </span>
                       </div>
                       <p
-                        className="text-[#8A9DB5] text-sm"
+                        className="text-soro-ink text-sm"
                         style={{ fontFamily: 'Inter, sans-serif' }}
                       >
                         {step}
@@ -179,17 +179,17 @@ const Quote: React.FC = () => {
 
                 <div className="glass p-6 rounded-2xl">
                   <h3
-                    className="text-white font-bold mb-3"
+                    className="text-soro-blue font-bold mb-3"
                     style={{ fontFamily: 'Outfit, sans-serif' }}
                   >
                     Share project files
                   </h3>
                   <p
-                    className="text-[#8A9DB5] text-sm"
+                    className="text-soro-ink text-sm"
                     style={{ fontFamily: 'Inter, sans-serif' }}
                   >
                     Attachments are not enabled on this form. Email drawings or reference files to{' '}
-                    <a className="text-[#1E6FFF] hover:underline" href="mailto:orders@sorofabrication.in">orders@sorofabrication.in</a>.
+                    <a className="text-soro-blue hover:underline" href="mailto:orders@sorofabrication.in">orders@sorofabrication.in</a>.
                   </p>
                 </div>
               </div>
@@ -203,13 +203,13 @@ const Quote: React.FC = () => {
                     <CheckCircle className="w-8 h-8 text-green-400" />
                   </div>
                   <h2
-                    className="text-white font-bold text-2xl mb-3"
+                    className="text-soro-blue font-bold text-2xl mb-3"
                     style={{ fontFamily: 'Outfit, sans-serif' }}
                   >
                     Enquiry Submitted!
                   </h2>
                   <p
-                    className="text-[#8A9DB5] mb-8"
+                    className="text-soro-ink mb-8"
                     style={{ fontFamily: 'Inter, sans-serif' }}
                   >
                     Your enquiry was delivered successfully. SORO can follow up using the contact
@@ -229,7 +229,7 @@ const Quote: React.FC = () => {
                   noValidate
                 >
                   <h2
-                    className="text-white font-bold text-xl mb-2"
+                    className="text-soro-blue font-bold text-xl mb-2"
                     style={{ fontFamily: 'Outfit, sans-serif' }}
                   >
                     Project Enquiry Form
@@ -426,9 +426,9 @@ const Quote: React.FC = () => {
                     <FieldError message={errors.contactMethod?.message} />
                   </div>
 
-                  <p className="text-[#8A9DB5] text-sm">
+                  <p className="text-soro-ink text-sm">
                     Need to share drawings or reference files? Email them to{' '}
-                    <a className="text-[#1E6FFF] hover:underline" href="mailto:orders@sorofabrication.in">
+                    <a className="text-soro-blue hover:underline" href="mailto:orders@sorofabrication.in">
                       orders@sorofabrication.in
                     </a>{' '}
                     after submitting your enquiry. File attachments are not enabled on this form.
@@ -439,11 +439,11 @@ const Quote: React.FC = () => {
                     <label className="flex items-start gap-3 cursor-pointer">
                       <input
                         type="checkbox"
-                        className="mt-0.5 w-4 h-4 rounded border border-[#1E3050] bg-[#0D1B2A] accent-[#1E6FFF]"
+                        className="mt-0.5 w-4 h-4 rounded border border-soro-border bg-soro-ivory accent-soro-blue"
                         {...register('privacyConsent')}
                       />
                       <span
-                        className="text-[#8A9DB5] text-sm"
+                        className="text-soro-ink text-sm"
                         style={{ fontFamily: 'Inter, sans-serif' }}
                       >
                         I consent to SORO Fabrications using these details to respond to this enquiry.{' '}
@@ -452,8 +452,8 @@ const Quote: React.FC = () => {
                     </label>
                     <FieldError message={errors.privacyConsent?.message} />
                   </div>
-                  <details className="border-t border-[#1E3050]/60 pt-4 text-sm text-[#AEB8C4]">
-                    <summary className="cursor-pointer font-semibold text-white">Privacy notice</summary>
+                  <details className="border-t border-soro-border/60 pt-4 text-sm text-soro-ink">
+                    <summary className="cursor-pointer font-semibold text-soro-blue">Privacy notice</summary>
                     <p className="mt-3 leading-relaxed">
                       When email delivery is configured, the details entered here are sent through the configured form provider to the intended SORO enquiry mailbox. Do not submit confidential design files or trade secrets through this form. SORO should confirm its full privacy and retention terms before launch.
                     </p>
@@ -470,7 +470,7 @@ const Quote: React.FC = () => {
 
                   <button
                     type="submit"
-                    className="btn-primary w-full justify-center py-3"
+                    className="btn-orange w-full justify-center py-3"
                     disabled={submitState === 'loading'}
                     id="submitQuoteButton"
                   >
@@ -487,17 +487,17 @@ const Quote: React.FC = () => {
                     )}
                   </button>
 
-                  <p className="text-[#8A9DB5]/70 text-xs text-center">
+                  <p className="text-soro-ink/70 text-xs text-center">
                     If submission is unavailable, email us at{' '}
-                    <a href="mailto:orders@sorofabrication.in" className="text-[#1E6FFF] hover:underline">
+                    <a href="mailto:orders@sorofabrication.in" className="text-soro-blue hover:underline">
                       orders@sorofabrication.in
                     </a>.
                   </p>
 
                   <div className="flex gap-2 items-center justify-center pt-2">
-                    <ArrowRight className="w-3.5 h-3.5 text-[#8A9DB5]" />
+                    <ArrowRight className="w-3.5 h-3.5 text-soro-ink" />
                     <span
-                      className="text-[#8A9DB5] text-xs"
+                      className="text-soro-ink text-xs"
                       style={{ fontFamily: 'Inter, sans-serif' }}
                     >
                       Your enquiry is sent only after the configured email service confirms delivery.
