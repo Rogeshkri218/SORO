@@ -64,6 +64,8 @@ export const createApp = () => {
     message: { error: 'Too many requests. Please try again later.' },
   });
   app.use('/api/submissions', publicLimiter);
+  app.use('/api/enquiries', publicLimiter);
+  app.use('/api/pcb-submissions', publicLimiter);
   app.use('/api/orders', publicLimiter);
   app.use('/api', apiRouter);
 

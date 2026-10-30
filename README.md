@@ -8,10 +8,10 @@ Install packages and create a local environment file:
 
 ```powershell
 npm install
-Copy-Item .env.example .env
+if (-not (Test-Path .env)) { Copy-Item .env.example .env }
 ```
 
-Replace placeholder values in the ignored `.env` file. Do not commit it. For local development, set `MONGODB_URI`, `JWT_SECRET`, `CUSTOMER_TOKEN_SECRET`, `ADMIN_EMAIL`, and `CLIENT_ORIGIN` at minimum. For server email and file uploads, configure SMTP and Supabase values as described below.
+Set `MONGODB_URI` in the ignored `.env` file to your Atlas connection string and keep `MONGODB_DB_NAME=soro`; do not commit `.env` or put the URI in a `VITE_*` variable. The local `.env` includes the localhost CORS origins and API defaults. Existing administrator endpoints additionally require independently generated `JWT_SECRET` and `CUSTOMER_TOKEN_SECRET` values and an `ADMIN_EMAIL`; do not use placeholder secrets. For server email and file storage, configure SMTP and Supabase values as described below.
 
 Run the API and website in separate terminals:
 
@@ -24,6 +24,32 @@ npm run dev
 ```
 
 The Vite development server proxies `/api` to `http://localhost:5000` by default. Set `VITE_API_PROXY_TARGET` if the local API listens elsewhere. The API listens on `PORT` (default `5000`) and reports `503` at `/api/health` until MongoDB is connected. It retries a failed initial connection; submissions are unavailable until the database is ready.
+
+### Direct submission endpoints
+
+The API also exposes standalone endpoints that write to their matching MongoDB collections:
+
+- `POST /api/enquiries` stores `{ name, email, phone?, company?, subject, message, website? }` in `enquiries`.
+- `POST /api/pcb-submissions` stores the PCB project requirements and contact details in `pcb_submissions`. Its accepted JSON fields are `projectType`, `software`, `softwareOther`, `description`, `quantity`, `deliverables`, `constraints`, `deadline`, `contactMethod`, `contact`, `website`, and `specifications`.
+
+Both endpoints require a JSON request from an allowed `CLIENT_ORIGIN`, apply backend validation and the public API rate limit, and return `201` on success or a structured error response. PCB submissions accept requirements only; file metadata or file contents are not accepted by these endpoints, and no upload is claimed. The existing website continues using `POST /api/submissions` and its current storage, admin, and order-status behavior.
+
+The values below are illustrative placeholders, not actual enquiries. Replace them before manually testing a POST; do not use example data as a real customer submission.
+
+```powershell
+Invoke-RestMethod -Method Get -Uri http://localhost:5000/api/health
+```
+
+```powershell
+$body = @{
+  name = "Replace with a name"
+  email = "replace-me@example.invalid"
+  subject = "Replace with a subject"
+  message = "Replace with a message that is at least 20 characters."
+} | ConvertTo-Json
+Invoke-RestMethod -Method Post -Uri http://localhost:5000/api/enquiries `
+  -ContentType "application/json" -Headers @{ Origin = "http://localhost:5173" } -Body $body
+```
 
 Build and lint the frontend, and run backend route checks:
 

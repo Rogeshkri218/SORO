@@ -7,6 +7,8 @@ import { AdminUser } from '../models/AdminUser.js';
 import { AuditLog } from '../models/AuditLog.js';
 import { NotificationLog } from '../models/NotificationLog.js';
 import { Submission } from '../models/Submission.js';
+import enquiriesRouter from './enquiries.js';
+import pcbSubmissionsRouter from './pcb-submissions.js';
 import { clearAdminSession, createAdminSession, authenticateAdmin } from '../middleware/auth.js';
 import { sendStatusNotification, sendSubmissionNotifications } from '../services/email.js';
 import { confirmStoredObject, createSignedUpload, validateUploadDetails } from '../services/storage.js';
@@ -309,6 +311,9 @@ router.use((request, response, next) => {
   }
   next();
 });
+
+router.use('/enquiries', enquiriesRouter);
+router.use('/pcb-submissions', pcbSubmissionsRouter);
 
 router.post('/submissions', async (request, response) => {
   try {

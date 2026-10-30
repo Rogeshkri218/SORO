@@ -12,6 +12,8 @@ const { validateUploadDetails } = await import('../services/storage.js');
 const { AdminUser } = await import('../models/AdminUser.js');
 const { NotificationLog } = await import('../models/NotificationLog.js');
 const { Submission } = await import('../models/Submission.js');
+const { Enquiry } = await import('../models/Enquiry.js');
+const { PcbSubmission } = await import('../models/PcbSubmission.js');
 const app = createApp();
 const server = createServer(app);
 let baseUrl;
@@ -134,6 +136,163 @@ test('project file validation rejects unsafe names and unsupported types', () =>
     validateUploadDetails({ name: 'design.pdf', size: 100, contentType: 'application/pdf' }, 0),
     { originalName: 'design.pdf', size: 100, contentType: 'application/pdf' },
   );
+});
+
+test('POST /enquiries validates and stores a record in the enquiries collection', async () => {
+  const originalCreate = Enquiry.create;
+  const createdAt = new Date('2026-01-02T03:04:05.000Z');
+  let saved;
+  Enquiry.create = async (data) => {
+    saved = data;
+    return { id: 'enquiry-id', createdAt };
+  };
+
+  try {
+    app.locals.databaseReady = true;
+    const response = await fetch(`${baseUrl}/enquiries`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Origin: 'http://localhost:5173',
+      },
+      body: JSON.stringify({
+        name: 'Test Person',
+        email: 'person@example.invalid',
+        subject: 'Design question',
+        message: 'Please contact me about an upcoming engineering design project.',
+        website: '',
+      }),
+    });
+
+    assert.equal(response.status, 201);
+    assert.deepEqual(await response.json(), {
+      success: true,
+      enquiry: { id: 'enquiry-id', createdAt: createdAt.toISOString() },
+    });
+    assert.equal(saved.name, 'Test Person');
+    assert.equal(saved.email, 'person@example.invalid');
+    assert.equal(Object.hasOwn(saved, 'website'), false);
+    assert.equal(Enquiry.collection.collectionName, 'enquiries');
+  } finally {
+    Enquiry.create = originalCreate;
+  }
+});
+
+test('POST /enquiries rejects invalid input without persisting it', async () => {
+  const originalCreate = Enquiry.create;
+  let createCalls = 0;
+  Enquiry.create = async () => {
+    createCalls += 1;
+    return {};
+  };
+
+  try {
+    app.locals.databaseReady = true;
+    const response = await fetch(`${baseUrl}/enquiries`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Origin: 'http://localhost:5173',
+      },
+      body: JSON.stringify({
+        name: '',
+        email: 'not-an-email',
+        subject: 'Hi',
+        message: 'Too short',
+      }),
+    });
+
+    assert.equal(response.status, 400);
+    assert.equal(createCalls, 0);
+    assert.ok(Array.isArray((await response.json()).details));
+  } finally {
+    Enquiry.create = originalCreate;
+  }
+});
+
+test('POST /pcb-submissions validates and stores requirements without pretending files were uploaded', async () => {
+  const originalCreate = PcbSubmission.create;
+  const createdAt = new Date('2026-01-02T03:04:05.000Z');
+  let saved;
+  PcbSubmission.create = async (data) => {
+    saved = data;
+    return {
+      ...data,
+      id: 'pcb-id',
+      status: 'Pending Review',
+      createdAt,
+    };
+  };
+
+  try {
+    app.locals.databaseReady = true;
+    const response = await fetch(`${baseUrl}/pcb-submissions`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Origin: 'http://localhost:5173',
+      },
+      body: JSON.stringify({
+        projectType: 'pcb-layout',
+        software: 'KiCad',
+        description: 'A two-layer controller board for an industrial sensor.',
+        contact: {
+          fullName: 'Test Person',
+          email: 'person@example.invalid',
+          phone: '+1 555 123 4567',
+        },
+        specifications: { layers: '2' },
+      }),
+    });
+
+    assert.equal(response.status, 201);
+    const result = await response.json();
+    assert.equal(result.success, true);
+    assert.equal(result.submission.id, 'pcb-id');
+    assert.match(result.submission.reference, /^PCB-\d{8}-[A-F0-9]{24}$/);
+    assert.equal(result.submission.status, 'Pending Review');
+    assert.equal(saved.projectType, 'pcb-layout');
+    assert.equal(saved.contact.email, 'person@example.invalid');
+    assert.equal(PcbSubmission.collection.collectionName, 'pcb_submissions');
+  } finally {
+    PcbSubmission.create = originalCreate;
+  }
+});
+
+test('POST /pcb-submissions rejects invalid data and upload claims', async () => {
+  const originalCreate = PcbSubmission.create;
+  let createCalls = 0;
+  PcbSubmission.create = async () => {
+    createCalls += 1;
+    return {};
+  };
+
+  try {
+    app.locals.databaseReady = true;
+    const response = await fetch(`${baseUrl}/pcb-submissions`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Origin: 'http://localhost:5173',
+      },
+      body: JSON.stringify({
+        projectType: 'pcb-layout',
+        software: 'KiCad',
+        description: 'A valid length description for a PCB design request.',
+        contact: {
+          fullName: 'Test Person',
+          email: 'person@example.invalid',
+          phone: '+1 555 123 4567',
+        },
+        selectedFiles: [{ name: 'design.pdf', size: 12 }],
+      }),
+    });
+
+    assert.equal(response.status, 400);
+    assert.equal(createCalls, 0);
+  } finally {
+    PcbSubmission.create = originalCreate;
+  }
 });
 
 test('submission records are persisted, retries are idempotent, and unverified recipient email is not sent', async () => {
